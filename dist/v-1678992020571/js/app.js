@@ -1666,7 +1666,7 @@
               it.name = "#" + it.ref + " " + it.subject;
             } else {
               it.id = "null";
-              it.name = "Not in an epic";
+              it.name = "Sin iniciativa asociada";
             }
             return it;
           });
@@ -41966,11 +41966,13 @@
       ];
       this.rangos = [
         {
-          rango: 'menor a 50 alumnos'
+          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE1")
         }, {
-          rango: '50 a 100 alumnos'
+          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE2")
         }, {
-          rango: 'mayor a 100'
+          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE3")
+        }, {
+          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE4")
         }
       ];
       this.ubicaciones = [
@@ -41984,38 +41986,47 @@
         {
           tipo: 'Particular'
         }, {
-          tipo: 'Particular subensionado'
+          tipo: 'Particular subvencionado'
         }, {
           tipo: 'Municipal'
         }
       ];
       this.objetivos = [
         {
-          objetivo: 'Infraestructura',
+          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ1"),
           seleccionado: false
         }, {
-          objetivo: 'Salud',
+          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ2"),
           seleccionado: false
         }, {
-          objetivo: 'Tecnología',
+          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ3"),
           seleccionado: false
         }, {
-          objetivo: 'Innovación',
+          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ4"),
           seleccionado: false
         }, {
-          objetivo: 'Medio ambiente',
+          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ5"),
           seleccionado: false
         }
       ];
       this.roles = [
         {
-          rol: 'Director',
+          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL1"),
           seleccionado: false
         }, {
-          rol: 'UTP',
+          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL2"),
           seleccionado: false
         }, {
-          rol: 'Profesor',
+          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL3"),
+          seleccionado: false
+        }, {
+          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL4"),
+          seleccionado: false
+        }, {
+          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL5"),
+          seleccionado: false
+        }, {
+          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL6"),
           seleccionado: false
         }
       ];
@@ -42176,7 +42187,7 @@
                 "project_id": project.get('id')
               };
               promise = _this.repo.create('bulk-create-us-custom', obj);
-              return promise.then(function(data) {
+              promise.then(function(data) {
                 var attributes_values, k, models, new_promise, params, ref1, us_ids, userstory_custom_attribute, userstory_custom_attributes;
                 params = null;
                 us_ids = data._attrs.map(function(item) {
@@ -42225,7 +42236,16 @@
                   return _this.currentUserService.loadProjects();
                 });
               });
-            } else {
+            }
+            if (_this.type === 'scrum') {
+              _this.analytics.trackEvent("project", "create", "project creation", {
+                slug: project.get('slug'),
+                id: project.get('id')
+              });
+              _this.location.url("project/" + (project.get('slug')) + "/epics");
+              _this.currentUserService.loadProjects();
+            }
+            if (_this.type === 'visit') {
               _this.analytics.trackEvent("project", "create", "project creation", {
                 slug: project.get('slug'),
                 id: project.get('id')
