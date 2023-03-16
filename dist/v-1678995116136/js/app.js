@@ -42123,10 +42123,35 @@
       if (!this.projectForm.description) {
         this.errorList.push('description');
       }
-      if (this.type === 'kanban' || this.type === 'scrum') {
+      if (this.type === 'kanban') {
         if (!this.projectForm.establishment_details.name) {
           this.errorList.push('establishment_name');
         }
+        if (!this.projectForm.establishment_details.size) {
+          this.errorList.push('establishment_size');
+        }
+        if (!this.projectForm.establishment_details.commune) {
+          this.errorList.push('establishment_region');
+        }
+        if (!this.projectForm.establishment_details.commune) {
+          this.errorList.push('establishment_province');
+        }
+        if (!this.projectForm.establishment_details.commune) {
+          this.errorList.push('establishment_commune');
+        }
+        if (!this.projectForm.establishment_details.location) {
+          this.errorList.push('establishment_location');
+        }
+        if (!this.projectForm.establishment_details.holder) {
+          this.errorList.push('establishment_holder');
+        }
+        if (!this.projectForm.establishment_details.vi) {
+          this.errorList.push('establishment_vi');
+        }
+        this.projectForm.establishment_details.region = this.selectedRegion.region;
+        this.projectForm.establishment_details.province = this.selectedProvince.name;
+      }
+      if (this.type === 'scrum') {
         if (!this.projectForm.establishment_details.size) {
           this.errorList.push('establishment_size');
         }
