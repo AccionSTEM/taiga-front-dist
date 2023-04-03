@@ -4257,6 +4257,7 @@
     "userstory-unwatch": "/userstories/%s/unwatch",
     "tasks": "/tasks",
     "bulk-create-tasks": "/tasks/bulk_create",
+    "bulk-create-tasks-custom": "/tasks/custom_bulk_create",
     "bulk-update-task-taskboard-order": "/tasks/bulk_update_taskboard_order",
     "bulk-update-task-milestone": "/tasks/bulk_update_milestone",
     "task-upvote": "/tasks/%s/upvote",
@@ -15443,9 +15444,9 @@
   EpicDetailController = (function(superClass) {
     extend(EpicDetailController, superClass);
 
-    EpicDetailController.$inject = ["$scope", "$rootScope", "$tgRepo", "$tgConfirm", "$tgResources", "tgResources", "$routeParams", "$q", "$tgLocation", "$log", "tgAppMetaService", "$tgAnalytics", "$tgNavUrls", "$translate", "$tgQueueModelTransformation", "tgErrorHandlingService", "tgProjectService", "tgAttachmentsFullService"];
+    EpicDetailController.$inject = ["$scope", "$rootScope", "$tgRepo", "$tgConfirm", "$tgResources", "tgResources", "$routeParams", "$q", "$tgLocation", "$log", "tgAppMetaService", "$tgAnalytics", "$tgNavUrls", "$translate", "$tgQueueModelTransformation", "tgErrorHandlingService", "tgProjectService", "tgAttachmentsFullService", "tgLightboxFactory"];
 
-    function EpicDetailController(scope, rootscope, repo, confirm, rs, rs2, params, q, location, log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService, attachmentsFullService) {
+    function EpicDetailController(scope, rootscope, repo, confirm, rs, rs2, params, q, location, log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService, attachmentsFullService, lightboxFactory) {
       var promise;
       this.scope = scope;
       this.rootscope = rootscope;
@@ -15465,6 +15466,7 @@
       this.errorHandlingService = errorHandlingService;
       this.projectService = projectService;
       this.attachmentsFullService = attachmentsFullService;
+      this.lightboxFactory = lightboxFactory;
       bindMethods(this);
       this.scope.epicRef = this.params.epicref;
       this.scope.sectionName = this.translate.instant("EPIC.SECTION_NAME");
@@ -15588,6 +15590,21 @@
           return _this.loadUserstories();
         };
       })(this));
+    };
+
+    EpicDetailController.prototype.onCreateExperience = function() {
+      return this.lightboxFactory.create('tg-create-expe', {
+        "class": "lightbox lightbox-create-epic open",
+        "on-create-expe": "onCreateExperience()",
+        "project": "project",
+        "epic": "epic",
+        "userstories": "userstories",
+        "usCustomAttrValues": "usCustomAttrValues"
+      }, {
+        "project": this.scope.project,
+        "epic": this.scope.epic,
+        "userstories": this.scope.userstories
+      });
     };
 
 
@@ -20352,6 +20369,12 @@
           }
           currentLoading = $loading().target(submitButton).start();
           privacyChanged = $scope.project.isAttributeModified("is_private");
+          if (privacyChanged && $scope.project.is_private) {
+            $scope.project.is_validated = false;
+          }
+          if (privacyChanged && !$scope.project.is_private) {
+            $scope.project.is_validated = true;
+          }
           promise = $repo.save($scope.project);
           promise.then(function() {
             var newUrl;
@@ -25642,7 +25665,7 @@
 
   taiga = this.taiga;
 
-  resourceProvider = function($repo) {
+  resourceProvider = function($repo, $model) {
     var _get, service;
     _get = function(objectId, resource) {
       return $repo.queryOne(resource, objectId);
@@ -25669,6 +25692,30 @@
         }
       }
     };
+    service.customBulkCreate = function(usIds, usCustomAttrValues) {
+      var i, j, models, obj, params, ref, schema;
+      schema = {
+        model: "custom-attributes-values/userstory",
+        initialData: function(data) {
+          return {
+            attributes_values: data.attributes_values || {},
+            id: data.id,
+            user_story: data.id,
+            version: 1
+          };
+        }
+      };
+      models = [];
+      for (i = j = 0, ref = usIds.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+        params = {
+          "attributes_values": usCustomAttrValues[i],
+          "id": usIds[i]
+        };
+        obj = $model.make_model(schema.model, schema.initialData(params));
+        models.push(obj);
+      }
+      return $repo.saveAll(models, false);
+    };
     return function(instance) {
       return instance.customAttributesValues = service;
     };
@@ -25676,7 +25723,7 @@
 
   module = angular.module("taigaResources");
 
-  module.factory("$tgCustomAttributesValuesResourcesProvider", ["$tgRepo", resourceProvider]);
+  module.factory("$tgCustomAttributesValuesResourcesProvider", ["$tgRepo", "$tgModel", resourceProvider]);
 
 }).call(this);
 
@@ -27028,6 +27075,15 @@
         return result.data;
       });
     };
+    service.customBulkCreate = function(projectId, status, bulk) {
+      var data;
+      data = {
+        project_id: projectId,
+        status_id: status,
+        bulk_tasks: bulk
+      };
+      return $repo.create('bulk-create-tasks-custom', data);
+    };
     service.upvote = function(taskId) {
       var url;
       url = $urls.resolve("task-upvote", taskId);
@@ -27388,6 +27444,15 @@
       };
       url = $urls.resolve("bulk-create-us");
       return $http.post(url, data);
+    };
+    service.customBulkCreate = function(projectId, status, bulk) {
+      var data;
+      data = {
+        project_id: projectId,
+        status_id: status,
+        bulk_stories: bulk
+      };
+      return $repo.create('bulk-create-us-custom', data);
     };
     service.upvote = function(userStoryId) {
       var url;
@@ -36610,6 +36675,315 @@
 
 
 /*
+ */
+
+(function() {
+  var CreateExperienceController, taiga;
+
+  taiga = this.taiga;
+
+  CreateExperienceController = (function() {
+    CreateExperienceController.$inject = ["$tgResources", "tgResources", "$q", "$tgConfirm", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "tgProjectsService", "lightboxService", "$translate"];
+
+    function CreateExperienceController(rs, rs2, q, confirm, location, navUrls, currentUserService, projectsService, lightboxService, translate) {
+      var latestModifiedDate, modifiedDates;
+      this.rs = rs;
+      this.rs2 = rs2;
+      this.q = q;
+      this.confirm = confirm;
+      this.location = location;
+      this.navUrls = navUrls;
+      this.currentUserService = currentUserService;
+      this.projectsService = projectsService;
+      this.lightboxService = lightboxService;
+      this.translate = translate;
+      this.usCustomAttrs = this.projectsService.getCustomAttributes(this.project.userstory_custom_attributes);
+      this.usCustomAttrValues = this.getCustomAttributesValues();
+      this.tagsEpic = this.getTagsEpic();
+      this.activities = this.getUserStoriesDetail();
+      modifiedDates = this.userstories.map(function(elem) {
+        return moment(elem.get("modified_date")).valueOf();
+      });
+      latestModifiedDate = moment(Math.max.apply(null, modifiedDates._tail.array)).format('YYYY-MM-DDTHH:mm');
+      this.goalsOptions = [
+        {
+          'id': '1',
+          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ1")
+        }, {
+          'id': '2',
+          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ2")
+        }, {
+          'id': '3',
+          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ3")
+        }, {
+          'id': '4',
+          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ4")
+        }, {
+          'id': '5',
+          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ5")
+        }
+      ];
+      this.newProjectForm = {
+        name: this.epic.subject,
+        description: this.epic.description,
+        is_private: true,
+        creation_template: 2,
+        start_date: this.epic.created_date,
+        end_date: latestModifiedDate,
+        establishment_details: this.project.establishment_details,
+        objectives_list: [],
+        related_roles: [],
+        tags_colors: Object.entries(this.project.tags_colors),
+        tags: this.tagsEpic
+      };
+      this.loading = false;
+    }
+
+    CreateExperienceController.prototype.createExperience = function() {
+      var setInvitedContacts;
+      if (!this.validateForm()) {
+        return;
+      }
+      this.loading = true;
+      this.newProjectForm.related_roles = this.getRelatedRoles();
+      setInvitedContacts = [];
+      return this.projectsService.create(this.newProjectForm).then((function(_this) {
+        return function(newProject) {
+          var promiseUs, usCustomAttrsNew;
+          usCustomAttrsNew = _this.projectsService.getCustomAttributes(newProject.get("userstory_custom_attributes")._tail.array);
+          newProject.get('roles').forEach(function(i) {
+            if (i.get('name') === 'Reviewer') {
+              return setInvitedContacts = [
+                {
+                  'role_id': i.get('id'),
+                  'username': 'reviewer@admin.com'
+                }
+              ];
+            }
+          });
+          _this.projectsService.bulkCreateMemberships(newProject.get('id'), setInvitedContacts, "");
+          promiseUs = _this.rs.userstories.customBulkCreate(newProject.get('id'), newProject.get('default_us_status'), _this.activities);
+          return promiseUs.then(function(data) {
+            var bulk_tasks, promiseTasks, usIds;
+            usIds = data._attrs.map(function(item) {
+              return item.id;
+            });
+            bulk_tasks = _this.addUsIdTasks(data);
+            promiseTasks = _this.rs.tasks.customBulkCreate(newProject.get('id'), newProject.get('default_task_status'), bulk_tasks);
+            return promiseTasks.then(function(data) {
+              var promiseCustomAttrs, usCustomAttrValuesNew;
+              usCustomAttrValuesNew = _this.createCustomAttributesValuesNew(usCustomAttrsNew);
+              promiseCustomAttrs = _this.rs.customAttributesValues.customBulkCreate(usIds, usCustomAttrValuesNew);
+              return promiseCustomAttrs.then(function(data) {
+                _this.loading = false;
+                _this.lightboxService.closeAll();
+                _this.confirm.notify("success");
+                _this.location.path(_this.navUrls.resolve("project", {
+                  project: newProject.get('slug')
+                }));
+                return _this.currentUserService.loadProjects();
+              });
+            });
+          });
+        };
+      })(this));
+    };
+
+    CreateExperienceController.prototype.getCustomAttributesValues = function() {
+      var promises, type, usCustomAttrValues, usIds;
+      type = 'userstory';
+      usIds = this.userstories._tail.array.map(function(item) {
+        return item.get("id");
+      });
+      promises = _.map(usIds, (function(_this) {
+        return function(usId) {
+          return _this.rs.customAttributesValues[type].get(usId);
+        };
+      })(this));
+      usCustomAttrValues = [];
+      this.q.all(promises).then((function(_this) {
+        return function(data) {
+          return data.map(function(item) {
+            return usCustomAttrValues.push(item.attributes_values);
+          });
+        };
+      })(this));
+      return usCustomAttrValues;
+    };
+
+    CreateExperienceController.prototype.createCustomAttributesValuesNew = function(usCustomAttrsNew) {
+      var attr, item, j, k, key, l, len, len1, len2, newObj, obj, ref, ref1, usCustomAttrValuesNew, value;
+      usCustomAttrValuesNew = [];
+      ref = this.usCustomAttrValues;
+      for (j = 0, len = ref.length; j < len; j++) {
+        obj = ref[j];
+        newObj = {};
+        ref1 = this.usCustomAttrs;
+        for (k = 0, len1 = ref1.length; k < len1; k++) {
+          item = ref1[k];
+          for (l = 0, len2 = usCustomAttrsNew.length; l < len2; l++) {
+            attr = usCustomAttrsNew[l];
+            if (item.name === attr.name) {
+              key = attr.id;
+              value = obj[item.id] || "";
+              newObj[key] = value;
+            }
+          }
+        }
+        usCustomAttrValuesNew.push(newObj);
+      }
+      return usCustomAttrValuesNew;
+    };
+
+    CreateExperienceController.prototype.getTagsEpic = function() {
+      var tagsEpic;
+      tagsEpic = [];
+      this.epic.tags.map(function(tagEpic) {
+        return tagsEpic.push(tagEpic[0]);
+      });
+      return tagsEpic;
+    };
+
+    CreateExperienceController.prototype.getUserStoriesDetail = function() {
+      var activities;
+      activities = [];
+      this.rs2.userstories.listAllInEpic(this.epic.id).then((function(_this) {
+        return function(data) {
+          return data._tail.array.map(function(item) {
+            var activity, tags, tasks;
+            tasks = [];
+            if (item.get("tasks").size > 0) {
+              item.get("tasks")._tail.array.map(function(task) {
+                var tags_tasks;
+                tags_tasks = [];
+                if (task.get("tags").size > 0) {
+                  tags_tasks = task.get('tags')._tail.array;
+                }
+                task = {
+                  "us_id": "",
+                  "subject": task.get("subject"),
+                  "description": task.get("description"),
+                  "tags": tags_tasks
+                };
+                return tasks.push(task);
+              });
+            }
+            tags = [];
+            if (item.get("tags").size > 0) {
+              item.get('tags')._tail.array.map(function(tag) {
+                return tags.push(tag._tail.array[0]);
+              });
+            }
+            activity = {
+              "subject": item.get("subject"),
+              "description": item.get("description"),
+              "tasks": tasks,
+              "tags": tags
+            };
+            return activities.push(activity);
+          });
+        };
+      })(this));
+      return activities;
+    };
+
+    CreateExperienceController.prototype.addUsIdTasks = function(data) {
+      var bulk_tasks;
+      bulk_tasks = [];
+      this.activities.forEach(function(activity) {
+        if (activity.tasks.length > 0) {
+          return data._attrs.map(function(item) {
+            var i, j, ref, results;
+            if (item.subject === activity.subject && item.description === activity.description) {
+              results = [];
+              for (i = j = 0, ref = activity.tasks.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+                activity.tasks[i].us_id = item.id;
+                results.push(bulk_tasks.push(activity.tasks[i]));
+              }
+              return results;
+            }
+          });
+        }
+      });
+      return bulk_tasks;
+    };
+
+    CreateExperienceController.prototype.getRelatedRoles = function() {
+      var j, k, len, len1, ref, ref1, relatedRoles, relatedRolesUnique, responsable, responsableId, usCustomAttr, usCustomAttrValue;
+      relatedRoles = [];
+      responsableId = null;
+      ref = this.usCustomAttrs;
+      for (j = 0, len = ref.length; j < len; j++) {
+        usCustomAttr = ref[j];
+        if (usCustomAttr.name === "Responsable") {
+          responsableId = usCustomAttr.id;
+          break;
+        }
+      }
+      relatedRoles = [];
+      ref1 = this.usCustomAttrValues;
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        usCustomAttrValue = ref1[k];
+        responsable = usCustomAttrValue[responsableId] || '';
+        if (responsable !== '') {
+          relatedRoles.push(responsable);
+        }
+      }
+      relatedRolesUnique = Array.from(new Set(relatedRoles));
+      return relatedRolesUnique;
+    };
+
+    return CreateExperienceController;
+
+  })();
+
+  angular.module("taigaEpics").controller("CreateExperienceCtrl", CreateExperienceController);
+
+}).call(this);
+
+
+/*
+ */
+
+(function() {
+  var CreateExperienceDirective;
+
+  CreateExperienceDirective = function() {
+    var link;
+    link = function(scope, el, attrs, ctrl) {
+      var form;
+      form = el.find("form").checksley();
+      ctrl.validateForm = (function(_this) {
+        return function() {
+          return form.validate();
+        };
+      })(this);
+      return ctrl.setFormErrors = (function(_this) {
+        return function(errors) {
+          return form.setErrors(errors);
+        };
+      })(this);
+    };
+    return {
+      link: link,
+      templateUrl: "epics/create-experience/create-experience.html",
+      controller: "CreateExperienceCtrl",
+      controllerAs: "vm",
+      bindToController: {
+        project: '=',
+        epic: '=',
+        userstories: '='
+      },
+      scope: {}
+    };
+  };
+
+  angular.module('taigaEpics').directive("tgCreateExpe", CreateExperienceDirective);
+
+}).call(this);
+
+
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -38982,6 +39356,37 @@
 
 }).call(this);
 
+(function() {
+  var HomeNeedValidationDirective;
+
+  HomeNeedValidationDirective = function(currentUserService) {
+    var directive, link;
+    link = function(scope, el, attrs, ctrl) {
+      scope.vm = {};
+      taiga.defineImmutableProperty(scope.vm, "projects", function() {
+        return currentUserService.projects.get("all");
+      });
+      return scope.newWindow = function(ps) {
+        var url;
+        url = 'project/' + ps + '/kanban';
+        window.open(url, '_blank');
+        return true;
+      };
+    };
+    directive = {
+      templateUrl: "home/need-validation/home-need-validation.html",
+      scope: {},
+      link: link
+    };
+    return directive;
+  };
+
+  HomeNeedValidationDirective.$inject = ["tgCurrentUserService"];
+
+  angular.module("taigaHome").directive("tgHomeNeedValidation", HomeNeedValidationDirective);
+
+}).call(this);
+
 
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -39029,13 +39434,17 @@
   var WorkingOnController;
 
   WorkingOnController = (function() {
-    WorkingOnController.$inject = ["tgHomeService"];
+    WorkingOnController.$inject = ["tgHomeService", "tgCurrentUserService"];
 
-    function WorkingOnController(homeService) {
+    function WorkingOnController(homeService, currentUserService) {
       this.homeService = homeService;
+      this.currentUserService = currentUserService;
       this.assignedTo = Immutable.Map();
       this.hiddenAssignedTo = [];
       this.showHiddenAssignedTo = false;
+      this.user = {};
+      this.user = this.currentUserService.getUser();
+      this.showNeedValidation = this.user.get('is_reviewer');
       this.watching = Immutable.Map();
       this.showHiddenWatching = false;
     }
@@ -41899,9 +42308,9 @@
   CreatetProjectFormController = (function() {
     var setInvitedContacts;
 
-    CreatetProjectFormController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo"];
+    CreatetProjectFormController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo", "$tgResources"];
 
-    function CreatetProjectFormController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo) {
+    function CreatetProjectFormController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo, rs) {
       this.currentUserService = currentUserService;
       this.projectsService = projectsService;
       this.projectUrl = projectUrl;
@@ -41911,6 +42320,7 @@
       this.translate = translate;
       this.model = model;
       this.repo = repo;
+      this.rs = rs;
       this.errorList = [];
       this.projectForm = {
         is_private: true,
@@ -42102,20 +42512,7 @@
     setInvitedContacts = [];
 
     CreatetProjectFormController.prototype.submit = function() {
-      var custom_attributes_ids, date, estimated_end, estimated_start, i, j, prettyDate, ref, schema;
-      schema = null;
-      custom_attributes_ids = null;
-      schema = {
-        model: "custom-attributes-values/userstory",
-        initialData: function(data) {
-          return {
-            attributes_values: data.attributes_values,
-            id: data.id,
-            user_story: data.id,
-            version: 1
-          };
-        }
-      };
+      var date, estimated_end, estimated_start, i, j, k, prettyDate, ref, ref1;
       this.errorList = [];
       if (!this.projectForm.name) {
         this.errorList.push('name');
@@ -42186,12 +42583,15 @@
           date = $('#date' + i).val();
           this.activities_attributes[i].fecha = moment(date, prettyDate).format("YYYY-MM-DD");
         }
+        for (i = k = 0, ref1 = this.activities.length - 1; 0 <= ref1 ? k <= ref1 : k >= ref1; i = 0 <= ref1 ? ++k : --k) {
+          this.activities[i].tags = [];
+        }
       }
       if (this.errorList.length === 0) {
         this.formSubmitLoading = true;
         return this.projectsService.create(this.projectForm).then((function(_this) {
           return function(project) {
-            var obj, promise;
+            var promise;
             if (_this.type === 'kanban') {
               _this.objetivosSeleccionados();
               _this.rolesSeleccionados();
@@ -42206,27 +42606,13 @@
                 }
               });
               _this.projectsService.bulkCreateMemberships(project.get('id'), setInvitedContacts, "");
-              obj = {
-                "bulk_stories": _this.activities,
-                "status_id": project.get('default_us_status'),
-                "project_id": project.get('id')
-              };
-              promise = _this.repo.create('bulk-create-us-custom', obj);
+              promise = _this.rs.userstories.customBulkCreate(project.get('id'), project.get('default_us_status'), _this.activities);
               promise.then(function(data) {
-                var attributes_values, k, models, new_promise, params, ref1, us_ids, userstory_custom_attribute, userstory_custom_attributes;
-                params = null;
+                var attributes_values, new_promise, us_ids, userstory_custom_attributes;
                 us_ids = data._attrs.map(function(item) {
                   return item.id;
                 });
-                userstory_custom_attributes = [];
-                userstory_custom_attribute = {};
-                project.get("userstory_custom_attributes")._tail.array.map(function(item) {
-                  userstory_custom_attribute = {
-                    id: item.get("id"),
-                    name: item.get("name")
-                  };
-                  return userstory_custom_attributes.push(userstory_custom_attribute);
-                });
+                userstory_custom_attributes = _this.projectsService.getCustomAttributes(project.get("userstory_custom_attributes")._tail.array);
                 attributes_values = _this.activities_attributes.map(function(value) {
                   var result;
                   result = {};
@@ -42242,16 +42628,7 @@
                   });
                   return result;
                 });
-                models = [];
-                for (i = k = 0, ref1 = us_ids.length - 1; 0 <= ref1 ? k <= ref1 : k >= ref1; i = 0 <= ref1 ? ++k : --k) {
-                  params = {
-                    "attributes_values": attributes_values[i],
-                    "id": us_ids[i]
-                  };
-                  obj = _this.model.make_model(schema.model, schema.initialData(params));
-                  models.push(obj);
-                }
-                new_promise = _this.repo.saveAll(models, false);
+                new_promise = _this.rs.customAttributesValues.customBulkCreate(us_ids, attributes_values);
                 return new_promise.then(function(data) {
                   _this.analytics.trackEvent("project", "create", "project creation", {
                     slug: project.get('slug'),
@@ -44969,6 +45346,20 @@
       return this.rs.projects.transferReject(projectId, token, reason);
     };
 
+    ProjectsService.prototype.getCustomAttributes = function(projectUsCustomAttrs) {
+      var usCustomAttrs;
+      usCustomAttrs = [];
+      projectUsCustomAttrs.map(function(attribute) {
+        var usCustomAttr;
+        usCustomAttr = {
+          id: attribute.id || attribute.get('id'),
+          name: attribute.name || attribute.get('name')
+        };
+        return usCustomAttrs.push(usCustomAttr);
+      });
+      return usCustomAttrs;
+    };
+
     return ProjectsService;
 
   })(taiga.Service);
@@ -46593,6 +46984,24 @@
         return Immutable.fromJS(result.data);
       });
     };
+    service.listAllInEpic = function(epicIid) {
+      var httpOptions, params, url;
+      url = urlsService.resolve("userstories");
+      httpOptions = {
+        headers: {
+          "x-disable-pagination": "1"
+        }
+      };
+      params = {
+        epic: epicIid,
+        order_by: 'epic_order',
+        include_tasks: true,
+        all_fields: true
+      };
+      return http.get(url, params, httpOptions).then(function(result) {
+        return Immutable.fromJS(result.data);
+      });
+    };
     return function() {
       return {
         "userstories": service
@@ -47415,15 +47824,20 @@
   taiga = this.taiga;
 
   ProjectService = (function() {
-    ProjectService.$inject = ["$rootScope", "tgProjectsService", "tgXhrErrorService", "tgUserActivityService", "$interval", "$q"];
+    ProjectService.$inject = ["$rootScope", "tgProjectsService", "tgXhrErrorService", "tgUserActivityService", "$interval", "$q", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "$tgRepo", "$tgModel"];
 
-    function ProjectService(rootScope, projectsService, xhrError, userActivityService, interval, q) {
+    function ProjectService(rootScope, projectsService, xhrError, userActivityService, interval, q, location, navUrls, currentUserService, repo, model) {
       this.rootScope = rootScope;
       this.projectsService = projectsService;
       this.xhrError = xhrError;
       this.userActivityService = userActivityService;
       this.interval = interval;
       this.q = q;
+      this.location = location;
+      this.navUrls = navUrls;
+      this.currentUserService = currentUserService;
+      this.repo = repo;
+      this.model = model;
       this.manageProjectSignal = bind(this.manageProjectSignal, this);
       this._project = null;
       this._section = null;

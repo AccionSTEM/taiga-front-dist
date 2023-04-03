@@ -406,6 +406,7 @@
         "EMPTY_WORKING_ON": "<strong>Parece vacío, ¿no?</strong> Empieza a trabajar y verás aquí las historias, tareas e incidentes en los que estás trabajando.",
         "EMPTY_WATCHING": "<strong>Sigue</strong> actividades, tareas y peticiones en tus proyectos y se te notificará sobre sus cambios :)",
         "EMPTY_PROJECT_LIST": "Aún no tienes ningún proyecto",
+        "NEED_VALIDATION_PROJECTS": "Experiencias por validar",
         "WORKING_ON_SECTION": "Trabajando en",
         "WATCHING_SECTION": "Observando",
         "DASHBOARD": "Dashboard de proyecto",
