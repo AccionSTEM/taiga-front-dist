@@ -801,7 +801,7 @@
     return plugin.module;
   });
 
-  modules = ["taigaBase", "taigaCommon", "taigaResources", "taigaResources2", "taigaAuth", "taigaEvents", "taigaHome", "taigaNavigationBar", "taigaProjects", "taigaRelatedTasks", "taigaBacklog", "taigaTaskboard", "taigaKanban", "taigaIssues", "taigaUserStories", "taigaTasks", "taigaTeam", "taigaWiki", "taigaSearch", "taigaAdmin", "taigaProject", "taigaUserSettings", "taigaFeedback", "taigaPlugins", "taigaIntegrations", "taigaComponents", "taigaProfile", "taigaHome", "taigaUserTimeline", "taigaExternalApps", "taigaDiscover", "taigaHistory", "taigaNotifications", "taigaWikiHistory", "taigaEpics", "taigaUtils", "templates", "ngSanitize", "ngRoute", "ngAnimate", "ngAria", "pascalprecht.translate", "infinite-scroll", "tgRepeat"].concat(pluginsModules);
+  modules = ["taigaBase", "taigaCommon", "taigaResources", "taigaResources2", "taigaAuth", "taigaEvents", "taigaHome", "taigaNavigationBar", "taigaProjects", "taigaRelatedTasks", "taigaBacklog", "taigaTaskboard", "taigaKanban", "taigaIssues", "taigaUserStories", "taigaTasks", "taigaTeam", "taigaWiki", "taigaSearch", "taigaAdmin", "taigaProject", "taigaUserSettings", "taigaFeedback", "taigaPlugins", "taigaIntegrations", "taigaComponents", "taigaProfile", "taigaHome", "taigaUserTimeline", "taigaExternalApps", "taigaDiscover", "taigaHistory", "taigaNotifications", "taigaWikiHistory", "taigaEpics", "taigaUtils", "taigaVisits", "templates", "ngSanitize", "ngRoute", "ngAnimate", "ngAria", "pascalprecht.translate", "infinite-scroll", "tgRepeat"].concat(pluginsModules);
 
   module = angular.module("taiga", modules);
 
@@ -4770,6 +4770,18 @@
 
 
 /*
+ * Accion STEM
+ */
+
+(function() {
+  var module;
+
+  module = angular.module("taigaVisits", []);
+
+}).call(this);
+
+
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -7490,10 +7502,10 @@
 
   groupBy = this.taiga.groupBy;
 
-  CreateEditDirective = function($log, $repo, $model, $rs, $rootScope, lightboxService, $loading, $translate, $confirm, $q, attachmentsService, $template, $compile) {
+  CreateEditDirective = function($log, $repo, $model, $rs, $rootScope, lightboxService, $loading, $translate, $confirm, $q, attachmentsService, $template, $compile, $kanbanUserstoriesService) {
     var link;
     link = function($scope, $el, attrs) {
-      var addExistingToSprint, attachmentsToAdd, attachmentsToDelete, checkClose, close, createAttachments, deleteAttachments, docEl, form, getSchema, isDisabledExisting, mount, objType, render, resetAttachments, saveItem, schema, schemas, setStatus, sprintChangeConfirmAndSave, submit;
+      var addExistingToSprint, attachmentsToAdd, attachmentsToDelete, checkClose, close, createAttachments, deleteAttachments, docEl, form, getSchema, isDisabledExisting, mount, objType, render, resetAttachments, saveItem, schema, schemas, setStatus, setStatusVisit, sprintChangeConfirmAndSave, submit;
       schema = null;
       objType = null;
       form = null;
@@ -7523,7 +7535,8 @@
               points: {},
               swimlane: data.project.is_kanban_activated ? data.project.default_swimlane : null,
               status: data.statusId ? data.statusId : data.project.default_us_status,
-              is_archived: false
+              is_archived: false,
+              project_visit: data.project_visit ? data.project_visit : null
             };
           }
         },
@@ -7906,10 +7919,58 @@
       };
       setStatus = function(id) {
         $scope.obj.status = id;
-        $scope.selectedStatus = _.find($scope.statusList, function(item) {
-          return item.id === id;
+        if ($scope.project.creation_template === 3) {
+          return $rs.projects.get($scope.obj.project).then(function(project) {
+            $scope.statusList = _.filter(project.us_statuses, function(item) {
+              return _.includes(item.slug, "visitas");
+            });
+            $scope.selectedStatus = _.find(project.us_statuses, function(item) {
+              return item.id === id;
+            });
+            $scope.obj.is_closed = $scope.selectedStatus.is_closed;
+            if (_.includes($scope.selectedStatus.slug, "visitas")) {
+              return setStatusVisit($scope.selectedStatus);
+            } else {
+              $scope.obj.project_visit = null;
+              return $scope.obj.status_visit = null;
+            }
+          });
+        } else if ($scope.statusList.length === 0) {
+          $scope.obj.project = $scope.project;
+          return $rs.userstories.listValues($scope.obj.project, "userstory-statuses").then((function(_this) {
+            return function(usStatusList) {
+              $scope.statusList = usStatusList;
+              $scope.selectedStatus = _.find($scope.statusList, function(item) {
+                return item.id === id;
+              });
+              $scope.obj.is_closed = $scope.selectedStatus.is_closed;
+              if (_.includes($scope.selectedStatus.slug, "visitas")) {
+                setStatusVisit($scope.selectedStatus);
+                return $scope.project = _this.projectVisit;
+              }
+            };
+          })(this));
+        } else {
+          $scope.selectedStatus = _.find($scope.statusList, function(item) {
+            return item.id === id;
+          });
+          $scope.obj.is_closed = $scope.selectedStatus.is_closed;
+          if (_.includes($scope.selectedStatus.slug, "visitas")) {
+            return setStatusVisit($scope.selectedStatus);
+          } else {
+            $scope.obj.project_visit = null;
+            return $scope.obj.status_visit = null;
+          }
+        }
+      };
+      setStatusVisit = function(newselectedStatus) {
+        var statusVisit;
+        this.projectVisit = $kanbanUserstoriesService.projectVisit;
+        $scope.obj.project_visit = this.projectVisit.id;
+        statusVisit = _.find(this.projectVisit.us_statuses, function(value) {
+          return value.slug === newselectedStatus.slug;
         });
-        return $scope.obj.is_closed = $scope.selectedStatus.is_closed;
+        return $scope.obj.status_visit = statusVisit.id;
       };
       return render = function(sprint) {
         var compiledTemplate, template, templateScope;
@@ -7924,7 +7985,7 @@
     };
   };
 
-  module.directive("tgLbCreateEdit", ["$log", "$tgRepo", "$tgModel", "$tgResources", "$rootScope", "lightboxService", "$tgLoading", "$translate", "$tgConfirm", "$q", "tgAttachmentsService", "$tgTemplate", "$compile", CreateEditDirective]);
+  module.directive("tgLbCreateEdit", ["$log", "$tgRepo", "$tgModel", "$tgResources", "$rootScope", "lightboxService", "$tgLoading", "$translate", "$tgConfirm", "$q", "tgAttachmentsService", "$tgTemplate", "$compile", "tgKanbanUserstories", CreateEditDirective]);
 
   debounceLeading = this.taiga.debounceLeading;
 
@@ -13405,11 +13466,14 @@
   KanbanUserstoriesService = (function(superClass) {
     extend(KanbanUserstoriesService, superClass);
 
-    KanbanUserstoriesService.$inject = ["$translate"];
+    KanbanUserstoriesService.$inject = ["$translate", "$tgResources", "tgCurrentUserService"];
 
-    function KanbanUserstoriesService(translate) {
+    function KanbanUserstoriesService(translate, rs, currentUserService) {
       this.translate = translate;
+      this.rs = rs;
+      this.currentUserService = currentUserService;
       this.reset();
+      this.projectVisit = this.getProjectVisit();
     }
 
     KanbanUserstoriesService.prototype.reset = function(resetSwimlanesList, resetArchivedStatus, resetHideStatud) {
@@ -13475,6 +13539,21 @@
       return results;
     };
 
+    KanbanUserstoriesService.prototype.initUsByStatusListVisit = function(userstories) {
+      var key, results, status, usModel;
+      results = [];
+      for (key in userstories) {
+        usModel = userstories[key];
+        status = String(usModel.status_visit);
+        if (!this.usByStatus.has(status)) {
+          results.push(this.usByStatus = this.usByStatus.set(status, Immutable.List()));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
     KanbanUserstoriesService.prototype.remove = function(usModel) {
       var status;
       this.userstoriesRaw = this.userstoriesRaw.filter((function(_this) {
@@ -13483,7 +13562,11 @@
         };
       })(this));
       delete this.order[usModel.id];
-      status = String(usModel.status);
+      if (this.project.creation_template === 3) {
+        status = String(usModel.status_visit);
+      } else {
+        status = String(usModel.status);
+      }
       this.usMap = this.usMap["delete"](usModel.id);
       this.usByStatus = this.usByStatus.set(status, this.usByStatus.get(status).filter((function(_this) {
         return function(id) {
@@ -13523,7 +13606,11 @@
       for (key in usList) {
         usModel = usList[key];
         us = this.retrieveUserStoryData(usModel);
-        status = String(usModel.status);
+        if (this.project.creation_template === 3) {
+          status = String(usModel.status_visit);
+        } else {
+          status = String(usModel.status);
+        }
         if (!this.usByStatus.has(status)) {
           this.usByStatus = this.usByStatus.set(status, Immutable.List());
         }
@@ -13732,7 +13819,7 @@
     };
 
     KanbanUserstoriesService.prototype.refresh = function(refreshUsMap, refreshSwimlanes) {
-      var collection, key, ref, us, usModel;
+      var collection, key, ref, ref1, us, usModel;
       if (refreshUsMap == null) {
         refreshUsMap = true;
       }
@@ -13747,21 +13834,41 @@
         })(this)
       ]);
       collection = {};
-      ref = this.userstoriesRaw;
-      for (key in ref) {
-        usModel = ref[key];
-        us = this.retrieveUserStoryData(usModel);
-        if (!collection[usModel.status]) {
-          collection[usModel.status] = [];
+      if (this.project.creation_template === 3) {
+        ref = this.userstoriesRaw;
+        for (key in ref) {
+          usModel = ref[key];
+          us = this.retrieveUserStoryData(usModel);
+          if (!collection[usModel.status_visit]) {
+            collection[usModel.status_visit] = [];
+          }
+          collection[usModel.status_visit] = collection[usModel.status_visit].filter((function(_this) {
+            return function(id) {
+              return id !== usModel.id;
+            };
+          })(this));
+          collection[usModel.status_visit].push(usModel.id);
+          if (refreshUsMap) {
+            this.usMap = this.usMap.set(usModel.id, Immutable.fromJS(us));
+          }
         }
-        collection[usModel.status] = collection[usModel.status].filter((function(_this) {
-          return function(id) {
-            return id !== usModel.id;
-          };
-        })(this));
-        collection[usModel.status].push(usModel.id);
-        if (refreshUsMap) {
-          this.usMap = this.usMap.set(usModel.id, Immutable.fromJS(us));
+      } else {
+        ref1 = this.userstoriesRaw;
+        for (key in ref1) {
+          usModel = ref1[key];
+          us = this.retrieveUserStoryData(usModel);
+          if (!collection[usModel.status]) {
+            collection[usModel.status] = [];
+          }
+          collection[usModel.status] = collection[usModel.status].filter((function(_this) {
+            return function(id) {
+              return id !== usModel.id;
+            };
+          })(this));
+          collection[usModel.status].push(usModel.id);
+          if (refreshUsMap) {
+            this.usMap = this.usMap.set(usModel.id, Immutable.fromJS(us));
+          }
         }
       }
       this.usByStatus = Immutable.fromJS(collection);
@@ -13827,6 +13934,20 @@
           return _this.usByStatusSwimlanes = _this.usByStatusSwimlanes.set(swimlane.id, swimlaneUsByStatus);
         };
       })(this));
+    };
+
+    KanbanUserstoriesService.prototype.getProjectVisit = function() {
+      var projectVisit;
+      projectVisit = this.currentUserService.projects.getIn(['visit', 0]);
+      if (projectVisit) {
+        projectVisit = projectVisit.toJS();
+        this.rs.userstories.listValues(projectVisit.id, "userstory-statuses").then((function(_this) {
+          return function(data) {
+            return projectVisit.us_statuses = data;
+          };
+        })(this));
+      }
+      return projectVisit;
     };
 
     return KanbanUserstoriesService;
@@ -13947,6 +14068,8 @@
           return _this.kanbanUserstoriesService.swimlanesList;
         };
       })(this));
+      this.projectVisit = this.kanbanUserstoriesService.projectVisit;
+      this.sortable = true;
     }
 
     KanbanController.prototype.cleanSelectedUss = function() {
@@ -14326,11 +14449,22 @@
     };
 
     KanbanController.prototype.renderUserStories = function(userstories) {
-      var userstoriesMap;
+      var statusNum, userstoriesMap;
       userstories = _.sortBy(userstories, 'kanban_order');
-      this.kanbanUserstoriesService.initUsByStatusList(userstories);
+      statusNum = this.scope.project.default_us_status;
+      if (this.scope.project.creation_template === 3) {
+        this.kanbanUserstoriesService.initUsByStatusListVisit(userstories);
+      } else {
+        this.kanbanUserstoriesService.initUsByStatusList(userstories);
+      }
       if (this.renderBatching) {
-        userstoriesMap = _.groupBy(userstories, 'status');
+        if (this.scope.project.creation_template === 3) {
+          userstoriesMap = {};
+          statusNum = this.scope.project.default_us_status;
+          userstoriesMap[statusNum] = userstories;
+        } else {
+          userstoriesMap = _.groupBy(userstories, 'status');
+        }
         this.rendered = [];
         this.queue = [];
         this.batchSize = 0;
@@ -14413,7 +14547,11 @@
       this.lastSearch = this.filterQ;
       lastSearch = this.filterQ;
       this.lastLoadUserstoriesParams = params;
-      loadPromises = [this.rs.userstories.listAll(this.scope.projectId, params), this.loadSwimlanes()];
+      if (this.scope.project.creation_template === 3) {
+        loadPromises = [this.rs.userstories.listAllVisit(this.scope.projectId, params), this.loadSwimlanes()];
+      } else {
+        loadPromises = [this.rs.userstories.listAll(this.scope.projectId, params), this.loadSwimlanes()];
+      }
       archivedPromises = [];
       openArchived = _.difference(this.kanbanUserstoriesService.archivedStatus, this.kanbanUserstoriesService.statusHide);
       if (openArchived.length) {
@@ -14538,6 +14676,9 @@
       this.scope.usStatusList = _.sortBy(project.us_statuses, "order");
       this.scope.usCardVisibility = {};
       this.scope.$emit("project:loaded", project);
+      if (this.scope.project.creation_template === 3) {
+        this.sortable = false;
+      }
       return project;
     };
 
@@ -14559,8 +14700,13 @@
     };
 
     KanbanController.prototype.moveUs = function(ctx, usList, newStatusId, newSwimlaneId, index, previousCard, nextCard) {
-      var apiNewSwimlaneId, data, promise;
+      var apiNewSwimlaneId, data, newselectedStatus, projectVisitId, promise, statusVisit, statusVisitId, usStatusList;
       this.cleanSelectedUss();
+      usStatusList = _.map(usList, (function(_this) {
+        return function(us) {
+          return us.oldStatusId;
+        };
+      })(this));
       usList = _.map(usList, (function(_this) {
         return function(us) {
           return _this.kanbanUserstoriesService.getUsModel(us.id);
@@ -14571,12 +14717,24 @@
       if (newSwimlaneId === -1) {
         apiNewSwimlaneId = null;
       }
+      newselectedStatus = _.find(this.scope.usStatusList, function(item) {
+        return item.id === newStatusId;
+      });
+      projectVisitId = null;
+      statusVisitId = null;
+      if (_.includes(newselectedStatus.slug, "visitas")) {
+        projectVisitId = this.projectVisit.id;
+        statusVisit = _.find(this.projectVisit.us_statuses, function(value) {
+          return value.slug === newselectedStatus.slug;
+        });
+        statusVisitId = statusVisit.id;
+      }
       data = this.kanbanUserstoriesService.move(usList.map((function(_this) {
         return function(it) {
           return it.id;
         };
       })(this)), newStatusId, apiNewSwimlaneId, index, previousCard, nextCard);
-      promise = this.rs.userstories.bulkUpdateKanbanOrder(this.scope.projectId, newStatusId, apiNewSwimlaneId, data.afterUserstoryId, data.beforeUserstoryId, data.bulkUserstories);
+      promise = this.rs.userstories.bulkUpdateKanbanOrder(this.scope.projectId, newStatusId, apiNewSwimlaneId, data.afterUserstoryId, data.beforeUserstoryId, data.bulkUserstories, projectVisitId, statusVisitId);
       return promise.then((function(_this) {
         return function() {
           _this.scope.$broadcast("redraw:wip");
@@ -14586,6 +14744,17 @@
           }
         };
       })(this));
+    };
+
+    KanbanController.prototype.addNewUsFromVisit = function(status) {
+      return this.lightboxFactory.create('tg-related-userstories-visit-create', {
+        "class": "lightbox lightbox-create-related-user-stories open",
+        "status": "status",
+        "projectvisit": "projectvisit"
+      }, {
+        "status": status,
+        "projectvisit": this.scope.project
+      });
     };
 
     return KanbanController;
@@ -15060,15 +15229,20 @@
                       id: $scope.vm.item.get('id')
                     });
                   }
-                }, {
-                  text: $translate.instant('COMMON.CARD.ASSIGN_TO'),
-                  icon: 'icon-assign-to',
-                  event: function() {
-                    return $scope.vm.onClickAssignedTo({
-                      id: $scope.vm.item.get('id')
-                    });
-                  }
                 });
+              }
+              if (projectService.project.get('creation_template') !== 3) {
+                if (projectService.project.get('my_permissions').includes($scope.vm.getModifyPermisionKey())) {
+                  actions.push({
+                    text: $translate.instant('COMMON.CARD.ASSIGN_TO'),
+                    icon: 'icon-assign-to',
+                    event: function() {
+                      return $scope.vm.onClickAssignedTo({
+                        id: $scope.vm.item.get('id')
+                      });
+                    }
+                  });
+                }
               }
               if (projectService.project.get('my_permissions').includes($scope.vm.getDeletePermisionKey())) {
                 actions.push({
@@ -15081,15 +15255,17 @@
                   }
                 });
               }
-              if (projectService.project.get('my_permissions').includes($scope.vm.getModifyPermisionKey()) && !$scope.vm.isFirst) {
-                actions.push({
-                  text: $translate.instant('COMMON.CARD.MOVE_TO_TOP'),
-                  icon: 'icon-move-to-top',
-                  event: function() {
-                    return $scope.vm.onClickMoveToTop($scope.vm.item);
-                  }
-                });
-              }
+
+              /*if projectService.project.get('my_permissions').includes($scope.vm.getModifyPermisionKey()) && !$scope.vm.isFirst
+                  actions.push(
+                      {
+                          text: $translate.instant('COMMON.CARD.MOVE_TO_TOP'),
+                          icon: 'icon-move-to-top',
+                          event: () ->
+                              $scope.vm.onClickMoveToTop($scope.vm.item)
+                      },
+                  )
+               */
               return taiga.globalPopover(event.currentTarget, actions, {}, function() {
                 return removePopupOpenState();
               });
@@ -15242,6 +15418,9 @@
     var link;
     link = function($scope, $el, $attrs) {
       var drake, init, oldIndex, unwatch;
+      if ($attrs.tgKanbanSortable === "false") {
+        return null;
+      }
       drake = null;
       oldIndex = null;
       $scope.openSwimlane = (function(_this) {
@@ -17878,7 +18057,7 @@
 
   module.directive("tgUsStatusDisplay", ["$tgTemplate", "$compile", UsStatusDisplayDirective]);
 
-  UsStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
+  UsStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile, $kanbanUserstoriesService) {
     var link, template;
     template = $template.get("common/components/status-button.html", true);
     link = function($scope, $el, $attrs, $model) {
@@ -17905,7 +18084,23 @@
           $el.find(".pop-status").popover().close();
           currentLoading = $loading().target($el.find('.js-edit-status')).start();
           transform = $modelTransform.save(function(us) {
-            us.status = status;
+            var projectVisit, selectedStatus, statusVisit;
+            selectedStatus = _.find($scope.statusList, function(item) {
+              return item.id === status;
+            });
+            if (_.includes(selectedStatus.slug, "visitas")) {
+              projectVisit = $kanbanUserstoriesService.projectVisit;
+              us.status = status;
+              us.project_visit = projectVisit.id;
+              statusVisit = _.find(projectVisit.us_statuses, function(value) {
+                return value.slug === selectedStatus.slug;
+              });
+              us.status_visit = statusVisit.id;
+            } else {
+              us.status = status;
+              us.project_visit = null;
+              us.status_visit = null;
+            }
             return us;
           });
           onSuccess = function() {
@@ -17959,7 +18154,7 @@
     };
   };
 
-  module.directive("tgUsStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", UsStatusButtonDirective]);
+  module.directive("tgUsStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", "tgKanbanUserstories", UsStatusButtonDirective]);
 
   UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
     var link, template;
@@ -27434,6 +27629,15 @@
       service.storeQueryParams(projectId, params);
       return $repo.queryMany("userstories", params);
     };
+    service.listAllVisit = function(projectId, filters) {
+      var params;
+      params = {
+        "is_project_visit": true,
+        "project_id": projectId
+      };
+      params = _.extend({}, params, filters || {});
+      return $repo.queryMany("userstories", params);
+    };
     service.bulkCreate = function(projectId, status, bulk, swimlane) {
       var data, url;
       data = {
@@ -27501,7 +27705,7 @@
       };
       return $http.post(url, params);
     };
-    service.bulkUpdateKanbanOrder = function(projectId, statusId, swimlaneId, afterUserstoryId, beforeUserstoryId, bulkUserstories) {
+    service.bulkUpdateKanbanOrder = function(projectId, statusId, swimlaneId, afterUserstoryId, beforeUserstoryId, bulkUserstories, projectVisitId, statusVisitId) {
       var params, url;
       url = $urls.resolve("bulk-update-us-kanban-order");
       params = {
@@ -27516,6 +27720,12 @@
       }
       if (swimlaneId) {
         params.swimlane_id = swimlaneId;
+      }
+      if (projectVisitId) {
+        params.project_visit_id = projectVisitId;
+      }
+      if (statusVisitId) {
+        params.status_visit_id = statusVisitId;
       }
       return $http.post(url, params);
     };
@@ -40444,6 +40654,12 @@
         },
         key: 'EVENTS.MENTIONED_YOU_IN_COMMENT',
         translate_params: ['username', 'obj_name']
+      }, {
+        check: function(notification) {
+          return notification.get('event_type') === 7;
+        },
+        key: 'EVENTS.CHANGE_ON_WIKI',
+        translate_params: ['username', 'obj_name', 'project_name']
       }
     ];
 
@@ -40473,9 +40689,15 @@
       obj_name: function(notification) {
         var obj, text, url;
         obj = this._getNotificationObject(notification);
-        url = this._getDetailObjUrl(notification, obj.get('content_type'));
-        text = '#' + obj.get('ref') + ' ' + obj.get('subject');
-        return this._getLink(notification, url, text, 'object-link');
+        if (notification.get('event_type') === 7) {
+          url = this._getObjUrlBySlug(notification);
+          text = obj.get('ref');
+          return this._getLink(notification, url, text);
+        } else {
+          url = this._getDetailObjUrl(notification, obj.get('content_type'));
+          text = '#' + obj.get('ref') + ' ' + obj.get('subject');
+          return this._getLink(notification, url, text, 'object-link');
+        }
       }
     };
 
@@ -40544,6 +40766,15 @@
 
     NotificationsService.prototype._translateTitleParams = function(param, notification, event) {
       return _params[param].call(this, notification, event);
+    };
+
+    NotificationsService.prototype._getObjUrlBySlug = function(notification) {
+      var url;
+      url = this.navUrls.resolve('project-wiki-page', {
+        project: notification.getIn(['data', 'project', 'slug']),
+        slug: notification.getIn(['data', 'obj', 'ref'])
+      });
+      return url;
     };
 
     NotificationsService.prototype._getDetailObjUrl = function(notification, contentType) {
@@ -42595,17 +42826,7 @@
             if (_this.type === 'kanban') {
               _this.objetivosSeleccionados();
               _this.rolesSeleccionados();
-              project.get('roles').forEach(function(i) {
-                if (i.get('name') === 'Reviewer') {
-                  return setInvitedContacts = [
-                    {
-                      'role_id': i.get('id'),
-                      'username': 'reviewer@admin.com'
-                    }
-                  ];
-                }
-              });
-              _this.projectsService.bulkCreateMemberships(project.get('id'), setInvitedContacts, "");
+              _this.projectsService.createReviewerStuff(project);
               promise = _this.rs.userstories.customBulkCreate(project.get('id'), project.get('default_us_status'), _this.activities);
               promise.then(function(data) {
                 var attributes_values, new_promise, us_ids, userstory_custom_attributes;
@@ -45276,11 +45497,14 @@
   ProjectsService = (function(superClass) {
     extend(ProjectsService, superClass);
 
-    ProjectsService.$inject = ["tgResources", "$projectUrl"];
+    ProjectsService.$inject = ["tgResources", "$projectUrl", "$tgResources", "$translate", "$tgRepo"];
 
-    function ProjectsService(rs, projectUrl) {
+    function ProjectsService(rs, projectUrl, rs2, translate, repo) {
       this.rs = rs;
       this.projectUrl = projectUrl;
+      this.rs2 = rs2;
+      this.translate = translate;
+      this.repo = repo;
     }
 
     ProjectsService.prototype.create = function(data) {
@@ -45293,6 +45517,38 @@
 
     ProjectsService.prototype.bulkCreateMemberships = function(projectId, data, invitation_extra_text) {
       return this.rs.projects.bulkCreateMemberships(projectId, data, invitation_extra_text);
+    };
+
+    ProjectsService.prototype.createReviewerStuff = function(project) {
+      var promise, reviewerForm, setInvitedContacts, wikiLinkName;
+      wikiLinkName = this.translate.instant("ACST_PROJECTS.EXPERIENCE.WIKI.LINK_NAME");
+      reviewerForm = "### FORMULARIO DE REVISIÓN - EXPERIENCIA\n\n \n\n**1.Proyecto**\n\n| Campo | Enlace | Comentarios | Completado |\n| --- | --- | --- | --- |\n| Nombre Experiencia | | | |\n| Descripción | | | |\n| Objetivos | | | |\n| Lideres del proyecto | | | |\n| Duración | | | |\n\n1.1. Datos establecimiento\n\n| Campo | Enlace | Comentarios | Completado |\n| --- | --- | --- | --- |\n| Nombre | | | |\n| Tamaño | | | |\n| Tipo ubicación | | | |\n| Comuna | | | |\n\n**2\. Descripción de la experiencia**\n\n| Nivel actual de la descripción | Comentarios | Completado |\n| --- | --- | --- |\n\n* Niveles de descripción\n\n| N° | 1 | 2 | 3 | 4 |\n| --- | --- | --- | --- | --- |\n| Descripción | . La experiencia es simple y con poca profundidad, no se enfoca en el estudiante ni en es un proceso sistemático. | | | La práctica está centrada en el estudiante y se enfoca en el desarrollo de una de las habilidades del siglo XXI, en la descripción se explicita el porqué de la importancia del desarrollo de la misma y brevemente explica cómo se llega a la conclusión de la necesidad de la misma. |\n\n**3\. Actividades**\n\n| Actividad | Nivel de descripción | Nivel de resultados | Completado |\n| --- | --- | --- | --- |\n| 1 | | | |\n| 2 | | | |\n| 3 | | | |\n| 4 | | | |\n| 5 | | | |\n| 6 | | | |\n| 7 | | | |\n\n* Niveles de descripción de la actividad\n\n| Nivel | 1 | 2 | 3 | 4 |\n| --- | --- | --- | --- | --- |\n| Descripción | No se menciona cuál fue el proceso que llevó a la práctica o deja mucha información fuera, No menciona los participantes o involucra a muy pocos actores de la comunidad educativa. | | | Se describen con detalle cuáles fueron los pasos adecuados para lograr que una actividad se desarrollara adecuadamente, la práctica descrita informa cuáles fueron las personas involucradas en lograr que la experiencia tuviera éxito y cuales fueron sus roles.Manifiesta los problemas que surgieron y durante el desarrollo de la misma se aprendió de los errores. la práctica se centró en el estudiante y se incorporó en instrumentos de gestión institucional. |\n\n* Nivel de descripción de resultados\n\n| Nivel | 1 | 2 | 3 | 4 |\n| --- | --- | --- | --- | --- |\n| Descripción | | | | |";
+      setInvitedContacts = [];
+      project.get('roles').forEach(function(i) {
+        if (i.get('name') === 'Reviewer') {
+          return setInvitedContacts = [
+            {
+              'role_id': i.get('id'),
+              'username': 'reviewer@admin.com'
+            }
+          ];
+        }
+      });
+      this.rs.projects.bulkCreateMemberships(project.get('id'), setInvitedContacts, "");
+      promise = this.repo.create("wiki-links", {
+        project: project.get('id'),
+        title: wikiLinkName
+      });
+      return promise.then((function(_this) {
+        return function(data) {
+          var promiseWikiPage;
+          promiseWikiPage = _this.rs2.wiki.getBySlug(project.get('id'), data._attrs.href);
+          return promiseWikiPage.then(function(wikidata) {
+            wikidata.content = reviewerForm;
+            return _this.repo.save(wikidata);
+          });
+        };
+      })(this));
     };
 
     ProjectsService.prototype.getProjectBySlug = function(projectSlug) {
@@ -47535,6 +47791,12 @@
       this._projects = this._projects.set("unblocked", projects.filter(function(project) {
         return project.toJS().blocked_code === null;
       }));
+      this._projects = this._projects.set("visit", projects.filter(function(project) {
+        return project.toJS().creation_template === 3;
+      }));
+      this._projects = this._projects.set("establishments", projects.filter(function(project) {
+        return project.toJS().creation_template === 1;
+      }));
       this._projectsById = Immutable.fromJS(groupBy(projects.toJS(), function(p) {
         return p.id;
       }));
@@ -49306,6 +49568,142 @@
   };
 
   angular.module("taigaUtils").directive("tgIsolateClick", IsolateClickDirective);
+
+}).call(this);
+
+
+/*
+ * Accion STEM
+ */
+
+(function() {
+  var RelatedUserstoriesVisitCreateController, module;
+
+  module = angular.module('taigaVisits');
+
+  RelatedUserstoriesVisitCreateController = (function() {
+    RelatedUserstoriesVisitCreateController.$inject = ["tgCurrentUserService", "$tgResources", "lightboxService", "$rootScope", "tgKanbanUserstories"];
+
+    function RelatedUserstoriesVisitCreateController(currentUserService, rs, lightboxService, rootscope, kanbanUserstoriesService) {
+      this.currentUserService = currentUserService;
+      this.rs = rs;
+      this.lightboxService = lightboxService;
+      this.rootscope = rootscope;
+      this.kanbanUserstoriesService = kanbanUserstoriesService;
+      this.projects = null;
+      this.loadProjects();
+      this.newUsVisitForm = {
+        status_visit: this.status,
+        project_visit: this.projectvisit.id,
+        us_position: 'top',
+        objType: 'us',
+        swimlane: null
+      };
+      this.loading = false;
+    }
+
+    RelatedUserstoriesVisitCreateController.prototype.loadProjects = function() {
+      if (this.projects === null) {
+        return this.projects = this.currentUserService.projects.get("establishments");
+      }
+    };
+
+    RelatedUserstoriesVisitCreateController.prototype.addNewUsVisit = function() {
+      var selectedStatusVisit, statusVisitId;
+      this.loading = true;
+      statusVisitId = this.status;
+      selectedStatusVisit = _.find(this.projectvisit.us_statuses, function(item) {
+        return item.id === statusVisitId;
+      });
+      return this.rs.userstories.listValues(this.newUsVisitForm.project, "userstory-statuses").then((function(_this) {
+        return function(usStatusList) {
+          var selectedStatus, swimlane;
+          selectedStatus = _.find(usStatusList, function(item) {
+            return item.slug === selectedStatusVisit.slug;
+          });
+          _this.newUsVisitForm.statusId = selectedStatus.id;
+          _this.loading = false;
+          _this.lightboxService.closeAll();
+          swimlane = null;
+          return _this.rootscope.$broadcast("genericform:new", {
+            'objType': 'us',
+            'project': _this.newUsVisitForm.project,
+            'statusId': selectedStatus.id,
+            'swimlane': swimlane
+          });
+        };
+      })(this));
+    };
+
+    return RelatedUserstoriesVisitCreateController;
+
+  })();
+
+  module.controller("RelatedUserstoriesVisitCreateCtrl", RelatedUserstoriesVisitCreateController);
+
+}).call(this);
+
+
+/*
+ * Accion STEM
+ */
+
+(function() {
+  var RelatedUserstoriesVisitCreateDirective, debounceLeading, module;
+
+  module = angular.module('taigaVisits');
+
+  debounceLeading = this.taiga.debounceLeading;
+
+  RelatedUserstoriesVisitCreateDirective = function(lightboxService) {
+    var link;
+    this.lightboxService = lightboxService;
+    link = function(scope, el, attrs, ctrl) {};
+    return {
+      link: link,
+      templateUrl: "visit/related-userstories-visit-create/related-userstories-visit-create.html",
+      controller: "RelatedUserstoriesVisitCreateCtrl",
+      controllerAs: "vm",
+      bindToController: {
+        status: '=',
+        projectvisit: '='
+      },
+      scope: {}
+    };
+  };
+
+  RelatedUserstoriesVisitCreateDirective.$inject = ["lightboxService"];
+
+  module.directive("tgRelatedUserstoriesVisitCreate", RelatedUserstoriesVisitCreateDirective);
+
+}).call(this);
+
+
+/*
+ * Accion STEM
+ */
+
+(function() {
+  var VisitsService, taiga;
+
+  taiga = this.taiga;
+
+  VisitsService = (function() {
+    VisitsService.$inject = ['tgProjectService', 'tgAttachmentsService', 'tgResources', 'tgXhrErrorService', '$q'];
+
+    function VisitsService(projectService, attachmentsService, resources, xhrError, q) {
+      this.projectService = projectService;
+      this.attachmentsService = attachmentsService;
+      this.resources = resources;
+      this.xhrError = xhrError;
+      this.q = q;
+    }
+
+    return VisitsService;
+
+  })();
+
+  angular.module('taigaVisits').service('tgVisitsService', VisitsService);
 
 }).call(this);
 

@@ -1851,7 +1851,8 @@
         "ADDED_YOU_AS_MEMBER": "{{username}} te ha añadido como miembro",
         "MENTIONED_YOU": "{{username}} te mencionó en {{obj_name}}",
         "MENTIONED_YOU_IN_COMMENT": "{{username}} te mencionó en un comentario en {{obj_name}}",
-        "COMMENTED": "{{username}} ha comentado en {{obj_name}}"
+        "COMMENTED": "{{username}} ha comentado en {{obj_name}}",
+        "CHANGE_ON_WIKI":"{{username}} ha realizado un cambio en {{obj_name}} del proyecto {{project_name}}"
     },
     "LEGAL": {
         "TERMS_OF_SERVICE_AND_PRIVACY_POLICY_AD": "<span>Al crear una nueva cuenta, acepta </span><a href=\"{{ termsOfServiceUrl }}\" title=\"See terms of service\" target=\"_blank\">nuestras condiciones de servicio</a><span> y </span><a href=\"{{ privacyPolicyUrl }}\" title=\"See privacy policy\" target=\"_blank\">nuestra política de privacidad</a>."
@@ -2057,11 +2058,21 @@
                     "SET_FIELD_DESCRIPTION": "Escribe una descripción para la actividad",
                     "SET_FIELD_EXPECTED_OUTCOME": "Describe el resultado esperado de la actividad"
                 }
+            },
+            "WIKI":{
+                "LINK_NAME":"Formulario"
             }
         },
         "VISIT": {
             "NAME": "Nombre de la visita (Obligatorio)",
             "DESCRIPTION": "Descripción de las visitas (Obligatorio)"
+        },
+        "EVENTS":{
+            "FORM_HAS_BEEN_MODIFIED " : "{{username}} ha realizado cambios en el formulario"
+
         }
+    },
+    "MISC":{
+        
     }
 }
