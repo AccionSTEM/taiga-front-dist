@@ -170,6 +170,7 @@
         },
         "ASSIGNED_TO": {
             "NOT_ASSIGNED": "Sin asignar",
+            "UNASSIGNED": "No asignado",
             "ASSIGN": "Asignar",
             "DELETE_ASSIGNMENT": "Eliminar asignaciones",
             "REMOVE_ASSIGNED": "Eliminar asignación",
@@ -1435,8 +1436,8 @@
             "INCREMENT_CLIENT": "El número de puntos incrementados por requerimientos del cliente para el sprint \"{{sprintName}}\" es de {{value}}"
         },
         "TAGS": {
-            "TOGGLE": "Cambia la visibilidad de los tags",
-            "SHOW": "tags",
+            "TOGGLE": "Cambia la visibilidad de las etiquetas",
+            "SHOW": "etiquetas",
             "HIDE": "Ocultar etiquetas"
         },
         "FORECASTING": {

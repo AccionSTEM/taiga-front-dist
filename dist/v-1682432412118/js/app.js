@@ -1613,10 +1613,11 @@
       }
       return this.q.all([this.rs.userstories.filtersData(loadFilters), this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName)]).then((function(_this) {
         return function(result) {
-          var customFiltersRaw, data, dataCollection, j, len1, ref1, selected, tagsWithAtLeastOneElement;
+          var customFiltersRaw, data, dataCollection, j, len1, ref1, selected, tagsWithAtLeastOneElement, unassignedText;
           data = result[0];
           customFiltersRaw = result[1];
           dataCollection = {};
+          unassignedText = _this.translate.instant("COMMON.ASSIGNED_TO.UNASSIGNED");
           dataCollection.status = _.map(data.statuses, function(it) {
             it.id = it.id.toString();
             return it;
@@ -1634,7 +1635,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.full_name || "Unassigned";
+            it.name = it.full_name || unassignedText;
             return it;
           });
           dataCollection.assigned_to = _.map(data.assigned_to, function(it) {
@@ -1643,7 +1644,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.full_name || "Unassigned";
+            it.name = it.full_name || unassignedText;
             return it;
           });
           dataCollection.role = _.map(data.roles, function(it) {
@@ -1652,7 +1653,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.name || "Unassigned";
+            it.name = it.name || unassignedText;
             return it;
           });
           dataCollection.owner = _.map(data.owners, function(it) {
@@ -7939,7 +7940,9 @@
           $scope.obj.project = $scope.project;
           return $rs.userstories.listValues($scope.obj.project, "userstory-statuses").then((function(_this) {
             return function(usStatusList) {
-              $scope.statusList = usStatusList;
+              $scope.statusList = _.filter(usStatusList, function(item) {
+                return _.includes(item.slug, "visitas");
+              });
               $scope.selectedStatus = _.find($scope.statusList, function(item) {
                 return item.id === id;
               });
@@ -12054,10 +12057,11 @@
       }
       return this.q.all([this.rs.tasks.filtersData(loadFilters), this.filterRemoteStorageService.getFilters(this.scope.projectId, 'tasks-custom-filters')]).then((function(_this) {
         return function(result) {
-          var customFiltersRaw, data, dataCollection, j, len1, ref1, selected, tagsWithAtLeastOneElement;
+          var customFiltersRaw, data, dataCollection, j, len1, ref1, selected, tagsWithAtLeastOneElement, unassignedText;
           data = result[0];
           customFiltersRaw = result[1];
           dataCollection = {};
+          unassignedText = _this.translate.instant("COMMON.ASSIGNED_TO.UNASSIGNED");
           dataCollection.status = _.map(data.statuses, function(it) {
             it.id = it.id.toString();
             return it;
@@ -12075,7 +12079,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.full_name || "Unassigned";
+            it.name = it.full_name || unassignedText;
             return it;
           });
           dataCollection.role = _.map(data.roles, function(it) {
@@ -12084,7 +12088,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.name || "Unassigned";
+            it.name = it.name || unassignedText;
             return it;
           });
           dataCollection.owner = _.map(data.owners, function(it) {
@@ -17083,10 +17087,11 @@
       }
       return this.q.all([this.rs.issues.filtersData(loadFilters), this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix)]).then((function(_this) {
         return function(result) {
-          var customFiltersRaw, data, dataCollection, k, len1, ref1, selected, tagsWithAtLeastOneElement;
+          var customFiltersRaw, data, dataCollection, k, len1, ref1, selected, tagsWithAtLeastOneElement, unassignedText;
           data = result[0];
           customFiltersRaw = result[1];
           dataCollection = {};
+          unassignedText = _this.translate.instant("COMMON.ASSIGNED_TO.UNASSIGNED");
           dataCollection.status = _.map(data.statuses, function(it) {
             it.id = it.id.toString();
             return it;
@@ -17116,7 +17121,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.full_name || "Unassigned";
+            it.name = it.full_name || unassignedText;
             return it;
           });
           dataCollection.owner = _.map(data.owners, function(it) {
@@ -17130,7 +17135,7 @@
             } else {
               it.id = "null";
             }
-            it.name = it.name || "Unassigned";
+            it.name = it.name || unassignedText;
             return it;
           });
           _this.selectedFilters = [];
@@ -36961,17 +36966,7 @@
         return function(newProject) {
           var promiseUs, usCustomAttrsNew;
           usCustomAttrsNew = _this.projectsService.getCustomAttributes(newProject.get("userstory_custom_attributes")._tail.array);
-          newProject.get('roles').forEach(function(i) {
-            if (i.get('name') === 'Reviewer') {
-              return setInvitedContacts = [
-                {
-                  'role_id': i.get('id'),
-                  'username': 'reviewer@admin.com'
-                }
-              ];
-            }
-          });
-          _this.projectsService.bulkCreateMemberships(newProject.get('id'), setInvitedContacts, "");
+          _this.projectsService.createReviewerStuff(newProject);
           promiseUs = _this.rs.userstories.customBulkCreate(newProject.get('id'), newProject.get('default_us_status'), _this.activities);
           return promiseUs.then(function(data) {
             var bulk_tasks, promiseTasks, usIds;
@@ -39578,7 +39573,7 @@
       });
       return scope.newWindow = function(ps) {
         var url;
-        url = 'project/' + ps + '/kanban';
+        url = 'project/' + ps + '/timeline';
         window.open(url, '_blank');
         return true;
       };
@@ -42803,6 +42798,10 @@
         }
         this.projectForm.establishment_details.region = this.selectedRegion.region;
         this.projectForm.establishment_details.province = this.selectedProvince.name;
+        this.projectForm.establishment_details.name = this.projectForm.name;
+      }
+      if (!this.projectForm.establishment_details.delegated_administration) {
+        this.projectForm.establishment_details.delegated_administration = false;
       }
       if (this.type === 'kanban') {
         prettyDate = this.translate.instant("COMMON.PICKERDATE.FORMAT");
@@ -45421,7 +45420,7 @@
     ProjectController.$inject = ["$routeParams", "tgAppMetaService", "$tgAuth", "$translate", "tgProjectService", "$tgConfig", "$tgNavUrls", "$location"];
 
     function ProjectController(routeParams, appMetaService, auth, translate, projectService, config, navUrls, location) {
-      var nextUrl;
+      var creation_template_id, nextUrl;
       this.routeParams = routeParams;
       this.appMetaService = appMetaService;
       this.auth = auth;
@@ -45452,6 +45451,14 @@
       this.publicRegisterEnabled = this.config.get("publicRegisterEnabled");
       this.appMetaService.setfn(this._setMeta.bind(this));
       this.establishment_details = this.project.get("establishment_details");
+      creation_template_id = this.project.get("creation_template");
+      if (creation_template_id === 3) {
+        this.showEstablishmentDetails = false;
+      } else {
+        this.showEstablishmentDetails = true;
+      }
+      console.log("@.showEstablishmentDetails");
+      console.log(this.showEstablishmentDetails);
     }
 
     ProjectController.prototype._setMeta = function() {
