@@ -16960,6 +16960,22 @@ tg-custom-field-edit-wysiwyg {
   .discover-results div[tg-loading] img {
     display: block;
     margin: 0 auto; }
+  .discover-results .tag {
+    align-self: flex-end;
+    background: #fff;
+    border: solid;
+    border-color: #70728F;
+    border-width: thin;
+    color: #2E3440;
+    margin: 0 .25rem .25rem 0;
+    max-width: 100%;
+    padding: .2rem; }
+  .discover-results .tag-name {
+    text-transform: lowercase; }
+  .discover-results .tag-title {
+    font-size: .875rem;
+    color: #5A5B72;
+    margin-bottom: 0; }
 
 /**********************
 **** VERTICAL HEIGHT

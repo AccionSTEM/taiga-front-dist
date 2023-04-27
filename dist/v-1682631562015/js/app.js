@@ -36548,6 +36548,18 @@
         return {
           is_kanban_activated: true
         };
+      } else if (this.filter === 'goals') {
+        return {
+          only_goals: true
+        };
+      } else if (this.filter === 'context') {
+        return {
+          only_context: true
+        };
+      } else if (this.filter === 'roles') {
+        return {
+          only_roles: true
+        };
       }
       return {};
     };
@@ -42819,12 +42831,12 @@
       }
       if (this.errorList.length === 0) {
         this.formSubmitLoading = true;
+        this.objetivosSeleccionados();
+        this.rolesSeleccionados();
         return this.projectsService.create(this.projectForm).then((function(_this) {
           return function(project) {
             var promise;
             if (_this.type === 'kanban') {
-              _this.objetivosSeleccionados();
-              _this.rolesSeleccionados();
               _this.projectsService.createReviewerStuff(project);
               promise = _this.rs.userstories.customBulkCreate(project.get('id'), project.get('default_us_status'), _this.activities);
               promise.then(function(data) {

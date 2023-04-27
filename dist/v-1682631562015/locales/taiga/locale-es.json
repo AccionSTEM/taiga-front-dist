@@ -1941,7 +1941,7 @@
         "FEATURED": "Proyectos Destacados",
         "EMPTY": "No hay proyectos que mostrar para estos criterios de búsqueda.<br> ¡Inténtalo de nuevo!",
         "FILTERS": {
-            "ALL": "Todas",
+            "ALL": "Todos",
             "KANBAN": "Kanban",
             "SCRUM": "Scrum",
             "PEOPLE": "Buscando a gente",
@@ -1949,14 +1949,21 @@
             "MONTH": "Último mes",
             "YEAR": "Último año",
             "ALL_TIME": "Todos",
-            "CLEAR": "Borrar filtros"
+            "CLEAR": "Borrar filtros",
+            "GOALS": "Objetivos",
+            "CONTEXT_EE": "Contexto EE",
+            "ROLES": "Roles"
         },
         "SEARCH": {
             "PAGE_TITLE": "Buscar - Descubre proyectos",
             "PAGE_DESCRIPTION": "Directorio de búsqueda de Proyectos Públicos. Explora los backlogs, timelines, peticiones y equipos. Echa un vistazo a los proyectos que más  gustan o más activos. Filtrar por Kanban o Scrum.",
             "INPUT_PLACEHOLDER": "Escribe algo...",
             "ACTION_TITLE": "Buscar",
-            "RESULTS": "Resultados de búsqueda"
+            "RESULTS": "Resultados de búsqueda",
+            "TAGS": "Etiquetas: ",
+            "GOALS": "Objetivos: ",
+            "ROLES": "Roles: ",
+            "CONTEXT_EE": "Contexto EE: "
         }
     },
     "ZOOM": {
@@ -1990,7 +1997,7 @@
                 "SIZE1": "Menos de 100 estudiantes",
                 "SIZE2": "100-499 estudiantes",
                 "SIZE3": "500-999 estudiantes",
-                "SIZE4": "1000 o más"
+                "SIZE4": "1000 o más estudiantes"
             },
             "LOCATION_TYPE": {
                 "TITLE": "Tipo de ubicación",
