@@ -976,13 +976,13 @@
             "CHOOSE_TEMPLATE": "¿Que plantilla se ajusta mejor con tu proyecto?",
             "TEMPLATE_SCRUM": "Establecimiento Educacional",
             "TEMPLATE_SCRUM_DESC": "Agrega tu establecimiento educacional",
-            "TEMPLATE_SCRUM_LONGDESC": "Información del establecimiento educacional en el que trabajas, etc etc.",
+            "TEMPLATE_SCRUM_LONGDESC": "Organiza tus actividades por establecimiento educacional",
             "TEMPLATE_KANBAN": "Experiencia",
             "TEMPLATE_KANBAN_DESC": "Agrega tu experiencia",
-            "TEMPLATE_KANBAN_LONGDESC": "Información de tus experiencias etc etc.",
+            "TEMPLATE_KANBAN_LONGDESC": "Complete un formulario para cada innovación educativa implementada.",
             "TEMPLATE_VISIT": "Visitas",
             "TEMPLATE_VISIT_DESC": "Agrega tus visitas",
-            "TEMPLATE_VISIT_LONGDESC": "Visitas en establecimientos, etc etc",
+            "TEMPLATE_VISIT_LONGDESC": "Mantiene organizadas tus visitas en establecimientos",
             "DUPLICATE": "Duplicar proyecto",
             "DUPLICATE_DESC": "Empieza un nuevo proyecto manteniendo tu configuración",
             "IMPORT": "Importar proyecto",
@@ -1015,8 +1015,8 @@
         },
         "COMMON": {
             "DETAILS": "Nuevos detalles del proyecto",
-            "PROJECT_TITLE": "Nombre del proyecto (Obligatorio)",
-            "PROJECT_DESCRIPTION": "Descripción del proyecto (Obligatorio)"
+            "PROJECT_TITLE": "Nombre del proyecto",
+            "PROJECT_DESCRIPTION": "Descripción del proyecto"
         },
         "DUPLICATE": {
             "TITLE": "Duplicar Proyecto",
@@ -1929,17 +1929,17 @@
         }
     },
     "DISCOVER": {
-        "PAGE_TITLE": "Descubre proyectos",
+        "PAGE_TITLE": "Descubre innovaciones educativas",
         "PAGE_DESCRIPTION": "Directorio de búsqueda de Proyectos Públicos. Explora los backlogs, timelines, peticiones y equipos. Echa un vistazo a los proyectos que más gustan o más activos. Filtrar por Kanban o Scrum.",
-        "DISCOVER_TITLE": "Descubre proyectos",
-        "DISCOVER_SUBTITLE": "{projects, plural, =1{Un proyecto público por descubrir} other{# proyectos público por descubrir}}",
+        "DISCOVER_TITLE": "Descubre innovaciones educativas",
+        "DISCOVER_SUBTITLE": "{projects, plural, =1{Una innovación educativa pública por descubrir} other{# innovaciones educativas públicas por descubrir}}",
         "MOST_ACTIVE": "Más activos",
-        "MOST_ACTIVE_EMPTY": "No hay proyectos con actividad todavía",
+        "MOST_ACTIVE_EMPTY": "No hay innovaciones educativas con actividad todavía",
         "MOST_LIKED": "Favoritos",
-        "MOST_LIKED_EMPTY": "No hay proyectos marcados como FAVORITOS todavía.",
+        "MOST_LIKED_EMPTY": "No hay innovaciones educativas marcadas como FAVORITOS todavía.",
         "VIEW_MORE": "Ver más",
-        "FEATURED": "Proyectos Destacados",
-        "EMPTY": "No hay proyectos que mostrar para estos criterios de búsqueda.<br> ¡Inténtalo de nuevo!",
+        "FEATURED": "Innovaciones Educativas Destacadas",
+        "EMPTY": "No hay innovaciones educativas que mostrar para estos criterios de búsqueda.<br> ¡Inténtalo de nuevo!",
         "FILTERS": {
             "ALL": "Todos",
             "KANBAN": "Kanban",
@@ -1955,8 +1955,8 @@
             "ROLES": "Roles"
         },
         "SEARCH": {
-            "PAGE_TITLE": "Buscar - Descubre proyectos",
-            "PAGE_DESCRIPTION": "Directorio de búsqueda de Proyectos Públicos. Explora los backlogs, timelines, peticiones y equipos. Echa un vistazo a los proyectos que más  gustan o más activos. Filtrar por Kanban o Scrum.",
+            "PAGE_TITLE": "Buscar - Descubre innovaciones educativas",
+            "PAGE_DESCRIPTION": "Directorio de búsqueda de Innovaciones Educativas Públicas.",
             "INPUT_PLACEHOLDER": "Escribe algo...",
             "ACTION_TITLE": "Buscar",
             "RESULTS": "Resultados de búsqueda",
@@ -1989,20 +1989,21 @@
             }
         },
         "INSTITUTION": {
-            "NAME": "Nombre del establecimiento (Obligatorio)",
-            "DESCRIPTION": "Descripción del establecimiento (Obligatorio)",
+            "NAME": "Nombre del establecimiento",
+            "DESCRIPTION": "Descripción del establecimiento",
             "TITLE_DETAILS": "Detalles del establecimiento",
+            "RBD": "RBD (sin dígito verificador, provisorio si es el caso.)",
+            "TEAM": {
+                "TITLE": "Equipo Directivo",
+                "DIRECTOR": "Nombre Director",
+                "UTP": "Nombre Jefe UTP",
+                "INSPECTOR": "Nombre Inspector General"
+            },
             "SIZE": {
-                "TITLE": "Tamaño del establecimiento",
-                "SIZE1": "Menos de 100 estudiantes",
-                "SIZE2": "100-499 estudiantes",
-                "SIZE3": "500-999 estudiantes",
-                "SIZE4": "1000 o más estudiantes"
+                "TITLE": "Tamaño del establecimiento"
             },
             "LOCATION_TYPE": {
-                "TITLE": "Tipo de ubicación",
-                "RURAL": "Rural",
-                "URBAN": "Urbano"
+                "TITLE": "Tipo de ubicación"
             },
             "LOCATION": {
                 "TITLE_REGION": "Región",
@@ -2010,32 +2011,34 @@
                 "TITLE_COMMUNE": "Comuna"
             },
             "SOSTENEDOR": {
-                "TITLE": "Tipo de sostenedor",
-                "PARTICULAR": "Particular",
-                "PARTICULAR_SUB": "Particular subvencionado",
-                "MUNICIPAL": "Municipal"
+                "TITLE": "Tipo de sostenedor"
             },
             "DELEGATED_ADMINISTRATION": {
                 "TITLE": "Administración Delegada"
             },
             "VULNERABILITY_INDEX": {
-                "TITLE": "Indice de vulnerabilidad (%)",
+                "TITLE": "Índice de vulnerabilidad escolar (%)",
                 "DEFAULT": "Ej: 60"
+            },
+            "LEVEL": {
+                "TITLE": "Nivel de enseñanza"
             }
         },
         "EXPERIENCE": {
-            "NAME": "Nombre de la experiencia (Obligatorio)",
-            "DESCRIPTION": "Descripción de la experiencia (Obligatorio)",
-            "DESCRIPTION_TEXT": "Formato: En esta experiencia el EE trabajó en X durante X meses para lograr X. Para ello, se involucró a X colaboradores, se realizaron actividades como X, Y y Z obteniendo resultados en X.",
+            "NAME": "Nombre de la experiencia",
+            "DESCRIPTION_TITLE": "Descripción de la experiencia",
+            "DESCRIPTION_TEXT": "A través de las siguientes preguntas describa los principales aspectos de la experiencia.",
+            "DESCRIPTION": "Escriba una descripción general de la experiencia",
+            "DESCRIPTION_FORMAT": "Formato: En esta experiencia el EE trabajó en X durante X meses para lograr X. Para ello, se involucró a X colaboradores, se realizaron actividades como X, Y y Z obteniendo resultados en X.",
             "GOALS": {
                 "TITLE": "Objetivos de la experiencia",
-                "LIST": {
-                    "OBJ1": "Infraestructura",
-                    "OBJ2": "Salud",
-                    "OBJ3": "Tecnología",
-                    "OBJ4": "Innovación",
-                    "OBJ5": "Medio ambiente"
-                }
+                "DESCRIPTION": "Describa el propósito de la experiencia",
+                "SELECT_GOAL": "¿Qué objetivo representa mejor la experiencia?"
+            },
+            "QUESTIONS_DESCRIPTION": {
+                "QUESTION_1": "¿Cuál era la/s problemática/s que buscaba resolver?",
+                "QUESTION_2": "¿Cómo llegaron a esa solución o práctica?",
+                "QUESTION_3": "¿Cuál es el vínculo de la práctica con el PME?"
             },
             "DURATION": {
                 "TITLE": "Duración de la experiencia",
@@ -2045,18 +2048,11 @@
                 "PLACEHOLDER_DATE_END": "Final Estimado"
             },
             "ROLES": {
-                "TITLE": "Participantes",
-                "LIST": {
-                    "ROL1": "Director/a",
-                    "ROL2": "UTP",
-                    "ROL3": "Centro de padres y apoderados",
-                    "ROL4": "Docentes",
-                    "ROL5": "Profesional PIE",
-                    "ROL6": "Orientador/a"
-                }
+                "TITLE": "¿Quién o quiénes participaron en la planificación, implementación y/o evaluación de la iniciativa? (Marque todos los que correspondan)"
             },
             "KEY_ACTIVITIES": {
                 "TITLE": "Actividades claves",
+                "DESCRIPTION": "Describa paso a paso en qué consiste la experiencia desarrollada en su comunidad educativa.",
                 "FIELDS": {
                     "ASSIGNED": "Responsable",
                     "INVOLVED": "Involucrados",
@@ -2072,8 +2068,18 @@
             }
         },
         "VISIT": {
-            "NAME": "Nombre de la visita (Obligatorio)",
-            "DESCRIPTION": "Descripción de las visitas (Obligatorio)"
+            "NAME": "Nombre de la visita",
+            "DESCRIPTION": "Descripción de las visitas"
+        },
+        "PRESENTATION_EXPERIENCE": {
+            "SECTION": {
+                "TAGS": "Etiquetas",
+                "GOALS": "Objetivos",
+                "ROLES": "Roles",
+                "START_DATE": "Fecha inicio",
+                "END_DATE": "Fecha fin",
+                "PROBLEM": "Problemática:"
+            }
         },
         "EVENTS":{
             "FORM_HAS_BEEN_MODIFIED " : "{{username}} ha realizado cambios en el formulario"

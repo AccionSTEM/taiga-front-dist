@@ -10,7 +10,7 @@
 (function() {
   var loadApp, loadJS, loadPlugin, loadPlugins, loadStylesheet, mainLoad, promise;
 
-  window._version = "v-1682631562015";
+  window._version = "v-1683140534291";
 
   window.taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
@@ -36,6 +36,8 @@
     "contribPlugins": [],
     "baseHref": "/"
   };
+
+  window.taigaAccionStem = {};
 
   window.taigaContribPlugins = [];
 
@@ -119,13 +121,20 @@
   };
 
   mainLoad = function() {
-    var emojisPromise;
+    var accionStemPromise, emojisPromise;
     emojisPromise = fetch(window._version + "/emojis/emojis-data.json").then((function(_this) {
       return function(response) {
         return response.json();
       };
     })(this)).then(function(emojis) {
       return window.emojis = emojis;
+    });
+    accionStemPromise = fetch(window._version + "/accionstem/data.json").then((function(_this) {
+      return function(response) {
+        return response.json();
+      };
+    })(this)).then(function(data) {
+      return window.taigaAccionStem = Object.assign({}, window.taigaAccionStem, data);
     });
     if (window.taigaConfig.contribPlugins.length > 0) {
       return loadJS(window._version + "/js/libs.js").then((function(_this) {

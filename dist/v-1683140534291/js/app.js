@@ -24401,6 +24401,39 @@
 
 
 /*
+ * Acción STEM
+ */
+
+(function() {
+  var AccionStemService, module;
+
+  AccionStemService = (function() {
+    function AccionStemService() {
+      this.configAccionStem = window.taigaAccionStem;
+    }
+
+    AccionStemService.prototype.get = function(key, defaultValue) {
+      if (defaultValue == null) {
+        defaultValue = null;
+      }
+      if (_.has(this.configAccionStem, key)) {
+        return this.configAccionStem[key];
+      }
+      return defaultValue;
+    };
+
+    return AccionStemService;
+
+  })();
+
+  module = angular.module("taigaBase");
+
+  module.service("$tgAccionStem", AccionStemService);
+
+}).call(this);
+
+
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -42546,9 +42579,9 @@
   CreatetProjectFormController = (function() {
     var setInvitedContacts;
 
-    CreatetProjectFormController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo", "$tgResources"];
+    CreatetProjectFormController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo", "$tgResources", "$tgAccionStem"];
 
-    function CreatetProjectFormController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo, rs) {
+    function CreatetProjectFormController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo, rs, accionStem) {
       this.currentUserService = currentUserService;
       this.projectsService = projectsService;
       this.projectUrl = projectUrl;
@@ -42559,6 +42592,7 @@
       this.model = model;
       this.repo = repo;
       this.rs = rs;
+      this.accionStem = accionStem;
       this.errorList = [];
       this.projectForm = {
         is_private: true,
@@ -42612,95 +42646,15 @@
           ]
         }
       ];
-      this.rangos = [
-        {
-          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE1")
-        }, {
-          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE2")
-        }, {
-          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE3")
-        }, {
-          rango: this.translate.instant("ACST_PROJECTS.INSTITUTION.SIZE.SIZE4")
-        }
-      ];
-      this.ubicaciones = [
-        {
-          tipo: 'Rural'
-        }, {
-          tipo: 'Urbano'
-        }
-      ];
-      this.sostenedores = [
-        {
-          tipo: 'Particular'
-        }, {
-          tipo: 'Particular subvencionado'
-        }, {
-          tipo: 'Municipal'
-        }
-      ];
-      this.objetivos = [
-        {
-          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ1"),
-          seleccionado: false
-        }, {
-          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ2"),
-          seleccionado: false
-        }, {
-          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ3"),
-          seleccionado: false
-        }, {
-          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ4"),
-          seleccionado: false
-        }, {
-          objetivo: this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ5"),
-          seleccionado: false
-        }
-      ];
-      this.roles = [
-        {
-          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL1"),
-          seleccionado: false
-        }, {
-          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL2"),
-          seleccionado: false
-        }, {
-          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL3"),
-          seleccionado: false
-        }, {
-          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL4"),
-          seleccionado: false
-        }, {
-          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL5"),
-          seleccionado: false
-        }, {
-          rol: this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL6"),
-          seleccionado: false
-        }
-      ];
+      this.rangos = this.accionStem.configAccionStem.institution.size;
+      this.ubicaciones = this.accionStem.configAccionStem.institution.location_type;
+      this.sostenedores = this.accionStem.configAccionStem.institution.sostenedor;
+      this.levelOptions = this.accionStem.configAccionStem.institution.level;
+      this.objetivos = this.accionStem.configAccionStem.experience.goals;
+      this.roles = this.accionStem.configAccionStem.experience.roles;
       this.activities = [];
       this.activities_attributes = [];
-      this.rolesOptions = [
-        {
-          'id': '1',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL1")
-        }, {
-          'id': '2',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL2")
-        }, {
-          'id': '3',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL3")
-        }, {
-          'id': '4',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL4")
-        }, {
-          'id': '5',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL5")
-        }, {
-          'id': '6',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.ROLES.LIST.ROL6")
-        }
-      ];
+      this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
       this.canCreatePublicProjects = this.currentUserService.canCreatePublicProjects();
       this.canCreatePrivateProjects = this.currentUserService.canCreatePrivateProjects();
       if (!this.canCreatePublicProjects.valid && this.canCreatePrivateProjects.valid) {
@@ -42723,8 +42677,8 @@
       results = [];
       for (j = 0, len = ref.length; j < len; j++) {
         o = ref[j];
-        if (o.seleccionado) {
-          results.push(this.projectForm.objectives_list.push(o.objetivo));
+        if (o.selected) {
+          results.push(this.projectForm.objectives_list.push(o.name));
         } else {
           results.push(void 0);
         }
@@ -42738,8 +42692,8 @@
       results = [];
       for (j = 0, len = ref.length; j < len; j++) {
         r = ref[j];
-        if (r.seleccionado) {
-          results.push(this.projectForm.related_roles.push(r.rol));
+        if (r.selected) {
+          results.push(this.projectForm.related_roles.push(r.name));
         } else {
           results.push(void 0);
         }
@@ -45469,8 +45423,6 @@
       } else {
         this.showEstablishmentDetails = true;
       }
-      console.log("@.showEstablishmentDetails");
-      console.log(this.showEstablishmentDetails);
     }
 
     ProjectController.prototype._setMeta = function() {
@@ -45553,7 +45505,14 @@
           ];
         }
       });
-      this.rs.projects.bulkCreateMemberships(project.get('id'), setInvitedContacts, "");
+      this.rs.projects.bulkCreateMemberships(project.get('id'), setInvitedContacts, "").then((function(_this) {
+        return function(data) {
+          return _this.rs2.memberships.get(data.data[0].id).then(function(member) {
+            member.is_admin = true;
+            return _this.repo.save(member);
+          });
+        };
+      })(this));
       promise = this.repo.create("wiki-links", {
         project: project.get('id'),
         title: wikiLinkName
