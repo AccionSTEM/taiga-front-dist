@@ -15651,6 +15651,7 @@
       this.attachmentsFullService = attachmentsFullService;
       this.lightboxFactory = lightboxFactory;
       bindMethods(this);
+      this.showPublishButtonBool = false;
       this.scope.epicRef = this.params.epicref;
       this.scope.sectionName = this.translate.instant("EPIC.SECTION_NAME");
       this.scope.attachmentsReady = false;
@@ -15663,6 +15664,16 @@
       promise = this.loadInitialData();
       promise.then((function(_this) {
         return function() {
+          var i, item, len, ref;
+          if (_this.scope.userstories.size) {
+            ref = _this.scope.userstories._tail.array;
+            for (i = 0, len = ref.length; i < len; i++) {
+              item = ref[i];
+              if (item.get('tasks').size) {
+                _this.showPublishButtonBool = true;
+              }
+            }
+          }
           _this._setMeta();
           return _this.initializeOnDeleteGoToUrl();
         };
@@ -36943,9 +36954,9 @@
   taiga = this.taiga;
 
   CreateExperienceController = (function() {
-    CreateExperienceController.$inject = ["$tgResources", "tgResources", "$q", "$tgConfirm", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "tgProjectsService", "lightboxService", "$translate"];
+    CreateExperienceController.$inject = ["$tgResources", "tgResources", "$q", "$tgConfirm", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "tgProjectsService", "lightboxService", "$translate", "$tgAccionStem"];
 
-    function CreateExperienceController(rs, rs2, q, confirm, location, navUrls, currentUserService, projectsService, lightboxService, translate) {
+    function CreateExperienceController(rs, rs2, q, confirm, location, navUrls, currentUserService, projectsService, lightboxService, translate, accionStem) {
       var latestModifiedDate, modifiedDates;
       this.rs = rs;
       this.rs2 = rs2;
@@ -36957,6 +36968,7 @@
       this.projectsService = projectsService;
       this.lightboxService = lightboxService;
       this.translate = translate;
+      this.accionStem = accionStem;
       this.usCustomAttrs = this.projectsService.getCustomAttributes(this.project.userstory_custom_attributes);
       this.usCustomAttrValues = this.getCustomAttributesValues();
       this.tagsEpic = this.getTagsEpic();
@@ -36965,24 +36977,7 @@
         return moment(elem.get("modified_date")).valueOf();
       });
       latestModifiedDate = moment(Math.max.apply(null, modifiedDates._tail.array)).format('YYYY-MM-DDTHH:mm');
-      this.goalsOptions = [
-        {
-          'id': '1',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ1")
-        }, {
-          'id': '2',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ2")
-        }, {
-          'id': '3',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ3")
-        }, {
-          'id': '4',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ4")
-        }, {
-          'id': '5',
-          'name': this.translate.instant("ACST_PROJECTS.EXPERIENCE.GOALS.LIST.OBJ5")
-        }
-      ];
+      this.goalsOptions = this.accionStem.configAccionStem.experience.goals;
       this.newProjectForm = {
         name: this.epic.subject,
         description: this.epic.description,

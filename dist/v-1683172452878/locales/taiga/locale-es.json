@@ -1144,8 +1144,8 @@
         },
         "DELETE_PROJECT": {
             "TITLE": "Borrar proyecto",
-            "QUESTION": "¿Esta seguro que decea eliminar este proyecto?",
-            "SUBTITLE": "Todos los datos del proyecto (actividades, tareas, peticiones, sprints y páginas de apuntes) se perderán :-(",
+            "QUESTION": "¿Esta seguro que desea eliminar este proyecto?",
+            "SUBTITLE": "Todos los datos del proyecto (actividades, tareas, peticiones y páginas de apuntes) se perderán :-(",
             "CONFIRM": "Si, Estoy realmente seguro"
         },
         "ASSIGNED_TO": {
@@ -1582,14 +1582,14 @@
         "SUBTITLE": "̀¡Un click más y tu email se actualizará!",
         "PLACEHOLDER_INPUT_TOKEN": "token de cambio de email",
         "ACTION_CHANGE_EMAIL": "Cambiar email",
-        "SUCCESS": "Your email address has been successfully changed"
+        "SUCCESS": "Tu correo electrónico ha sido cambiado con éxito."
     },
     "VERIFY_EMAIL_FORM": {
         "TITLE": "Verifica tu correo electrónico",
         "SUBTITLE": "¡Un clic más y habrás verificado tu correo electrónico!",
         "PLACEHOLDER_INPUT_TOKEN": "token de cambio de email",
         "ACTION_VERIFY_EMAIL": "Verificar correo electrónico",
-        "SUCCESS": "Congratulations!!, your email address has been verified"
+        "SUCCESS": "¡Felicidades! Su correo electrónico ha sido verificado."
     },
     "ISSUES": {
         "PAGE_TITLE": "Peticiones - {{projectName}}",
