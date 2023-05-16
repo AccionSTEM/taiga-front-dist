@@ -43566,21 +43566,21 @@
       this.levelOptions = this.accionStem.configAccionStem.institution.level;
       this.objetivos = this.accionStem.configAccionStem.experience.goals;
       this.roles = this.accionStem.configAccionStem.experience.roles;
+      this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
       this.activities = [];
       this.activities_attributes = [];
-      this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
       this.linkVideoPresentation = null;
       this.estimated_start = null;
       this.estimated_end = null;
     }
 
     ExperienceProjectController.prototype.objetivosSeleccionados = function() {
-      var goal, i, len, ref, results;
+      var goal, j, len, ref, results;
       this.projectForm.objectives_list = [];
       ref = this.objetivos;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        goal = ref[i];
+      for (j = 0, len = ref.length; j < len; j++) {
+        goal = ref[j];
         if (goal.selected) {
           results.push(this.projectForm.objectives_list.push(goal.name));
         } else {
@@ -43591,12 +43591,12 @@
     };
 
     ExperienceProjectController.prototype.rolesSeleccionados = function() {
-      var i, len, ref, results, rol;
+      var j, len, ref, results, rol;
       this.projectForm.related_roles = [];
       ref = this.roles;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        rol = ref[i];
+      for (j = 0, len = ref.length; j < len; j++) {
+        rol = ref[j];
         if (rol.selected) {
           results.push(this.projectForm.related_roles.push(rol.name));
         } else {
@@ -43606,25 +43606,22 @@
       return results;
     };
 
-    ExperienceProjectController.prototype.obtenerIdYoutube = function(enlace) {
 
-      /*
-      Esta función recibe un enlace de YouTube y devuelve el identificador del video.
-      Si el enlace no es válido, devuelve null.
-       */
+    /*
+    Esta función recibe un enlace de YouTube y devuelve el identificador del video.
+    Si el enlace no es válido, devuelve null.
+     */
+
+    ExperienceProjectController.prototype.obtenerIdYoutube = function(enlace) {
       var query_params;
-      console.log("enlace: ", enlace);
       if (enlace.startsWith("https://youtu.be/")) {
-        console.log("enlace.split(/).at(-1): ", enlace.split("/").at(-1));
         return enlace.split("/").at(-1);
       } else if (enlace.startsWith("https://www.youtube.com/watch?")) {
         query_params = new URL(enlace).searchParams;
         if (query_params.has("v")) {
-          console.log("query_params.get(v): ", query_params.get("v"));
           return query_params.get("v");
         }
       } else if (enlace.startsWith("https://www.youtube.com/watch?v=")) {
-        console.log("enlace.split(=).at(-1): ", enlace.split("/").at(-1));
         return enlace.split("=").at(-1);
       } else {
         return null;
@@ -43633,24 +43630,55 @@
 
     ExperienceProjectController.prototype.submit = function() {
       this.validateForm();
-      console.log("@.errorList", this.errorList);
       if (this.errorList.length === 0) {
         this.projectForm.start_date = moment(this.estimated_start).format("YYYY-MM-DDThh:mm");
         this.projectForm.end_date = moment(this.estimated_end).format("YYYY-MM-DDThh:mm");
-        console.log("@.projectForm: ", this.projectForm);
         return this.projectsService.create(this.projectForm).then((function(_this) {
           return function(project) {
+            var promise;
             if (_this.imageAttachment) {
               _this.rs.projects.changeImagePresentation(project.get('id'), _this.imageAttachment);
             }
-            return console.log("project", project);
+            _this.projectsService.createReviewerStuff(project);
+            promise = _this.rs.userstories.customBulkCreate(project.get('id'), project.get('default_us_status'), _this.activities);
+            return promise.then(function(data) {
+              var attributes_values, new_promise, us_ids, userstory_custom_attributes;
+              us_ids = data._attrs.map(function(item) {
+                return item.id;
+              });
+              userstory_custom_attributes = _this.projectsService.getCustomAttributes(project.get("userstory_custom_attributes")._tail.array);
+              attributes_values = _this.activities_attributes.map(function(value) {
+                var result;
+                result = {};
+                userstory_custom_attributes.forEach(function(attribute) {
+                  var key, name;
+                  key = attribute.id;
+                  name = attribute.name.toLowerCase();
+                  if (name === "involucrados") {
+                    return result[key] = value[name].join(", ");
+                  } else {
+                    return result[key] = value[name];
+                  }
+                });
+                return result;
+              });
+              new_promise = _this.rs.customAttributesValues.customBulkCreate(us_ids, attributes_values);
+              return new_promise.then(function(data) {
+                _this.analytics.trackEvent("project", "create", "project creation", {
+                  slug: project.get('slug'),
+                  id: project.get('id')
+                });
+                _this.location.url(_this.projectUrl.get(project));
+                return _this.currentUserService.loadProjects();
+              });
+            });
           };
         })(this));
       }
     };
 
     ExperienceProjectController.prototype.validateForm = function() {
-      var idVideo;
+      var date, i, idVideo, j, k, ref, ref1;
       this.errorList = [];
       this.objetivosSeleccionados();
       this.rolesSeleccionados();
@@ -43671,10 +43699,8 @@
       }
       if (this.linkVideoPresentation) {
         idVideo = this.obtenerIdYoutube(this.linkVideoPresentation);
-        console.log("idVideo: ", idVideo);
         if (idVideo) {
           this.projectForm.video_presentation = "https://www.youtube.com/embed/" + idVideo;
-          console.log("@.projectForm.video_presentation", this.projectForm.video_presentation);
         } else {
           this.errorList.push('format_video');
         }
@@ -43691,6 +43717,17 @@
       }
       if (!this.estimated_end) {
         this.errorList.push('end_date');
+      }
+      if (this.activities.length) {
+        for (i = j = 0, ref = this.activities.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+          this.activities[i].tags = [];
+        }
+        for (i = k = 0, ref1 = this.activities_attributes.length - 1; 0 <= ref1 ? k <= ref1 : k >= ref1; i = 0 <= ref1 ? ++k : --k) {
+          date = $('#date' + i).val();
+          this.activities_attributes[i].fecha = moment(date).format("YYYY-MM-DD");
+        }
+      } else {
+        this.errorList.push('activities');
       }
       this.projectForm.establishment_details.region = this.selectedRegion.region;
       this.projectForm.establishment_details.province = this.selectedProvince.name;
@@ -43773,12 +43810,9 @@
         return $el.find(".size-info").addClass("active");
       };
       $el.on("click", ".js-change-image", function() {
-        console.log("click image");
         return $el.find("#image-field").click();
       });
       $el.on("change", "#image-field", function(event) {
-        console.log("change image");
-        console.log("$scope.vm.imageAttachment", $scope.vm.imageAttachment);
         if ($scope.vm.imageAttachment) {
           return $el.find('#image-field-name').html($scope.vm.imageAttachment.name);
         } else {
@@ -43786,7 +43820,6 @@
         }
       });
       return $scope.$on("$destroy", function() {
-        console.log("destroy image");
         return $el.off();
       });
     };
@@ -43822,12 +43855,10 @@
       return scope.$watch('project', function(project) {
         var experienceImage;
         project = Immutable.fromJS(project);
-        console.log("project", project);
         if (!project) {
           return;
         }
         experienceImage = project.get('image_presentation');
-        console.log("experienceImage", experienceImage);
         if (experienceImage) {
           el.attr('src', experienceImage);
           return el.css('background', "");

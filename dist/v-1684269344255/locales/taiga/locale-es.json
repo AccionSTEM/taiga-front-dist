@@ -1986,7 +1986,8 @@
             "SUBTITLE_LOGIN": "Ama tu Innovación Educativa",
             "FORM_ERRORS": {
                 "FORMAT_YOUTUBE_VIDEO": "Formato de video no válido",
-                "FORMAT_IMAGE": "Formato de imagen no válido"
+                "FORMAT_IMAGE": "Formato de imagen no válido",
+                "ACTIVITIES": "Agregue por lo menos una actividad con todos sus campos."
             }
         },
         "INICIATIVE": {

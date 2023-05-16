@@ -12292,6 +12292,14 @@ tg-project-menu {
   margin-bottom: 1rem;
   text-align: justify; }
 
+.single-project .image-presentation {
+  padding-bottom: .625rem;
+  text-align: center; }
+
+.single-project .video-presentation {
+  padding-bottom: .625rem;
+  text-align: center; }
+
 /**********************
 **** VERTICAL HEIGHT
 ***********************/
