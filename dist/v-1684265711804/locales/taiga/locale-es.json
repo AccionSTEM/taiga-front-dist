@@ -980,6 +980,9 @@
             "TEMPLATE_KANBAN": "Experiencia",
             "TEMPLATE_KANBAN_DESC": "Agrega tu experiencia",
             "TEMPLATE_KANBAN_LONGDESC": "Complete un formulario para cada innovación educativa implementada.",
+            "TEMPLATE_EXPERIENCE": "Experiencia",
+            "TEMPLATE_EXPERIENCE_DESC": "Agrega tu experiencia",
+            "TEMPLATE_EXPERIENCE_LONGDESC": "Complete un formulario para cada innovación educativa implementada.",
             "TEMPLATE_VISIT": "Visitas",
             "TEMPLATE_VISIT_DESC": "Agrega tus visitas",
             "TEMPLATE_VISIT_LONGDESC": "Mantiene organizadas tus visitas en establecimientos",
@@ -1853,7 +1856,8 @@
         "MENTIONED_YOU": "{{username}} te mencionó en {{obj_name}}",
         "MENTIONED_YOU_IN_COMMENT": "{{username}} te mencionó en un comentario en {{obj_name}}",
         "COMMENTED": "{{username}} ha comentado en {{obj_name}}",
-        "CHANGE_ON_WIKI":"{{username}} ha realizado un cambio en {{obj_name}} del proyecto {{project_name}}"
+        "CHANGE_ON_WIKI":"{{username}} ha realizado un cambio en {{obj_name}} del proyecto {{project_name}}",
+        "PROJECT_RECOMMENDATION":"{{username}} te ha recomendado el proyecto {{project_name}}"
     },
     "LEGAL": {
         "TERMS_OF_SERVICE_AND_PRIVACY_POLICY_AD": "<span>Al crear una nueva cuenta, acepta </span><a href=\"{{ termsOfServiceUrl }}\" title=\"See terms of service\" target=\"_blank\">nuestras condiciones de servicio</a><span> y </span><a href=\"{{ privacyPolicyUrl }}\" title=\"See privacy policy\" target=\"_blank\">nuestra política de privacidad</a>."
@@ -1979,7 +1983,11 @@
             "DESCRIPTION": "Descripción",
             "SELECT_DEFAULT_OPTION": "Seleccione",
             "TITLE_LOGIN": "Acción STEM",
-            "SUBTITLE_LOGIN": "Ama tu Innovación Educativa"
+            "SUBTITLE_LOGIN": "Ama tu Innovación Educativa",
+            "FORM_ERRORS": {
+                "FORMAT_YOUTUBE_VIDEO": "Formato de video no válido",
+                "FORMAT_IMAGE": "Formato de imagen no válido"
+            }
         },
         "INICIATIVE": {
             "DETAIL": {
@@ -2025,6 +2033,10 @@
             }
         },
         "EXPERIENCE": {
+            "CREATE": {
+                "TITLE": "Experiencia",
+                "DESCRIPTION": "Agrega tu experiencia"
+            },
             "NAME": "Nombre de la experiencia",
             "DESCRIPTION_TITLE": "Descripción de la experiencia",
             "DESCRIPTION_TEXT": "A través de las siguientes preguntas describa los principales aspectos de la experiencia.",
@@ -2036,7 +2048,7 @@
                 "SELECT_GOAL": "¿Qué objetivo representa mejor la experiencia?"
             },
             "QUESTIONS_DESCRIPTION": {
-                "QUESTION_1": "¿Cuál era la/s problemática/s que buscaba resolver?",
+                "PROBLEM": "¿Cuál era la/s problemática/s que buscaba resolver?",
                 "QUESTION_2": "¿Cómo llegaron a esa solución o práctica?",
                 "QUESTION_3": "¿Cuál es el vínculo de la práctica con el PME?"
             },
@@ -2065,6 +2077,13 @@
             },
             "WIKI":{
                 "LINK_NAME":"Formulario"
+            },
+            "VIDEO": {
+                "TITLE": "Enlace de video de YouTube"
+            },
+            "IMAGE": {
+                "TITLE": "Imagen destacada",
+                "SELECT": "Seleccionar archivo"
             }
         },
         "VISIT": {
@@ -2083,8 +2102,22 @@
         },
         "EVENTS":{
             "FORM_HAS_BEEN_MODIFIED " : "{{username}} ha realizado cambios en el formulario"
-
-        }
+        },
+        "RECOMMEND_BUTTON":{
+            "BUTTON_TITLE":"Recomendar",
+            "LIGHTBOX_TITLE":"Seleccione los usuarios a los que desea recomendar este proyecto",
+            "RECOMMEND_DESC":"Recomiende este proyecto a otros usuarios",
+            "RECOMMEND_NOTIFICATION_TITLE":"¡Todo Ok!",
+            "RECOMMEND_NOTIFICATION_MESSAGE":"Recomendación enviada",
+            "RECOMMEND_BUTTON_TEXT": "Recomendar",
+            "COUNTER_TITLE": "{total, plural, =1{una recomendación} other{# recomendaciones}}"
+        },
+        "USER_PROFILE":{
+            "RECOMMENDATION_TAB": "Recomendaciones",
+            "RECOMMENDATION_TAB_TITLE": "Lista todos los projectos que se han recomendado a este usuario",
+            "RECOMMENDATION_EMPTY":"Aún no te han recomendado proyectos",
+            "RECOMMENDATION_FROM_USER":" te ha recomendado el proyecto: "
+        } 
     },
     "MISC":{
         

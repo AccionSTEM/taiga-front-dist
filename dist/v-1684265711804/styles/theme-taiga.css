@@ -5486,6 +5486,30 @@ textarea {
     color: #fff;
     line-height: 1.2; }
 
+.notification-message-recommended {
+  background: rgba(92, 186, 169, 0.95);
+  box-shadow: 0 25px 10px -15px rgba(0, 0, 0, 0.05);
+  right: -370px;
+  top: 2%;
+  transition: opacity .2s ease-in;
+  width: 370px; }
+  .notification-message-recommended.active {
+    animation: animSlide 2000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    opacity: 1; }
+  .notification-message-recommended.inactive {
+    animation: animSlideOut .5s;
+    opacity: 0;
+    transform: none; }
+  .notification-message-recommended p {
+    margin: 0; }
+  .notification-message-recommended .warning {
+    font-size: 1.1rem;
+    font-family: 'Ubuntu-Medium', Arial, Helvetica, sans-serif;
+    color: #fff;
+    line-height: 1.2; }
+
 @keyframes animSlide {
   0% {
     transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -12254,6 +12278,19 @@ tg-project-menu {
     padding: .1rem;
     position: absolute;
     right: 5%; }
+
+.single-project .presentation {
+  flex: 1;
+  flex-shrink: 3;
+  margin-right: 2rem;
+  max-width: 960px;
+  width: 0; }
+
+.single-project .text-description {
+  font-family: 'Ubuntu-Regular', Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: justify; }
 
 /**********************
 **** VERTICAL HEIGHT
@@ -19244,12 +19281,73 @@ tg-related-userstory-row {
 **** VERTICAL HEIGHT
 ***********************/
 /* Do not use this except for the main layout */
+.profile-recommendations .activity-item {
+  padding: 1rem .5rem 1rem 0;
+  position: relative; }
+  .profile-recommendations .activity-item p {
+    margin-bottom: 0;
+    word-break: break-word; }
+  .profile-recommendations .activity-item a:first-child,
+  .profile-recommendations .activity-item .username:first-child {
+    font-family: 'Ubuntu-Medium', Arial, Helvetica, sans-serif;
+    color: #5A5B72; }
+  .profile-recommendations .activity-item span {
+    color: #5A5B72; }
+  .profile-recommendations .activity-item blockquote {
+    line-height: 1.4rem;
+    margin-bottom: 0;
+    margin-left: calc(35px + 1rem);
+    margin-top: .5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: pre-line; }
+    .profile-recommendations .activity-item blockquote a {
+      display: flex; }
+  .profile-recommendations .activity-item img {
+    max-height: 640px;
+    max-width: 640px; }
+  .profile-recommendations .activity-item .activity-info {
+    align-items: center;
+    color: #70728F;
+    display: flex;
+    margin-right: 130px; }
+
+.profile-recommendations .tag {
+  align-self: flex-end;
+  background: #fff;
+  border: solid;
+  border-color: #70728F;
+  border-width: thin;
+  color: #2E3440;
+  margin: 0 .25rem .25rem 0;
+  max-width: 100%;
+  padding: .2rem; }
+
+.profile-recommendations .tag-name {
+  text-transform: lowercase; }
+
+.profile-recommendations .tag-title {
+  font-size: .875rem;
+  color: #5A5B72;
+  margin-bottom: 0; }
+
+.profile-recommendations .text-description {
+  color: #5A5B72;
+  text-align: justify; }
+
+.profile-recommendations .list-itemtype-project .list-itemtype-track {
+  padding: 1rem .5rem 1rem 0; }
+
+/**********************
+**** VERTICAL HEIGHT
+***********************/
+/* Do not use this except for the main layout */
 .profile {
   display: flex;
   min-height: calc(100vh - 48px);
   padding: 2rem 0; }
   .profile .profile-bar {
-    margin-right: 1rem;
+    margin-right: 2rem;
     width: 200px; }
   .profile .main {
     display: flex;
@@ -19397,7 +19495,7 @@ tg-related-userstory-row {
   border-top: 1px solid #E2E3E9;
   color: #5A5B72;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 1.25rem;
   padding: 1rem .5rem; }
   .profile-bar .profile-stats .stat {
@@ -19457,6 +19555,27 @@ tg-related-userstory-row {
     margin-right: .5rem;
     stroke: #434456;
     transition: fill .2s linear; }
+
+/**********************
+**** VERTICAL HEIGHT
+***********************/
+/* Do not use this except for the main layout */
+.profile-recommendations {
+  border-top: 1px solid;
+  display: flex;
+  flex-direction: column; }
+  .profile-recommendations .objectives-list {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1px; }
+    .profile-recommendations .objectives-list .recommended-by {
+      align-items: bottom;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 1px; }
+      .profile-recommendations .objectives-list .recommended-by .userby {
+        font-size: .875rem; }
 
 /**********************
 **** VERTICAL HEIGHT
@@ -20451,6 +20570,24 @@ tg-related-userstory-row {
 /* Do not use this except for the main layout */
 .duplicate-project-reference {
   margin-bottom: 2rem; }
+
+/**********************
+**** VERTICAL HEIGHT
+***********************/
+/* Do not use this except for the main layout */
+.establishment-data {
+  display: flex;
+  flex-wrap: wrap; }
+
+.middle {
+  box-sizing: border-box; }
+
+.left {
+  flex-basis: 50%;
+  padding-right: 10px; }
+
+.right {
+  flex-basis: 50%; }
 
 /**********************
 **** VERTICAL HEIGHT

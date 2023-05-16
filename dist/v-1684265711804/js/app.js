@@ -46,7 +46,7 @@
     };
   })(this);
 
-  configure = function($routeProvider, $locationProvider, $httpProvider, $provide, $tgEventsProvider, $compileProvider, $translateProvider, $translatePartialLoaderProvider, $animateProvider, $logProvider) {
+  configure = function($routeProvider, $locationProvider, $httpProvider, $provide, $tgEventsProvider, $compileProvider, $translateProvider, $translatePartialLoaderProvider, $animateProvider, $logProvider, $sceDelegateProvider) {
     var authHttpIntercept, blockingIntercept, decorators, defaultHeaders, loaderIntercept, originalWhen, preferedLangCode, userInfo, versionCheckHttpIntercept;
     $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/);
     originalWhen = $routeProvider.when;
@@ -141,6 +141,11 @@
     $routeProvider.when("/project/new/duplicate", {
       title: "PROJECT.CREATE.TITLE",
       template: "<tg-duplicate-project></tg-duplicate-project>",
+      loader: true
+    });
+    $routeProvider.when("/project/new/experience", {
+      title: "PROJECT.CREATE.TITLE",
+      template: "<tg-experience-project></tg-experience-project>",
       loader: true
     });
     $routeProvider.when("/project/new/import/:platform?", {
@@ -644,8 +649,9 @@
     });
     $logProvider.debugEnabled(window.taigaConfig.debug);
     if (window.taigaConfig.debug) {
-      return console.info("Debug mode is enable");
+      console.info("Debug mode is enable");
     }
+    return $sceDelegateProvider.resourceUrlWhitelist(['self', "https://www.youtube.com/embed/**"]);
   };
 
   i18nInit = function(lang, $translate) {
@@ -805,7 +811,7 @@
 
   module = angular.module("taiga", modules);
 
-  module.config(["$routeProvider", "$locationProvider", "$httpProvider", "$provide", "$tgEventsProvider", "$compileProvider", "$translateProvider", "$translatePartialLoaderProvider", "$animateProvider", "$logProvider", configure]);
+  module.config(["$routeProvider", "$locationProvider", "$httpProvider", "$provide", "$tgEventsProvider", "$compileProvider", "$translateProvider", "$translatePartialLoaderProvider", "$animateProvider", "$logProvider", "$sceDelegateProvider", configure]);
 
   module.run(["$log", "$rootScope", "$tgAuth", "$tgEvents", "$tgAnalytics", "$tgTagManager", "$tgUserPilot", "$translate", "$tgLocation", "$tgNavUrls", "tgAppMetaService", "tgLoader", "tgNavigationBarService", "tgErrorHandlingService", "lightboxService", "$tgConfig", "tgProjectService", init]);
 
@@ -2666,6 +2672,7 @@
     "create-project-kanban": "/project/new/kanban",
     "create-project-visit": "/project/new/visit",
     "create-project-duplicate": "/project/new/duplicate",
+    "create-project-experience": "/project/new/experience",
     "create-project-import": "/project/new/import",
     "create-project-import-platform": "/project/new/import/:platform",
     "profile": "/profile",
@@ -4190,6 +4197,7 @@
     "users-export": "/users/export",
     "user-stats": "/users/%s/stats",
     "user-liked": "/users/%s/liked",
+    "user-recommendations": "/projects/%s/get_recommendations",
     "user-voted": "/users/%s/voted",
     "user-watched": "/users/%s/watched",
     "user-contacts": "/users/%s/contacts",
@@ -4210,6 +4218,8 @@
     "project-modules": "/projects/%s/modules",
     "bulk-update-projects-order": "/projects/bulk_update_order",
     "project-like": "/projects/%s/like",
+    "project-recommend": "/projects/%s/recommend",
+    "project-getallusers": "/projects/%s/all_users",
     "project-unlike": "/projects/%s/unlike",
     "project-watch": "/projects/%s/watch",
     "project-unwatch": "/projects/%s/unwatch",
@@ -5647,6 +5657,10 @@
     "light-error": {
       title: "NOTIFICATION.WARNING",
       message: "NOTIFICATION.WARNING_TEXT"
+    },
+    "recommended": {
+      title: "ACST_PROJECTS.RECOMMEND_BUTTON.RECOMMEND_NOTIFICATION_TITLE",
+      message: "ACST_PROJECTS.RECOMMEND_BUTTON.RECOMMEND_NOTIFICATION_MESSAGE"
     }
   };
 
@@ -26953,6 +26967,31 @@
       url = ($urls.resolve("projects")) + "/" + projectId + "/remove_logo";
       return $http.post(url);
     };
+    service.changeImagePresentation = function(projectId, file) {
+      var data, defered, maxFileSize, options, response, url;
+      maxFileSize = $config.get("maxUploadFileSize", null);
+      if (maxFileSize && file.size > maxFileSize) {
+        response = {
+          status: 413,
+          data: {
+            _error_message: "'" + file.name + "' (" + (sizeFormat(file.size)) + ") is too heavy for our oompa loompas, try it with a smaller than (" + (sizeFormat(maxFileSize)) + ")"
+          }
+        };
+        defered = $q.defer();
+        defered.reject(response);
+        return defered.promise;
+      }
+      data = new FormData();
+      data.append('image', file);
+      options = {
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': void 0
+        }
+      };
+      url = ($urls.resolve("projects")) + "/" + projectId + "/change_image_presentation";
+      return $http.post(url, data, {}, options);
+    };
     return function(instance) {
       return instance.projects = service;
     };
@@ -40695,6 +40734,12 @@
         },
         key: 'EVENTS.CHANGE_ON_WIKI',
         translate_params: ['username', 'obj_name', 'project_name']
+      }, {
+        check: function(notification) {
+          return notification.get('event_type') === 8;
+        },
+        key: 'EVENTS.PROJECT_RECOMMENDATION',
+        translate_params: ['username', 'obj_name', 'project_name']
       }
     ];
 
@@ -41461,6 +41506,70 @@
 
 }).call(this);
 
+(function() {
+  var ProfileRecommendationsController;
+
+  ProfileRecommendationsController = (function() {
+    ProfileRecommendationsController.$inject = ["tgUserService", "tgCurrentUserService"];
+
+    ProfileRecommendationsController.showLoading = true;
+
+    function ProfileRecommendationsController(userService, currentUserService) {
+      this.userService = userService;
+      this.currentUserService = currentUserService;
+      this.currentUser = this.currentUserService.getUser();
+      this.isCurrentUser = false;
+      if (this.currentUser && this.currentUser.get("id") === this.user.get("id")) {
+        this.isCurrentUser = true;
+      }
+    }
+
+    ProfileRecommendationsController.prototype.loadRecommendations = function() {
+      return this.userService.getRecommendations(this.user.get("id")).then((function(_this) {
+        return function(projects) {
+          if (projects.size) {
+            _this.recommendedProjects = projects._tail.array;
+            _this.showLoading = false;
+            return _this.showEmpty = false;
+          } else {
+            return _this.showEmpty = true;
+          }
+        };
+      })(this));
+    };
+
+    return ProfileRecommendationsController;
+
+  })();
+
+  angular.module("taigaProfile").controller("ProfileRecommendations", ProfileRecommendationsController);
+
+}).call(this);
+
+(function() {
+  var ProfileRecommendationsDirective;
+
+  ProfileRecommendationsDirective = function() {
+    var link;
+    link = function(scope, elm, attrs, ctrl) {
+      return ctrl.loadRecommendations();
+    };
+    return {
+      templateUrl: "profile/profile-recommendations/profile-recommendations.html",
+      scope: {
+        user: "="
+      },
+      controllerAs: "vm",
+      controller: "ProfileRecommendations",
+      link: link,
+      bindToController: true
+    };
+  };
+
+  angular.module("taigaProfile").directive("tgProfileRecommendation", ProfileRecommendationsDirective);
+
+}).call(this);
+
 
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -41990,6 +42099,194 @@
   })(taiga.Service);
 
   angular.module("taigaProjects").service("tgLikeProjectButtonService", LikeProjectButtonService);
+
+}).call(this);
+
+(function() {
+  var RecommendProjectButtonController;
+
+  RecommendProjectButtonController = (function() {
+    RecommendProjectButtonController.$inject = ["$tgConfirm", "tgRecommendProjectButtonService", "$translate", "tgLightboxFactory", "$tgConfirm"];
+
+    function RecommendProjectButtonController(confirm, recommendButtonService, translate, lightboxFactory, Confirm) {
+      var promise;
+      this.confirm = confirm;
+      this.recommendButtonService = recommendButtonService;
+      this.translate = translate;
+      this.lightboxFactory = lightboxFactory;
+      this.Confirm = Confirm;
+      this.isMouseOver = false;
+      this.loading = false;
+      this.usersList = null;
+      this.usersFromRequest = null;
+      promise = this.recommendButtonService.getAllUsers(this.project.get('id'));
+      promise.then((function(_this) {
+        return function(userList) {
+          _this.usersList = _this.transformDatatoUsers(userList._tail.array);
+          return _this.usersFromRequest = userList._tail.array;
+        };
+      })(this));
+    }
+
+    RecommendProjectButtonController.prototype.showTextWhenMouseIsOver = function() {
+      return this.isMouseOver = true;
+    };
+
+    RecommendProjectButtonController.prototype.showTextWhenMouseIsLeave = function() {
+      return this.isMouseOver = false;
+    };
+
+    RecommendProjectButtonController.prototype.transformDatatoUsers = function(usersList) {
+      var usersArray;
+      usersArray = [];
+      usersList.forEach(function(user) {
+        var obj;
+        if (user.get("is_active")) {
+          obj = {
+            'color': user.get('color'),
+            'photo': user.get('photo'),
+            'username': user.get('username'),
+            'gravatar_id': user.get('gravatar_id'),
+            'id': user.get('id'),
+            "is_active": user.get('is_active'),
+            'full_name': user.get('full_name'),
+            'full_name_display': user.get('full_name_display'),
+            'fullNameDisplay': user.get('full_name_display')
+          };
+          return usersArray.push(obj);
+        }
+      });
+      return usersArray;
+    };
+
+    RecommendProjectButtonController.prototype.openWatchers = function() {
+      var onClose;
+      onClose = (function(_this) {
+        return function(selectedUsers) {
+          return _this.save(selectedUsers);
+        };
+      })(this);
+      return this.lightboxFactory.create('tg-lb-select-user', {
+        "class": "lightbox lightbox-select-user"
+      }, {
+        "currentUsers": [],
+        "activeUsers": this.usersList,
+        "onClose": onClose,
+        "button_text": this.translate.instant("ACST_PROJECTS.RECOMMEND_BUTTON.RECOMMEND_BUTTON_TEXT"),
+        "lbTitle": this.translate.instant("ACST_PROJECTS.RECOMMEND_BUTTON.LIGHTBOX_TITLE")
+      });
+    };
+
+    RecommendProjectButtonController.prototype.save = function(selectedUsers) {
+      var filteredUsers, i, len, user;
+      filteredUsers = this.usersFromRequest.filter(function(user) {
+        return selectedUsers.indexOf(user.get('id')) !== -1;
+      });
+      for (i = 0, len = filteredUsers.length; i < len; i++) {
+        user = filteredUsers[i];
+        this.recommendButtonService.recommend(this.project.get('id'), user).then((function(_this) {
+          return function() {
+            var promise;
+            promise = _this.recommendButtonService.getAllUsers(_this.project.get('id'));
+            return promise.then(function(userList) {
+              _this.usersList = _this.transformDatatoUsers(userList._tail.array);
+              return _this.usersFromRequest = userList._tail.array;
+            });
+          };
+        })(this));
+      }
+      if (filteredUsers.length) {
+        return this.confirm.notify("recommended");
+      }
+    };
+
+    return RecommendProjectButtonController;
+
+  })();
+
+  angular.module("taigaProjects").controller("RecommendProjectButton", RecommendProjectButtonController);
+
+}).call(this);
+
+(function() {
+  var RecommendProjectButtonDirective;
+
+  RecommendProjectButtonDirective = function() {
+    return {
+      scope: {},
+      controller: "RecommendProjectButton",
+      bindToController: {
+        project: '='
+      },
+      controllerAs: "vm",
+      templateUrl: "projects/components/recommend-project-button/recommend-project-button.html"
+    };
+  };
+
+  angular.module("taigaProjects").directive("tgRecommendProjectButton", RecommendProjectButtonDirective);
+
+}).call(this);
+
+
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Copyright (c) 2021-present Kaleidos Ventures SL
+ */
+
+(function() {
+  var RecommendProjectButtonService, taiga,
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  taiga = this.taiga;
+
+  RecommendProjectButtonService = (function(superClass) {
+    extend(RecommendProjectButtonService, superClass);
+
+    RecommendProjectButtonService.$inject = ["tgResources", "tgCurrentUserService", "tgProjectService"];
+
+    function RecommendProjectButtonService(rs, currentUserService, projectService) {
+      this.rs = rs;
+      this.currentUserService = currentUserService;
+      this.projectService = projectService;
+    }
+
+    RecommendProjectButtonService.prototype._updateCurrentProject = function(isRecommended) {
+      var project, totalRecommendations;
+      totalRecommendations = this.projectService.project.get("total_recommendations");
+      if (isRecommended) {
+        totalRecommendations++;
+      } else {
+        totalRecommendations--;
+      }
+      project = this.projectService.project.merge({
+        total_recommendations: totalRecommendations
+      });
+      return this.projectService.setProject(project);
+    };
+
+    RecommendProjectButtonService.prototype.recommend = function(projectId, user) {
+      return this.rs.projects.recommendProject(projectId, user).then((function(_this) {
+        return function() {
+          return _this._updateCurrentProject(true);
+        };
+      })(this));
+    };
+
+    RecommendProjectButtonService.prototype.getAllUsers = function(projectId) {
+      var users;
+      users = this.rs.projects.getAllUsersToRecommend(projectId);
+      return users;
+    };
+
+    return RecommendProjectButtonService;
+
+  })(taiga.Service);
+
+  angular.module("taigaProjects").service("tgRecommendProjectButtonService", RecommendProjectButtonService);
 
 }).call(this);
 
@@ -43182,6 +43479,372 @@
   DuplicateProjectDirective.$inject = [];
 
   angular.module("taigaProjects").directive("tgDuplicateProject", DuplicateProjectDirective);
+
+}).call(this);
+
+
+/*
+ * Acción STEM - Comunidades de práctica - 2023
+ */
+
+(function() {
+  var ExperienceProjectController;
+
+  ExperienceProjectController = (function() {
+    ExperienceProjectController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo", "$tgResources", "$tgAccionStem"];
+
+    function ExperienceProjectController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo, rs, accionStem) {
+      this.currentUserService = currentUserService;
+      this.projectsService = projectsService;
+      this.projectUrl = projectUrl;
+      this.location = location;
+      this.navUrls = navUrls;
+      this.analytics = analytics;
+      this.translate = translate;
+      this.model = model;
+      this.repo = repo;
+      this.rs = rs;
+      this.accionStem = accionStem;
+      this.errorList = [];
+      this.projectForm = {
+        is_private: true,
+        start_date: null,
+        end_date: null,
+        establishment_details: {},
+        objectives_list: [],
+        related_roles: [],
+        context_experience: {},
+        creation_template: 2
+      };
+      this.selectedRegion = {};
+      this.selectedProvince = {};
+      this.comunas = [
+        {
+          "region": "Región de los Ríos",
+          "provincias": [
+            {
+              "name": "Valdivia",
+              "comunas": [
+                {
+                  "name": "Valdivia"
+                }, {
+                  "name": "Corral"
+                }, {
+                  "name": "Lanco"
+                }, {
+                  "name": "Los Lagos"
+                }, {
+                  "name": "Máfil"
+                }, {
+                  "name": "Mariquina"
+                }, {
+                  "name": "Paillaco"
+                }, {
+                  "name": "Panguipulli"
+                }
+              ]
+            }, {
+              "name": "Ranco",
+              "comunas": [
+                {
+                  "name": "La Unión"
+                }, {
+                  "name": "Futrono"
+                }, {
+                  "name": "Lago Ranco"
+                }, {
+                  "name": "Río Bueno"
+                }
+              ]
+            }
+          ]
+        }
+      ];
+      this.rangos = this.accionStem.configAccionStem.institution.size;
+      this.ubicaciones = this.accionStem.configAccionStem.institution.location_type;
+      this.sostenedores = this.accionStem.configAccionStem.institution.sostenedor;
+      this.levelOptions = this.accionStem.configAccionStem.institution.level;
+      this.objetivos = this.accionStem.configAccionStem.experience.goals;
+      this.roles = this.accionStem.configAccionStem.experience.roles;
+      this.activities = [];
+      this.activities_attributes = [];
+      this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
+      this.linkVideoPresentation = null;
+      this.estimated_start = null;
+      this.estimated_end = null;
+    }
+
+    ExperienceProjectController.prototype.objetivosSeleccionados = function() {
+      var goal, i, len, ref, results;
+      this.projectForm.objectives_list = [];
+      ref = this.objetivos;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        goal = ref[i];
+        if (goal.selected) {
+          results.push(this.projectForm.objectives_list.push(goal.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    ExperienceProjectController.prototype.rolesSeleccionados = function() {
+      var i, len, ref, results, rol;
+      this.projectForm.related_roles = [];
+      ref = this.roles;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        rol = ref[i];
+        if (rol.selected) {
+          results.push(this.projectForm.related_roles.push(rol.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    ExperienceProjectController.prototype.obtenerIdYoutube = function(enlace) {
+
+      /*
+      Esta función recibe un enlace de YouTube y devuelve el identificador del video.
+      Si el enlace no es válido, devuelve null.
+       */
+      var query_params;
+      console.log("enlace: ", enlace);
+      if (enlace.startsWith("https://youtu.be/")) {
+        console.log("enlace.split(/).at(-1): ", enlace.split("/").at(-1));
+        return enlace.split("/").at(-1);
+      } else if (enlace.startsWith("https://www.youtube.com/watch?")) {
+        query_params = new URL(enlace).searchParams;
+        if (query_params.has("v")) {
+          console.log("query_params.get(v): ", query_params.get("v"));
+          return query_params.get("v");
+        }
+      } else if (enlace.startsWith("https://www.youtube.com/watch?v=")) {
+        console.log("enlace.split(=).at(-1): ", enlace.split("/").at(-1));
+        return enlace.split("=").at(-1);
+      } else {
+        return null;
+      }
+    };
+
+    ExperienceProjectController.prototype.submit = function() {
+      this.validateForm();
+      console.log("@.errorList", this.errorList);
+      if (this.errorList.length === 0) {
+        this.projectForm.start_date = moment(this.estimated_start).format("YYYY-MM-DDThh:mm");
+        this.projectForm.end_date = moment(this.estimated_end).format("YYYY-MM-DDThh:mm");
+        console.log("@.projectForm: ", this.projectForm);
+        return this.projectsService.create(this.projectForm).then((function(_this) {
+          return function(project) {
+            if (_this.imageAttachment) {
+              _this.rs.projects.changeImagePresentation(project.get('id'), _this.imageAttachment);
+            }
+            return console.log("project", project);
+          };
+        })(this));
+      }
+    };
+
+    ExperienceProjectController.prototype.validateForm = function() {
+      var idVideo;
+      this.errorList = [];
+      this.objetivosSeleccionados();
+      this.rolesSeleccionados();
+      if (!this.projectForm.name) {
+        this.errorList.push('name');
+      }
+      if (!this.projectForm.description) {
+        this.errorList.push('description');
+      }
+      if (!this.projectForm.objectives_list.length) {
+        this.errorList.push('objectives_list');
+      }
+      if (!this.projectForm.context_experience.problem) {
+        this.errorList.push('problem');
+      }
+      if (!this.projectForm.related_roles.length) {
+        this.errorList.push('related_roles');
+      }
+      if (this.linkVideoPresentation) {
+        idVideo = this.obtenerIdYoutube(this.linkVideoPresentation);
+        console.log("idVideo: ", idVideo);
+        if (idVideo) {
+          this.projectForm.video_presentation = "https://www.youtube.com/embed/" + idVideo;
+          console.log("@.projectForm.video_presentation", this.projectForm.video_presentation);
+        } else {
+          this.errorList.push('format_video');
+        }
+      }
+      if (this.imageAttachment) {
+        if (this.imageAttachment.type !== 'image/jpeg' && this.imageAttachment.type !== 'image/png') {
+          this.errorList.push('format_image');
+        }
+      }
+      this.estimated_start = $('.date-start').val();
+      this.estimated_end = $('.date-end').val();
+      if (!this.estimated_start) {
+        this.errorList.push('start_date');
+      }
+      if (!this.estimated_end) {
+        this.errorList.push('end_date');
+      }
+      this.projectForm.establishment_details.region = this.selectedRegion.region;
+      this.projectForm.establishment_details.province = this.selectedProvince.name;
+      if (!this.projectForm.establishment_details.name) {
+        this.errorList.push('establishment_name');
+      }
+      if (!this.projectForm.establishment_details.name) {
+        this.errorList.push('establishment_rbd');
+      }
+      if (!this.projectForm.establishment_details.name) {
+        this.errorList.push('establishment_level');
+      }
+      if (!this.projectForm.establishment_details.size) {
+        this.errorList.push('establishment_size');
+      }
+      if (!this.projectForm.establishment_details.region) {
+        this.errorList.push('establishment_region');
+      }
+      if (!this.projectForm.establishment_details.province) {
+        this.errorList.push('establishment_province');
+      }
+      if (!this.projectForm.establishment_details.commune) {
+        this.errorList.push('establishment_commune');
+      }
+      if (!this.projectForm.establishment_details.location) {
+        this.errorList.push('establishment_location');
+      }
+      if (!this.projectForm.establishment_details.holder) {
+        this.errorList.push('establishment_holder');
+      }
+      if (!this.projectForm.establishment_details.vi) {
+        return this.errorList.push('establishment_vi');
+      }
+    };
+
+    ExperienceProjectController.prototype.onCancelForm = function() {
+      return this.location.path(this.navUrls.resolve("create-project"));
+    };
+
+    return ExperienceProjectController;
+
+  })();
+
+  angular.module("taigaProjects").controller("ExperienceProjectCtrl", ExperienceProjectController);
+
+}).call(this);
+
+
+/*
+ * Accion STEM
+ */
+
+(function() {
+  var ExperienceImageDirective, ExperienceImageModelDirective, ExperienceProjectDirective, ProjectExperienceImageSrcDirective, module;
+
+  module = angular.module("taigaProjects");
+
+  ExperienceProjectDirective = function() {
+    var link;
+    link = function(scope, el, attr, ctrl) {};
+    return {
+      link: link,
+      templateUrl: "projects/create/experience/experience-project.html",
+      controller: "ExperienceProjectCtrl",
+      controllerAs: "vm",
+      bindToController: true,
+      scope: {}
+    };
+  };
+
+  ExperienceProjectDirective.$inject = [];
+
+  module.directive("tgExperienceProject", ExperienceProjectDirective);
+
+  ExperienceImageDirective = function($auth, $model, $rs, $confirm) {
+    var link;
+    link = function($scope, $el, $attrs) {
+      var showSizeInfo;
+      showSizeInfo = function() {
+        return $el.find(".size-info").addClass("active");
+      };
+      $el.on("click", ".js-change-image", function() {
+        console.log("click image");
+        return $el.find("#image-field").click();
+      });
+      $el.on("change", "#image-field", function(event) {
+        console.log("change image");
+        console.log("$scope.vm.imageAttachment", $scope.vm.imageAttachment);
+        if ($scope.vm.imageAttachment) {
+          return $el.find('#image-field-name').html($scope.vm.imageAttachment.name);
+        } else {
+          return $el.find('#image-field-name').html("");
+        }
+      });
+      return $scope.$on("$destroy", function() {
+        console.log("destroy image");
+        return $el.off();
+      });
+    };
+    return {
+      link: link
+    };
+  };
+
+  module.directive("tgExperienceImage", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", ExperienceImageDirective]);
+
+  ExperienceImageModelDirective = function($parse) {
+    var link;
+    link = function($scope, $el, $attrs) {
+      var model, modelSetter;
+      model = $parse($attrs.tgExperienceImageModel);
+      modelSetter = model.assign;
+      return $el.bind('change', function() {
+        return $scope.$apply(function() {
+          return modelSetter($scope, $el[0].files[0]);
+        });
+      });
+    };
+    return {
+      link: link
+    };
+  };
+
+  module.directive('tgExperienceImageModel', ['$parse', ExperienceImageModelDirective]);
+
+  ProjectExperienceImageSrcDirective = function() {
+    var link;
+    link = function(scope, el, attrs) {
+      return scope.$watch('project', function(project) {
+        var experienceImage;
+        project = Immutable.fromJS(project);
+        console.log("project", project);
+        if (!project) {
+          return;
+        }
+        experienceImage = project.get('image_presentation');
+        console.log("experienceImage", experienceImage);
+        if (experienceImage) {
+          el.attr('src', experienceImage);
+          return el.css('background', "");
+        }
+      });
+    };
+    return {
+      link: link,
+      scope: {
+        project: "=tgProjectExperienceImageSrc"
+      }
+    };
+  };
+
+  ProjectExperienceImageSrcDirective.$inject = [];
+
+  module.directive("tgProjectExperienceImageSrc", ProjectExperienceImageSrcDirective);
 
 }).call(this);
 
@@ -46676,6 +47339,25 @@
       url = urlsService.resolve("project-like", projectId);
       return http.post(url);
     };
+    service.recommendProject = function(projectId, user) {
+      var data, url;
+      url = urlsService.resolve("project-recommend", projectId);
+      data = {
+        project: projectId,
+        toUser: user
+      };
+      return http.post(url, data);
+    };
+    service.getAllUsersToRecommend = function(projectId) {
+      var data, url;
+      url = urlsService.resolve("project-getallusers", projectId);
+      data = {
+        project: projectId
+      };
+      return http.get(url, data).then(function(result) {
+        return Immutable.fromJS(result.data);
+      });
+    };
     service.unlikeProject = function(projectId) {
       var url;
       url = urlsService.resolve("project-unlike", projectId);
@@ -47014,6 +47696,13 @@
       }).then(function(result) {
         result = Immutable.fromJS(result);
         return paginateResponseService(result);
+      });
+    };
+    service.getRecommendations = function(userId) {
+      var url;
+      url = urlsService.resolve("user-recommendations", userId);
+      return http.get(url).then(function(result) {
+        return Immutable.fromJS(result.data);
       });
     };
     service.getVoted = function(userId, page, type, q) {
@@ -48446,6 +49135,10 @@
 
     UserService.prototype.getLiked = function(userId, pageNumber, objectType, textQuery) {
       return this.rs.users.getLiked(userId, pageNumber, objectType, textQuery);
+    };
+
+    UserService.prototype.getRecommendations = function(userId) {
+      return this.rs.users.getRecommendations(userId);
     };
 
     UserService.prototype.getVoted = function(userId, pageNumber, objectType, textQuery) {
