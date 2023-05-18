@@ -43564,6 +43564,7 @@
       this.ubicaciones = this.accionStem.configAccionStem.institution.location_type;
       this.sostenedores = this.accionStem.configAccionStem.institution.sostenedor;
       this.levelOptions = this.accionStem.configAccionStem.institution.level;
+      this.toolsOptions = this.accionStem.configAccionStem.experience.institutional_tools;
       this.objetivos = this.accionStem.configAccionStem.experience.goals;
       this.roles = this.accionStem.configAccionStem.experience.roles;
       this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
@@ -43572,6 +43573,7 @@
       this.linkVideoPresentation = null;
       this.estimated_start = null;
       this.estimated_end = null;
+      this.openSectionIndex = -1;
     }
 
     ExperienceProjectController.prototype.objetivosSeleccionados = function() {
@@ -43765,6 +43767,18 @@
 
     ExperienceProjectController.prototype.onCancelForm = function() {
       return this.location.path(this.navUrls.resolve("create-project"));
+    };
+
+    ExperienceProjectController.prototype.toggleSection = function(index) {
+      if (this.openSectionIndex === index) {
+        return this.openSectionIndex = -1;
+      } else {
+        return this.openSectionIndex = index;
+      }
+    };
+
+    ExperienceProjectController.prototype.isSectionOpen = function(index) {
+      return this.openSectionIndex === index;
     };
 
     return ExperienceProjectController;

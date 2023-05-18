@@ -148,6 +148,23 @@
                 "id": "10",
                 "name": "Sostenedor"
             }
+        ],
+        "institutional_tools": [{
+                "id": "1",
+                "name": "Sí, es parte del Plan Educativo Institucional (PEI) y del Plan de Mejoramiento Educativo (PME)"
+            },
+            {
+                "id": "2",
+                "name": "Sí, es parte Plan de Mejoramiento Educativo (PME)"
+            },
+            {
+                "id": "3",
+                "name": "Sí, es parte del Plan Educativo Institucional (PEI)"
+            },
+            {
+                "id": "4",
+                "name": "No, no está incorporada en los instrumentos de gestión institucional"
+            }
         ]
     },
     "institution": {

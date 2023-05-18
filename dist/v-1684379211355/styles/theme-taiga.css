@@ -12300,6 +12300,9 @@ tg-project-menu {
   padding-bottom: .625rem;
   text-align: center; }
 
+.single-project p.question {
+  font-weight: bold; }
+
 /**********************
 **** VERTICAL HEIGHT
 ***********************/
@@ -20270,6 +20273,36 @@ tg-related-userstory-row {
 **** VERTICAL HEIGHT
 ***********************/
 /* Do not use this except for the main layout */
+.accordion-header {
+  border: 0.125rem solid #D8DEE9;
+  border-radius: .188px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: .625rem; }
+
+.accordion-content {
+  padding: .625rem; }
+
+.content-data {
+  display: flex;
+  flex-wrap: wrap; }
+
+.middle {
+  box-sizing: border-box; }
+
+.left {
+  flex-basis: 50%;
+  padding-right: 10px; }
+
+.right {
+  flex-basis: 50%; }
+
+/**********************
+**** VERTICAL HEIGHT
+***********************/
+/* Do not use this except for the main layout */
 .import-project-github-form {
   margin: 1rem auto;
   max-width: 1200px;
@@ -20578,24 +20611,6 @@ tg-related-userstory-row {
 /* Do not use this except for the main layout */
 .duplicate-project-reference {
   margin-bottom: 2rem; }
-
-/**********************
-**** VERTICAL HEIGHT
-***********************/
-/* Do not use this except for the main layout */
-.establishment-data {
-  display: flex;
-  flex-wrap: wrap; }
-
-.middle {
-  box-sizing: border-box; }
-
-.left {
-  flex-basis: 50%;
-  padding-right: 10px; }
-
-.right {
-  flex-basis: 50%; }
 
 /**********************
 **** VERTICAL HEIGHT

@@ -2003,10 +2003,11 @@
             "TITLE_DETAILS": "Detalles del establecimiento",
             "RBD": "RBD (sin dígito verificador, provisorio si es el caso.)",
             "TEAM": {
-                "TITLE": "Equipo Directivo",
+                "TITLE": "Equipo Directivo (al momento de ejecutar la iniciativa)",
                 "DIRECTOR": "Nombre Director",
                 "UTP": "Nombre Jefe UTP",
-                "INSPECTOR": "Nombre Inspector General"
+                "INSPECTOR": "Nombre Inspector General",
+                "EMAIL": "Correo electrónico"
             },
             "SIZE": {
                 "TITLE": "Tamaño del establecimiento"
@@ -2046,12 +2047,17 @@
             "GOALS": {
                 "TITLE": "Objetivos de la experiencia",
                 "DESCRIPTION": "Describa el propósito de la experiencia",
-                "SELECT_GOAL": "¿Qué objetivo representa mejor la experiencia?"
+                "SELECT_GOAL": "¿Qué objetivo(s) representa(n) mejor la experiencia?"
             },
             "QUESTIONS_DESCRIPTION": {
-                "PROBLEM": "¿Cuál era la/s problemática/s que buscaba resolver?",
-                "QUESTION_2": "¿Cómo llegaron a esa solución o práctica?",
-                "QUESTION_3": "¿Cuál es el vínculo de la práctica con el PME?"
+                "PROBLEM": "¿Cuál era la(s) problemática(s) que buscaba resolver?",
+                "SOLUTION": "¿Cómo llegaron a esa solución o práctica?",
+                "RESOURCES": "¿Qué recursos y/o condiciones colaboraron en el surgimiento y la implementación de estas innovaciones? (infraestructura, condiciones organizacionales, equipo u otra.",
+                "HINDERS": "Describa si existieron obstaculizadores para el desarrollo de la experiencia educativa y si hubo errores o problemas, qué aprendieron de éstos",
+                "TOOLS": "¿La práctica se incorporó en los instrumentos de gestión institucional como PEI o PME?",
+                "RESULTS": "Señale los resultados que la aplicación de la práctica ha significado en término de aprendizaje de los estudiantes, el trabajo docente, la gestión escolar.",
+                "NEEDS": "¿Qué cree que se necesita para convertirla en una experiencia más avanzada o para ser compartida?",
+                "LESSONS": "¿Si otra institución quisiera replicar esta experiencia, qué lecciones aprendidas le gustaría compartir?"
             },
             "DURATION": {
                 "TITLE": "Duración de la experiencia",
@@ -2061,7 +2067,9 @@
                 "PLACEHOLDER_DATE_END": "Final Estimado"
             },
             "ROLES": {
-                "TITLE": "¿Quién o quiénes participaron en la planificación, implementación y/o evaluación de la iniciativa? (Marque todos los que correspondan)"
+                "TITLE": "¿Quién o quiénes participaron en la planificación, implementación y/o evaluación de la iniciativa? (Marque todos los que correspondan)",
+                "DETAILS": "Describa cómo la innovación consideró la colaboración y la participación de los y las involucrados/as en las etapas de planificación, implementación y/o evaluación",
+                "STUDENTS": "Específicamente, describa el rol de sus estudiantes en el desarrollo de la innovación implementada"
             },
             "KEY_ACTIVITIES": {
                 "TITLE": "Actividades claves",
@@ -2085,6 +2093,18 @@
             "IMAGE": {
                 "TITLE": "Imagen destacada",
                 "SELECT": "Seleccionar archivo"
+            },
+            "TITLES": {
+                "ROLES": "Roles",
+                "RECOMMENDATIONS": "Recomendaciones",
+                "RESULTS": "Resultados",
+                "IMPLEMENTATION": "Implementación",
+                "RESOURCES": "Recursos y condiciones",
+                "CONTACT": "Contacto"
+            },
+            "CONTACT": {
+                "NAME": "Nombre",
+                "EMAIL": "Correo electrónico"
             }
         },
         "VISIT": {
