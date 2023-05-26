@@ -138,6 +138,11 @@
       template: "<tg-create-project-form type=\"visit\"></tg-create-project-form>",
       loader: true
     });
+    $routeProvider.when("/project/new/associative", {
+      title: "PROJECT.CREATE.TITLE",
+      template: "<tg-create-project-form type=\"associative\"></tg-create-project-form>",
+      loader: true
+    });
     $routeProvider.when("/project/new/duplicate", {
       title: "PROJECT.CREATE.TITLE",
       template: "<tg-duplicate-project></tg-duplicate-project>",
@@ -2671,6 +2676,7 @@
     "create-project-scrum": "/project/new/scrum",
     "create-project-kanban": "/project/new/kanban",
     "create-project-visit": "/project/new/visit",
+    "create-project-associative": "/project/new/associative",
     "create-project-duplicate": "/project/new/duplicate",
     "create-project-experience": "/project/new/experience",
     "create-project-import": "/project/new/import",
@@ -15802,7 +15808,7 @@
 
     EpicDetailController.prototype.onCreateExperience = function() {
       return this.lightboxFactory.create('tg-create-expe', {
-        "class": "lightbox lightbox-create-epic open",
+        "class": "lightbox lightbox-create-experience open",
         "on-create-expe": "onCreateExperience()",
         "project": "project",
         "epic": "epic",
@@ -36985,289 +36991,6 @@
 
 
 /*
- */
-
-(function() {
-  var CreateExperienceController, taiga;
-
-  taiga = this.taiga;
-
-  CreateExperienceController = (function() {
-    CreateExperienceController.$inject = ["$tgResources", "tgResources", "$q", "$tgConfirm", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "tgProjectsService", "lightboxService", "$translate", "$tgAccionStem"];
-
-    function CreateExperienceController(rs, rs2, q, confirm, location, navUrls, currentUserService, projectsService, lightboxService, translate, accionStem) {
-      var latestModifiedDate, modifiedDates;
-      this.rs = rs;
-      this.rs2 = rs2;
-      this.q = q;
-      this.confirm = confirm;
-      this.location = location;
-      this.navUrls = navUrls;
-      this.currentUserService = currentUserService;
-      this.projectsService = projectsService;
-      this.lightboxService = lightboxService;
-      this.translate = translate;
-      this.accionStem = accionStem;
-      this.usCustomAttrs = this.projectsService.getCustomAttributes(this.project.userstory_custom_attributes);
-      this.usCustomAttrValues = this.getCustomAttributesValues();
-      this.tagsEpic = this.getTagsEpic();
-      this.activities = this.getUserStoriesDetail();
-      modifiedDates = this.userstories.map(function(elem) {
-        return moment(elem.get("modified_date")).valueOf();
-      });
-      latestModifiedDate = moment(Math.max.apply(null, modifiedDates._tail.array)).format('YYYY-MM-DDTHH:mm');
-      this.goalsOptions = this.accionStem.configAccionStem.experience.goals;
-      this.newProjectForm = {
-        name: this.epic.subject,
-        description: this.epic.description,
-        is_private: true,
-        creation_template: 2,
-        start_date: this.epic.created_date,
-        end_date: latestModifiedDate,
-        establishment_details: this.project.establishment_details,
-        objectives_list: [],
-        related_roles: [],
-        tags_colors: Object.entries(this.project.tags_colors),
-        tags: this.tagsEpic
-      };
-      this.loading = false;
-    }
-
-    CreateExperienceController.prototype.createExperience = function() {
-      var setInvitedContacts;
-      if (!this.validateForm()) {
-        return;
-      }
-      this.loading = true;
-      this.newProjectForm.related_roles = this.getRelatedRoles();
-      setInvitedContacts = [];
-      return this.projectsService.create(this.newProjectForm).then((function(_this) {
-        return function(newProject) {
-          var promiseUs, usCustomAttrsNew;
-          usCustomAttrsNew = _this.projectsService.getCustomAttributes(newProject.get("userstory_custom_attributes")._tail.array);
-          _this.projectsService.createReviewerStuff(newProject);
-          promiseUs = _this.rs.userstories.customBulkCreate(newProject.get('id'), newProject.get('default_us_status'), _this.activities);
-          return promiseUs.then(function(data) {
-            var bulk_tasks, promiseTasks, usIds;
-            usIds = data._attrs.map(function(item) {
-              return item.id;
-            });
-            bulk_tasks = _this.addUsIdTasks(data);
-            promiseTasks = _this.rs.tasks.customBulkCreate(newProject.get('id'), newProject.get('default_task_status'), bulk_tasks);
-            return promiseTasks.then(function(data) {
-              var promiseCustomAttrs, usCustomAttrValuesNew;
-              usCustomAttrValuesNew = _this.createCustomAttributesValuesNew(usCustomAttrsNew);
-              promiseCustomAttrs = _this.rs.customAttributesValues.customBulkCreate(usIds, usCustomAttrValuesNew);
-              return promiseCustomAttrs.then(function(data) {
-                _this.loading = false;
-                _this.lightboxService.closeAll();
-                _this.confirm.notify("success");
-                _this.location.path(_this.navUrls.resolve("project", {
-                  project: newProject.get('slug')
-                }));
-                return _this.currentUserService.loadProjects();
-              });
-            });
-          });
-        };
-      })(this));
-    };
-
-    CreateExperienceController.prototype.getCustomAttributesValues = function() {
-      var promises, type, usCustomAttrValues, usIds;
-      type = 'userstory';
-      usIds = this.userstories._tail.array.map(function(item) {
-        return item.get("id");
-      });
-      promises = _.map(usIds, (function(_this) {
-        return function(usId) {
-          return _this.rs.customAttributesValues[type].get(usId);
-        };
-      })(this));
-      usCustomAttrValues = [];
-      this.q.all(promises).then((function(_this) {
-        return function(data) {
-          return data.map(function(item) {
-            return usCustomAttrValues.push(item.attributes_values);
-          });
-        };
-      })(this));
-      return usCustomAttrValues;
-    };
-
-    CreateExperienceController.prototype.createCustomAttributesValuesNew = function(usCustomAttrsNew) {
-      var attr, item, j, k, key, l, len, len1, len2, newObj, obj, ref, ref1, usCustomAttrValuesNew, value;
-      usCustomAttrValuesNew = [];
-      ref = this.usCustomAttrValues;
-      for (j = 0, len = ref.length; j < len; j++) {
-        obj = ref[j];
-        newObj = {};
-        ref1 = this.usCustomAttrs;
-        for (k = 0, len1 = ref1.length; k < len1; k++) {
-          item = ref1[k];
-          for (l = 0, len2 = usCustomAttrsNew.length; l < len2; l++) {
-            attr = usCustomAttrsNew[l];
-            if (item.name === attr.name) {
-              key = attr.id;
-              value = obj[item.id] || "";
-              newObj[key] = value;
-            }
-          }
-        }
-        usCustomAttrValuesNew.push(newObj);
-      }
-      return usCustomAttrValuesNew;
-    };
-
-    CreateExperienceController.prototype.getTagsEpic = function() {
-      var tagsEpic;
-      tagsEpic = [];
-      this.epic.tags.map(function(tagEpic) {
-        return tagsEpic.push(tagEpic[0]);
-      });
-      return tagsEpic;
-    };
-
-    CreateExperienceController.prototype.getUserStoriesDetail = function() {
-      var activities;
-      activities = [];
-      this.rs2.userstories.listAllInEpic(this.epic.id).then((function(_this) {
-        return function(data) {
-          return data._tail.array.map(function(item) {
-            var activity, tags, tasks;
-            tasks = [];
-            if (item.get("tasks").size > 0) {
-              item.get("tasks")._tail.array.map(function(task) {
-                var tags_tasks;
-                tags_tasks = [];
-                if (task.get("tags").size > 0) {
-                  tags_tasks = task.get('tags')._tail.array;
-                }
-                task = {
-                  "us_id": "",
-                  "subject": task.get("subject"),
-                  "description": task.get("description"),
-                  "tags": tags_tasks
-                };
-                return tasks.push(task);
-              });
-            }
-            tags = [];
-            if (item.get("tags").size > 0) {
-              item.get('tags')._tail.array.map(function(tag) {
-                return tags.push(tag._tail.array[0]);
-              });
-            }
-            activity = {
-              "subject": item.get("subject"),
-              "description": item.get("description"),
-              "tasks": tasks,
-              "tags": tags
-            };
-            return activities.push(activity);
-          });
-        };
-      })(this));
-      return activities;
-    };
-
-    CreateExperienceController.prototype.addUsIdTasks = function(data) {
-      var bulk_tasks;
-      bulk_tasks = [];
-      this.activities.forEach(function(activity) {
-        if (activity.tasks.length > 0) {
-          return data._attrs.map(function(item) {
-            var i, j, ref, results;
-            if (item.subject === activity.subject && item.description === activity.description) {
-              results = [];
-              for (i = j = 0, ref = activity.tasks.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
-                activity.tasks[i].us_id = item.id;
-                results.push(bulk_tasks.push(activity.tasks[i]));
-              }
-              return results;
-            }
-          });
-        }
-      });
-      return bulk_tasks;
-    };
-
-    CreateExperienceController.prototype.getRelatedRoles = function() {
-      var j, k, len, len1, ref, ref1, relatedRoles, relatedRolesUnique, responsable, responsableId, usCustomAttr, usCustomAttrValue;
-      relatedRoles = [];
-      responsableId = null;
-      ref = this.usCustomAttrs;
-      for (j = 0, len = ref.length; j < len; j++) {
-        usCustomAttr = ref[j];
-        if (usCustomAttr.name === "Responsable") {
-          responsableId = usCustomAttr.id;
-          break;
-        }
-      }
-      relatedRoles = [];
-      ref1 = this.usCustomAttrValues;
-      for (k = 0, len1 = ref1.length; k < len1; k++) {
-        usCustomAttrValue = ref1[k];
-        responsable = usCustomAttrValue[responsableId] || '';
-        if (responsable !== '') {
-          relatedRoles.push(responsable);
-        }
-      }
-      relatedRolesUnique = Array.from(new Set(relatedRoles));
-      return relatedRolesUnique;
-    };
-
-    return CreateExperienceController;
-
-  })();
-
-  angular.module("taigaEpics").controller("CreateExperienceCtrl", CreateExperienceController);
-
-}).call(this);
-
-
-/*
- */
-
-(function() {
-  var CreateExperienceDirective;
-
-  CreateExperienceDirective = function() {
-    var link;
-    link = function(scope, el, attrs, ctrl) {
-      var form;
-      form = el.find("form").checksley();
-      ctrl.validateForm = (function(_this) {
-        return function() {
-          return form.validate();
-        };
-      })(this);
-      return ctrl.setFormErrors = (function(_this) {
-        return function(errors) {
-          return form.setErrors(errors);
-        };
-      })(this);
-    };
-    return {
-      link: link,
-      templateUrl: "epics/create-experience/create-experience.html",
-      controller: "CreateExperienceCtrl",
-      controllerAs: "vm",
-      bindToController: {
-        project: '=',
-        epic: '=',
-        userstories: '='
-      },
-      scope: {}
-    };
-  };
-
-  angular.module('taigaEpics').directive("tgCreateExpe", CreateExperienceDirective);
-
-}).call(this);
-
-
-/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -42955,6 +42678,9 @@
       if (this.type === 'scrum') {
         this.projectForm.creation_template = 1;
       }
+      if (this.type === 'associative') {
+        this.projectForm.creation_template = 1;
+      }
       if (this.type === 'kanban') {
         this.projectForm.creation_template = 2;
       }
@@ -43057,9 +42783,9 @@
         this.projectForm.establishment_details.region = this.selectedRegion.region;
         this.projectForm.establishment_details.province = this.selectedProvince.name;
         this.projectForm.establishment_details.name = this.projectForm.name;
-      }
-      if (!this.projectForm.establishment_details.delegated_administration) {
-        this.projectForm.establishment_details.delegated_administration = false;
+        if (!this.projectForm.establishment_details.delegated_administration) {
+          this.projectForm.establishment_details.delegated_administration = false;
+        }
       }
       if (this.type === 'kanban') {
         prettyDate = this.translate.instant("COMMON.PICKERDATE.FORMAT");
@@ -43126,6 +42852,14 @@
               _this.currentUserService.loadProjects();
             }
             if (_this.type === 'visit') {
+              _this.analytics.trackEvent("project", "create", "project creation", {
+                slug: project.get('slug'),
+                id: project.get('id')
+              });
+              _this.location.url(_this.projectUrl.get(project));
+              _this.currentUserService.loadProjects();
+            }
+            if (_this.type === 'associative') {
               _this.analytics.trackEvent("project", "create", "project creation", {
                 slug: project.get('slug'),
                 id: project.get('id')
@@ -43479,417 +43213,6 @@
   DuplicateProjectDirective.$inject = [];
 
   angular.module("taigaProjects").directive("tgDuplicateProject", DuplicateProjectDirective);
-
-}).call(this);
-
-
-/*
- * Acción STEM - Comunidades de práctica - 2023
- */
-
-(function() {
-  var ExperienceProjectController;
-
-  ExperienceProjectController = (function() {
-    ExperienceProjectController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo", "$tgResources", "$tgAccionStem"];
-
-    function ExperienceProjectController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo, rs, accionStem) {
-      this.currentUserService = currentUserService;
-      this.projectsService = projectsService;
-      this.projectUrl = projectUrl;
-      this.location = location;
-      this.navUrls = navUrls;
-      this.analytics = analytics;
-      this.translate = translate;
-      this.model = model;
-      this.repo = repo;
-      this.rs = rs;
-      this.accionStem = accionStem;
-      this.errorList = [];
-      this.projectForm = {
-        is_private: true,
-        start_date: null,
-        end_date: null,
-        establishment_details: {},
-        objectives_list: [],
-        related_roles: [],
-        context_experience: {},
-        creation_template: 2
-      };
-      this.selectedRegion = {};
-      this.selectedProvince = {};
-      this.comunas = [
-        {
-          "region": "Región de los Ríos",
-          "provincias": [
-            {
-              "name": "Valdivia",
-              "comunas": [
-                {
-                  "name": "Valdivia"
-                }, {
-                  "name": "Corral"
-                }, {
-                  "name": "Lanco"
-                }, {
-                  "name": "Los Lagos"
-                }, {
-                  "name": "Máfil"
-                }, {
-                  "name": "Mariquina"
-                }, {
-                  "name": "Paillaco"
-                }, {
-                  "name": "Panguipulli"
-                }
-              ]
-            }, {
-              "name": "Ranco",
-              "comunas": [
-                {
-                  "name": "La Unión"
-                }, {
-                  "name": "Futrono"
-                }, {
-                  "name": "Lago Ranco"
-                }, {
-                  "name": "Río Bueno"
-                }
-              ]
-            }
-          ]
-        }
-      ];
-      this.rangos = this.accionStem.configAccionStem.institution.size;
-      this.ubicaciones = this.accionStem.configAccionStem.institution.location_type;
-      this.sostenedores = this.accionStem.configAccionStem.institution.sostenedor;
-      this.levelOptions = this.accionStem.configAccionStem.institution.level;
-      this.toolsOptions = this.accionStem.configAccionStem.experience.institutional_tools;
-      this.objetivos = this.accionStem.configAccionStem.experience.goals;
-      this.roles = this.accionStem.configAccionStem.experience.roles;
-      this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
-      this.activities = [];
-      this.activities_attributes = [];
-      this.linkVideoPresentation = null;
-      this.estimated_start = null;
-      this.estimated_end = null;
-      this.openSectionIndex = -1;
-    }
-
-    ExperienceProjectController.prototype.objetivosSeleccionados = function() {
-      var goal, j, len, ref, results;
-      this.projectForm.objectives_list = [];
-      ref = this.objetivos;
-      results = [];
-      for (j = 0, len = ref.length; j < len; j++) {
-        goal = ref[j];
-        if (goal.selected) {
-          results.push(this.projectForm.objectives_list.push(goal.name));
-        } else {
-          results.push(void 0);
-        }
-      }
-      return results;
-    };
-
-    ExperienceProjectController.prototype.rolesSeleccionados = function() {
-      var j, len, ref, results, rol;
-      this.projectForm.related_roles = [];
-      ref = this.roles;
-      results = [];
-      for (j = 0, len = ref.length; j < len; j++) {
-        rol = ref[j];
-        if (rol.selected) {
-          results.push(this.projectForm.related_roles.push(rol.name));
-        } else {
-          results.push(void 0);
-        }
-      }
-      return results;
-    };
-
-
-    /*
-    Esta función recibe un enlace de YouTube y devuelve el identificador del video.
-    Si el enlace no es válido, devuelve null.
-     */
-
-    ExperienceProjectController.prototype.obtenerIdYoutube = function(enlace) {
-      var query_params;
-      if (enlace.startsWith("https://youtu.be/")) {
-        return enlace.split("/").at(-1);
-      } else if (enlace.startsWith("https://www.youtube.com/watch?")) {
-        query_params = new URL(enlace).searchParams;
-        if (query_params.has("v")) {
-          return query_params.get("v");
-        }
-      } else if (enlace.startsWith("https://www.youtube.com/watch?v=")) {
-        return enlace.split("=").at(-1);
-      } else {
-        return null;
-      }
-    };
-
-    ExperienceProjectController.prototype.submit = function() {
-      this.validateForm();
-      if (this.errorList.length === 0) {
-        this.projectForm.start_date = moment(this.estimated_start).format("YYYY-MM-DDThh:mm");
-        this.projectForm.end_date = moment(this.estimated_end).format("YYYY-MM-DDThh:mm");
-        return this.projectsService.create(this.projectForm).then((function(_this) {
-          return function(project) {
-            var promise;
-            if (_this.imageAttachment) {
-              _this.rs.projects.changeImagePresentation(project.get('id'), _this.imageAttachment);
-            }
-            _this.projectsService.createReviewerStuff(project);
-            promise = _this.rs.userstories.customBulkCreate(project.get('id'), project.get('default_us_status'), _this.activities);
-            return promise.then(function(data) {
-              var attributes_values, new_promise, us_ids, userstory_custom_attributes;
-              us_ids = data._attrs.map(function(item) {
-                return item.id;
-              });
-              userstory_custom_attributes = _this.projectsService.getCustomAttributes(project.get("userstory_custom_attributes")._tail.array);
-              attributes_values = _this.activities_attributes.map(function(value) {
-                var result;
-                result = {};
-                userstory_custom_attributes.forEach(function(attribute) {
-                  var key, name;
-                  key = attribute.id;
-                  name = attribute.name.toLowerCase();
-                  if (name === "involucrados") {
-                    return result[key] = value[name].join(", ");
-                  } else {
-                    return result[key] = value[name];
-                  }
-                });
-                return result;
-              });
-              new_promise = _this.rs.customAttributesValues.customBulkCreate(us_ids, attributes_values);
-              return new_promise.then(function(data) {
-                _this.analytics.trackEvent("project", "create", "project creation", {
-                  slug: project.get('slug'),
-                  id: project.get('id')
-                });
-                _this.location.url(_this.projectUrl.get(project));
-                return _this.currentUserService.loadProjects();
-              });
-            });
-          };
-        })(this));
-      }
-    };
-
-    ExperienceProjectController.prototype.validateForm = function() {
-      var date, i, idVideo, j, k, ref, ref1;
-      this.errorList = [];
-      this.objetivosSeleccionados();
-      this.rolesSeleccionados();
-      if (!this.projectForm.name) {
-        this.errorList.push('name');
-      }
-      if (!this.projectForm.description) {
-        this.errorList.push('description');
-      }
-      if (!this.projectForm.objectives_list.length) {
-        this.errorList.push('objectives_list');
-      }
-      if (!this.projectForm.context_experience.problem) {
-        this.errorList.push('problem');
-      }
-      if (!this.projectForm.related_roles.length) {
-        this.errorList.push('related_roles');
-      }
-      if (this.linkVideoPresentation) {
-        idVideo = this.obtenerIdYoutube(this.linkVideoPresentation);
-        if (idVideo) {
-          this.projectForm.video_presentation = "https://www.youtube.com/embed/" + idVideo;
-        } else {
-          this.errorList.push('format_video');
-        }
-      }
-      if (this.imageAttachment) {
-        if (this.imageAttachment.type !== 'image/jpeg' && this.imageAttachment.type !== 'image/png') {
-          this.errorList.push('format_image');
-        }
-      }
-      this.estimated_start = $('.date-start').val();
-      this.estimated_end = $('.date-end').val();
-      if (!this.estimated_start) {
-        this.errorList.push('start_date');
-      }
-      if (!this.estimated_end) {
-        this.errorList.push('end_date');
-      }
-      if (this.activities.length) {
-        for (i = j = 0, ref = this.activities.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
-          this.activities[i].tags = [];
-        }
-        for (i = k = 0, ref1 = this.activities_attributes.length - 1; 0 <= ref1 ? k <= ref1 : k >= ref1; i = 0 <= ref1 ? ++k : --k) {
-          date = $('#date' + i).val();
-          this.activities_attributes[i].fecha = moment(date).format("YYYY-MM-DD");
-        }
-      } else {
-        this.errorList.push('activities');
-      }
-      this.projectForm.establishment_details.region = this.selectedRegion.region;
-      this.projectForm.establishment_details.province = this.selectedProvince.name;
-      if (!this.projectForm.establishment_details.name) {
-        this.errorList.push('establishment_name');
-      }
-      if (!this.projectForm.establishment_details.name) {
-        this.errorList.push('establishment_rbd');
-      }
-      if (!this.projectForm.establishment_details.name) {
-        this.errorList.push('establishment_level');
-      }
-      if (!this.projectForm.establishment_details.size) {
-        this.errorList.push('establishment_size');
-      }
-      if (!this.projectForm.establishment_details.region) {
-        this.errorList.push('establishment_region');
-      }
-      if (!this.projectForm.establishment_details.province) {
-        this.errorList.push('establishment_province');
-      }
-      if (!this.projectForm.establishment_details.commune) {
-        this.errorList.push('establishment_commune');
-      }
-      if (!this.projectForm.establishment_details.location) {
-        this.errorList.push('establishment_location');
-      }
-      if (!this.projectForm.establishment_details.holder) {
-        this.errorList.push('establishment_holder');
-      }
-      if (!this.projectForm.establishment_details.vi) {
-        return this.errorList.push('establishment_vi');
-      }
-    };
-
-    ExperienceProjectController.prototype.onCancelForm = function() {
-      return this.location.path(this.navUrls.resolve("create-project"));
-    };
-
-    ExperienceProjectController.prototype.toggleSection = function(index) {
-      if (this.openSectionIndex === index) {
-        return this.openSectionIndex = -1;
-      } else {
-        return this.openSectionIndex = index;
-      }
-    };
-
-    ExperienceProjectController.prototype.isSectionOpen = function(index) {
-      return this.openSectionIndex === index;
-    };
-
-    return ExperienceProjectController;
-
-  })();
-
-  angular.module("taigaProjects").controller("ExperienceProjectCtrl", ExperienceProjectController);
-
-}).call(this);
-
-
-/*
- * Accion STEM
- */
-
-(function() {
-  var ExperienceImageDirective, ExperienceImageModelDirective, ExperienceProjectDirective, ProjectExperienceImageSrcDirective, module;
-
-  module = angular.module("taigaProjects");
-
-  ExperienceProjectDirective = function() {
-    var link;
-    link = function(scope, el, attr, ctrl) {};
-    return {
-      link: link,
-      templateUrl: "projects/create/experience/experience-project.html",
-      controller: "ExperienceProjectCtrl",
-      controllerAs: "vm",
-      bindToController: true,
-      scope: {}
-    };
-  };
-
-  ExperienceProjectDirective.$inject = [];
-
-  module.directive("tgExperienceProject", ExperienceProjectDirective);
-
-  ExperienceImageDirective = function($auth, $model, $rs, $confirm) {
-    var link;
-    link = function($scope, $el, $attrs) {
-      var showSizeInfo;
-      showSizeInfo = function() {
-        return $el.find(".size-info").addClass("active");
-      };
-      $el.on("click", ".js-change-image", function() {
-        return $el.find("#image-field").click();
-      });
-      $el.on("change", "#image-field", function(event) {
-        if ($scope.vm.imageAttachment) {
-          return $el.find('#image-field-name').html($scope.vm.imageAttachment.name);
-        } else {
-          return $el.find('#image-field-name').html("");
-        }
-      });
-      return $scope.$on("$destroy", function() {
-        return $el.off();
-      });
-    };
-    return {
-      link: link
-    };
-  };
-
-  module.directive("tgExperienceImage", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", ExperienceImageDirective]);
-
-  ExperienceImageModelDirective = function($parse) {
-    var link;
-    link = function($scope, $el, $attrs) {
-      var model, modelSetter;
-      model = $parse($attrs.tgExperienceImageModel);
-      modelSetter = model.assign;
-      return $el.bind('change', function() {
-        return $scope.$apply(function() {
-          return modelSetter($scope, $el[0].files[0]);
-        });
-      });
-    };
-    return {
-      link: link
-    };
-  };
-
-  module.directive('tgExperienceImageModel', ['$parse', ExperienceImageModelDirective]);
-
-  ProjectExperienceImageSrcDirective = function() {
-    var link;
-    link = function(scope, el, attrs) {
-      return scope.$watch('project', function(project) {
-        var experienceImage;
-        project = Immutable.fromJS(project);
-        if (!project) {
-          return;
-        }
-        experienceImage = project.get('image_presentation');
-        if (experienceImage) {
-          el.attr('src', experienceImage);
-          return el.css('background', "");
-        }
-      });
-    };
-    return {
-      link: link,
-      scope: {
-        project: "=tgProjectExperienceImageSrc"
-      }
-    };
-  };
-
-  ProjectExperienceImageSrcDirective.$inject = [];
-
-  module.directive("tgProjectExperienceImageSrc", ProjectExperienceImageSrcDirective);
 
 }).call(this);
 
@@ -45978,6 +45301,1101 @@
 
 
 /*
+ */
+
+(function() {
+  var CreateExperienceController, taiga;
+
+  taiga = this.taiga;
+
+  CreateExperienceController = (function() {
+    CreateExperienceController.$inject = ["$tgResources", "tgResources", "$q", "$tgConfirm", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "tgProjectsService", "lightboxService", "$translate", "$tgAccionStem"];
+
+    function CreateExperienceController(rs, rs2, q, confirm, location, navUrls, currentUserService, projectsService, lightboxService, translate, accionStem) {
+      var latestModifiedDate, modifiedDates;
+      this.rs = rs;
+      this.rs2 = rs2;
+      this.q = q;
+      this.confirm = confirm;
+      this.location = location;
+      this.navUrls = navUrls;
+      this.currentUserService = currentUserService;
+      this.projectsService = projectsService;
+      this.lightboxService = lightboxService;
+      this.translate = translate;
+      this.accionStem = accionStem;
+      this.errorList = [];
+      this.usCustomAttrs = this.projectsService.getCustomAttributes(this.project.userstory_custom_attributes);
+      this.usCustomAttrValues = this.getCustomAttributesValues();
+      this.tagsEpic = this.getTagsEpic();
+      this.activities = this.getUserStoriesDetail();
+      modifiedDates = this.userstories.map(function(elem) {
+        return moment(elem.get("modified_date")).valueOf();
+      });
+      latestModifiedDate = moment(Math.max.apply(null, modifiedDates._tail.array)).format('YYYY-MM-DDTHH:mm');
+      this.objetivos = this.accionStem.configAccionStem.experience.goals;
+      this.toolsOptions = this.accionStem.configAccionStem.experience.institutional_tools;
+      this.newProjectForm = {
+        name: this.epic.subject,
+        description: this.epic.description,
+        is_private: true,
+        creation_template: 2,
+        start_date: this.epic.created_date,
+        end_date: latestModifiedDate,
+        establishment_details: this.project.establishment_details,
+        objectives_list: [],
+        related_roles: [],
+        tags_colors: Object.entries(this.project.tags_colors),
+        tags: this.tagsEpic,
+        context_experience: {}
+      };
+      this.linkVideoPresentation = null;
+      this.loading = false;
+    }
+
+    CreateExperienceController.prototype.createExperience = function() {
+      var setInvitedContacts;
+      this.validateForm();
+      if (this.errorList.length === 0) {
+        this.loading = true;
+        this.newProjectForm.related_roles = this.getRelatedRoles();
+        setInvitedContacts = [];
+        return this.projectsService.create(this.newProjectForm).then((function(_this) {
+          return function(newProject) {
+            var promiseUs, usCustomAttrsNew;
+            usCustomAttrsNew = _this.projectsService.getCustomAttributes(newProject.get("userstory_custom_attributes")._tail.array);
+            _this.projectsService.createReviewerStuff(newProject);
+            if (_this.imageAttachment) {
+              _this.rs.projects.changeImagePresentation(newProject.get('id'), _this.imageAttachment);
+            }
+            promiseUs = _this.rs.userstories.customBulkCreate(newProject.get('id'), newProject.get('default_us_status'), _this.activities);
+            return promiseUs.then(function(data) {
+              var bulk_tasks, promiseTasks, usIds;
+              usIds = data._attrs.map(function(item) {
+                return item.id;
+              });
+              bulk_tasks = _this.addUsIdTasks(data);
+              promiseTasks = _this.rs.tasks.customBulkCreate(newProject.get('id'), newProject.get('default_task_status'), bulk_tasks);
+              return promiseTasks.then(function(data) {
+                var promiseCustomAttrs, usCustomAttrValuesNew;
+                usCustomAttrValuesNew = _this.createCustomAttributesValuesNew(usCustomAttrsNew);
+                promiseCustomAttrs = _this.rs.customAttributesValues.customBulkCreate(usIds, usCustomAttrValuesNew);
+                return promiseCustomAttrs.then(function(data) {
+                  _this.loading = false;
+                  _this.lightboxService.closeAll();
+                  _this.confirm.notify("success");
+                  _this.location.path(_this.navUrls.resolve("project", {
+                    project: newProject.get('slug')
+                  }));
+                  return _this.currentUserService.loadProjects();
+                });
+              });
+            });
+          };
+        })(this));
+      }
+    };
+
+    CreateExperienceController.prototype.validateForm = function() {
+      var idVideo;
+      this.errorList = [];
+      this.objetivosSeleccionados();
+      if (!this.newProjectForm.description) {
+        this.errorList.push('description');
+      }
+      if (!this.newProjectForm.objectives_list.length) {
+        this.errorList.push('objectives_list');
+      }
+      if (!this.newProjectForm.context_experience.problem) {
+        this.errorList.push('problem');
+      }
+      if (!this.newProjectForm.context_experience.problem) {
+        this.errorList.push('solution');
+      }
+      if (!this.newProjectForm.context_experience.problem) {
+        this.errorList.push('results');
+      }
+      if (this.linkVideoPresentation) {
+        idVideo = this.obtenerIdYoutube(this.linkVideoPresentation);
+        if (idVideo) {
+          this.newProjectForm.video_presentation = "https://www.youtube.com/embed/" + idVideo;
+        } else {
+          this.errorList.push('format_video');
+        }
+      }
+      if (this.imageAttachment) {
+        if (this.imageAttachment.type !== 'image/jpeg' && this.imageAttachment.type !== 'image/png') {
+          return this.errorList.push('format_image');
+        }
+      }
+    };
+
+    CreateExperienceController.prototype.objetivosSeleccionados = function() {
+      var goal, j, len, ref, results;
+      this.newProjectForm.objectives_list = [];
+      ref = this.objetivos;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        goal = ref[j];
+        if (goal.selected) {
+          results.push(this.newProjectForm.objectives_list.push(goal.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+
+    /*
+    Esta función recibe un enlace de YouTube y devuelve el identificador del video.
+    Si el enlace no es válido, devuelve null.
+     */
+
+    CreateExperienceController.prototype.obtenerIdYoutube = function(enlace) {
+      var query_params;
+      if (enlace.startsWith("https://youtu.be/")) {
+        return enlace.split("/").at(-1);
+      } else if (enlace.startsWith("https://www.youtube.com/watch?")) {
+        query_params = new URL(enlace).searchParams;
+        if (query_params.has("v")) {
+          return query_params.get("v");
+        }
+      } else if (enlace.startsWith("https://www.youtube.com/watch?v=")) {
+        return enlace.split("=").at(-1);
+      } else {
+        return null;
+      }
+    };
+
+    CreateExperienceController.prototype.getCustomAttributesValues = function() {
+      var promises, type, usCustomAttrValues, usIds;
+      type = 'userstory';
+      usIds = this.userstories._tail.array.map(function(item) {
+        return item.get("id");
+      });
+      promises = _.map(usIds, (function(_this) {
+        return function(usId) {
+          return _this.rs.customAttributesValues[type].get(usId);
+        };
+      })(this));
+      usCustomAttrValues = [];
+      this.q.all(promises).then((function(_this) {
+        return function(data) {
+          return data.map(function(item) {
+            return usCustomAttrValues.push(item.attributes_values);
+          });
+        };
+      })(this));
+      return usCustomAttrValues;
+    };
+
+    CreateExperienceController.prototype.createCustomAttributesValuesNew = function(usCustomAttrsNew) {
+      var attr, item, j, k, key, l, len, len1, len2, newObj, obj, ref, ref1, usCustomAttrValuesNew, value;
+      usCustomAttrValuesNew = [];
+      ref = this.usCustomAttrValues;
+      for (j = 0, len = ref.length; j < len; j++) {
+        obj = ref[j];
+        newObj = {};
+        ref1 = this.usCustomAttrs;
+        for (k = 0, len1 = ref1.length; k < len1; k++) {
+          item = ref1[k];
+          for (l = 0, len2 = usCustomAttrsNew.length; l < len2; l++) {
+            attr = usCustomAttrsNew[l];
+            if (item.name === attr.name) {
+              key = attr.id;
+              value = obj[item.id] || "";
+              newObj[key] = value;
+            }
+          }
+        }
+        usCustomAttrValuesNew.push(newObj);
+      }
+      return usCustomAttrValuesNew;
+    };
+
+    CreateExperienceController.prototype.getTagsEpic = function() {
+      var tagsEpic;
+      tagsEpic = [];
+      this.epic.tags.map(function(tagEpic) {
+        return tagsEpic.push(tagEpic[0]);
+      });
+      return tagsEpic;
+    };
+
+    CreateExperienceController.prototype.getUserStoriesDetail = function() {
+      var activities;
+      activities = [];
+      this.rs2.userstories.listAllInEpic(this.epic.id).then((function(_this) {
+        return function(data) {
+          return data._tail.array.map(function(item) {
+            var activity, tags, tasks;
+            tasks = [];
+            if (item.get("tasks").size > 0) {
+              item.get("tasks")._tail.array.map(function(task) {
+                var tags_tasks;
+                tags_tasks = [];
+                if (task.get("tags").size > 0) {
+                  tags_tasks = task.get('tags')._tail.array;
+                }
+                task = {
+                  "us_id": "",
+                  "subject": task.get("subject"),
+                  "description": task.get("description"),
+                  "tags": tags_tasks
+                };
+                return tasks.push(task);
+              });
+            }
+            tags = [];
+            if (item.get("tags").size > 0) {
+              item.get('tags')._tail.array.map(function(tag) {
+                return tags.push(tag._tail.array[0]);
+              });
+            }
+            activity = {
+              "subject": item.get("subject"),
+              "description": item.get("description"),
+              "tasks": tasks,
+              "tags": tags
+            };
+            return activities.push(activity);
+          });
+        };
+      })(this));
+      return activities;
+    };
+
+    CreateExperienceController.prototype.addUsIdTasks = function(data) {
+      var bulk_tasks;
+      bulk_tasks = [];
+      this.activities.forEach(function(activity) {
+        if (activity.tasks.length > 0) {
+          return data._attrs.map(function(item) {
+            var i, j, ref, results;
+            if (item.subject === activity.subject && item.description === activity.description) {
+              results = [];
+              for (i = j = 0, ref = activity.tasks.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+                activity.tasks[i].us_id = item.id;
+                results.push(bulk_tasks.push(activity.tasks[i]));
+              }
+              return results;
+            }
+          });
+        }
+      });
+      return bulk_tasks;
+    };
+
+    CreateExperienceController.prototype.getRelatedRoles = function() {
+      var j, k, len, len1, ref, ref1, relatedRoles, relatedRolesUnique, responsable, responsableId, usCustomAttr, usCustomAttrValue;
+      relatedRoles = [];
+      responsableId = null;
+      ref = this.usCustomAttrs;
+      for (j = 0, len = ref.length; j < len; j++) {
+        usCustomAttr = ref[j];
+        if (usCustomAttr.name === "Responsable") {
+          responsableId = usCustomAttr.id;
+          break;
+        }
+      }
+      relatedRoles = [];
+      ref1 = this.usCustomAttrValues;
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        usCustomAttrValue = ref1[k];
+        responsable = usCustomAttrValue[responsableId] || '';
+        if (responsable !== '') {
+          relatedRoles.push(responsable);
+        }
+      }
+      relatedRolesUnique = Array.from(new Set(relatedRoles));
+      return relatedRolesUnique;
+    };
+
+    return CreateExperienceController;
+
+  })();
+
+  angular.module("taigaProjects").controller("CreateExperienceCtrl", CreateExperienceController);
+
+}).call(this);
+
+
+/*
+ */
+
+(function() {
+  var CreateExperienceDirective;
+
+  CreateExperienceDirective = function() {
+    var link;
+    link = function(scope, el, attrs, ctrl) {
+      var form;
+      return form = el.find("form").checksley();
+    };
+    return {
+      link: link,
+      templateUrl: "projects/experience/create-from-initiative/create-experience.html",
+      controller: "CreateExperienceCtrl",
+      controllerAs: "vm",
+      bindToController: {
+        project: '=',
+        epic: '=',
+        userstories: '='
+      },
+      scope: {}
+    };
+  };
+
+  angular.module('taigaProjects').directive("tgCreateExpe", CreateExperienceDirective);
+
+}).call(this);
+
+
+/*
+ * Acción STEM - Comunidades de práctica - 2023
+ */
+
+(function() {
+  var ExperienceProjectController;
+
+  ExperienceProjectController = (function() {
+    ExperienceProjectController.$inject = ["tgCurrentUserService", "tgProjectsService", "$projectUrl", "$location", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgModel", "$tgRepo", "$tgResources", "$tgAccionStem"];
+
+    function ExperienceProjectController(currentUserService, projectsService, projectUrl, location, navUrls, analytics, translate, model, repo, rs, accionStem) {
+      this.currentUserService = currentUserService;
+      this.projectsService = projectsService;
+      this.projectUrl = projectUrl;
+      this.location = location;
+      this.navUrls = navUrls;
+      this.analytics = analytics;
+      this.translate = translate;
+      this.model = model;
+      this.repo = repo;
+      this.rs = rs;
+      this.accionStem = accionStem;
+      this.errorList = [];
+      this.projectForm = {
+        is_private: true,
+        start_date: null,
+        end_date: null,
+        establishment_details: {},
+        objectives_list: [],
+        related_roles: [],
+        context_experience: {},
+        creation_template: 2
+      };
+      this.selectedRegion = {};
+      this.selectedProvince = {};
+      this.comunas = [
+        {
+          "region": "Región de los Ríos",
+          "provincias": [
+            {
+              "name": "Valdivia",
+              "comunas": [
+                {
+                  "name": "Valdivia"
+                }, {
+                  "name": "Corral"
+                }, {
+                  "name": "Lanco"
+                }, {
+                  "name": "Los Lagos"
+                }, {
+                  "name": "Máfil"
+                }, {
+                  "name": "Mariquina"
+                }, {
+                  "name": "Paillaco"
+                }, {
+                  "name": "Panguipulli"
+                }
+              ]
+            }, {
+              "name": "Ranco",
+              "comunas": [
+                {
+                  "name": "La Unión"
+                }, {
+                  "name": "Futrono"
+                }, {
+                  "name": "Lago Ranco"
+                }, {
+                  "name": "Río Bueno"
+                }
+              ]
+            }
+          ]
+        }
+      ];
+      this.rangos = this.accionStem.configAccionStem.institution.size;
+      this.ubicaciones = this.accionStem.configAccionStem.institution.location_type;
+      this.sostenedores = this.accionStem.configAccionStem.institution.sostenedor;
+      this.levelOptions = this.accionStem.configAccionStem.institution.level;
+      this.toolsOptions = this.accionStem.configAccionStem.experience.institutional_tools;
+      this.objetivos = this.accionStem.configAccionStem.experience.goals;
+      this.roles = this.accionStem.configAccionStem.experience.roles;
+      this.rolesOptions = this.accionStem.configAccionStem.experience.roles_activities;
+      this.activities = [];
+      this.activities_attributes = [];
+      this.linkVideoPresentation = null;
+      this.estimated_start = null;
+      this.estimated_end = null;
+      this.openSectionIndex = -1;
+    }
+
+    ExperienceProjectController.prototype.objetivosSeleccionados = function() {
+      var goal, j, len, ref, results;
+      this.projectForm.objectives_list = [];
+      ref = this.objetivos;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        goal = ref[j];
+        if (goal.selected) {
+          results.push(this.projectForm.objectives_list.push(goal.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    ExperienceProjectController.prototype.rolesSeleccionados = function() {
+      var j, len, ref, results, rol;
+      this.projectForm.related_roles = [];
+      ref = this.roles;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        rol = ref[j];
+        if (rol.selected) {
+          results.push(this.projectForm.related_roles.push(rol.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+
+    /*
+    Esta función recibe un enlace de YouTube y devuelve el identificador del video.
+    Si el enlace no es válido, devuelve null.
+     */
+
+    ExperienceProjectController.prototype.obtenerIdYoutube = function(enlace) {
+      var query_params;
+      if (enlace.startsWith("https://youtu.be/")) {
+        return enlace.split("/").at(-1);
+      } else if (enlace.startsWith("https://www.youtube.com/watch?")) {
+        query_params = new URL(enlace).searchParams;
+        if (query_params.has("v")) {
+          return query_params.get("v");
+        }
+      } else if (enlace.startsWith("https://www.youtube.com/watch?v=")) {
+        return enlace.split("=").at(-1);
+      } else {
+        return null;
+      }
+    };
+
+    ExperienceProjectController.prototype.submit = function() {
+      var prettyDate;
+      this.validateForm();
+      if (this.errorList.length === 0) {
+        this.projectForm.establishment_details.region = this.selectedRegion.region;
+        this.projectForm.establishment_details.province = this.selectedProvince.name;
+        if (!this.projectForm.establishment_details.delegated_administration) {
+          this.projectForm.establishment_details.delegated_administration = false;
+        }
+        prettyDate = this.translate.instant("COMMON.PICKERDATE.FORMAT");
+        this.projectForm.start_date = moment(this.estimated_start, prettyDate).format("YYYY-MM-DDThh:mm");
+        this.projectForm.end_date = moment(this.estimated_end, prettyDate).format("YYYY-MM-DDThh:mm");
+        return this.projectsService.create(this.projectForm).then((function(_this) {
+          return function(project) {
+            var promise;
+            if (_this.imageAttachment) {
+              _this.rs.projects.changeImagePresentation(project.get('id'), _this.imageAttachment);
+            }
+            _this.projectsService.createReviewerStuff(project);
+            promise = _this.rs.userstories.customBulkCreate(project.get('id'), project.get('default_us_status'), _this.activities);
+            return promise.then(function(data) {
+              var attributes_values, new_promise, us_ids, userstory_custom_attributes;
+              us_ids = data._attrs.map(function(item) {
+                return item.id;
+              });
+              userstory_custom_attributes = _this.projectsService.getCustomAttributes(project.get("userstory_custom_attributes")._tail.array);
+              attributes_values = _this.activities_attributes.map(function(value) {
+                var result;
+                result = {};
+                userstory_custom_attributes.forEach(function(attribute) {
+                  var key, name;
+                  key = attribute.id;
+                  name = attribute.name.toLowerCase();
+                  if (name === "involucrados") {
+                    return result[key] = value[name].join(", ");
+                  } else {
+                    return result[key] = value[name];
+                  }
+                });
+                return result;
+              });
+              new_promise = _this.rs.customAttributesValues.customBulkCreate(us_ids, attributes_values);
+              return new_promise.then(function(data) {
+                _this.analytics.trackEvent("project", "create", "project creation", {
+                  slug: project.get('slug'),
+                  id: project.get('id')
+                });
+                _this.location.url(_this.projectUrl.get(project));
+                return _this.currentUserService.loadProjects();
+              });
+            });
+          };
+        })(this));
+      }
+    };
+
+    ExperienceProjectController.prototype.validateForm = function() {
+      var date, i, idVideo, j, k, prettyDate, ref, ref1, results;
+      this.errorList = [];
+      this.objetivosSeleccionados();
+      this.rolesSeleccionados();
+      if (!this.projectForm.name) {
+        this.errorList.push('name');
+      }
+      if (!this.projectForm.description) {
+        this.errorList.push('description');
+      }
+      if (!this.projectForm.objectives_list.length) {
+        this.errorList.push('objectives_list');
+      }
+      if (!this.projectForm.context_experience.problem) {
+        this.errorList.push('problem');
+      }
+      if (!this.projectForm.context_experience.problem) {
+        this.errorList.push('solution');
+      }
+      if (!this.projectForm.context_experience.problem) {
+        this.errorList.push('results');
+      }
+      if (!this.projectForm.related_roles.length) {
+        this.errorList.push('related_roles');
+      }
+      if (this.linkVideoPresentation) {
+        idVideo = this.obtenerIdYoutube(this.linkVideoPresentation);
+        if (idVideo) {
+          this.projectForm.video_presentation = "https://www.youtube.com/embed/" + idVideo;
+        } else {
+          this.errorList.push('format_video');
+        }
+      }
+      if (this.imageAttachment) {
+        if (this.imageAttachment.type !== 'image/jpeg' && this.imageAttachment.type !== 'image/png') {
+          this.errorList.push('format_image');
+        }
+      }
+      this.estimated_start = $('.date-start').val();
+      this.estimated_end = $('.date-end').val();
+      if (!this.estimated_start) {
+        this.errorList.push('start_date');
+      }
+      if (!this.estimated_end) {
+        this.errorList.push('end_date');
+      }
+      prettyDate = this.translate.instant("COMMON.PICKERDATE.FORMAT");
+      if (this.activities.length) {
+        for (i = j = 0, ref = this.activities.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+          this.activities[i].tags = [];
+        }
+        results = [];
+        for (i = k = 0, ref1 = this.activities_attributes.length - 1; 0 <= ref1 ? k <= ref1 : k >= ref1; i = 0 <= ref1 ? ++k : --k) {
+          date = $('#date' + i).val();
+          results.push(this.activities_attributes[i].fecha = moment(date, prettyDate).format("YYYY-MM-DD"));
+        }
+        return results;
+      } else {
+        return this.errorList.push('activities');
+      }
+    };
+
+    ExperienceProjectController.prototype.onCancelForm = function() {
+      return this.location.path(this.navUrls.resolve("create-project"));
+    };
+
+    ExperienceProjectController.prototype.toggleSection = function(index) {
+      if (this.openSectionIndex === index) {
+        return this.openSectionIndex = -1;
+      } else {
+        return this.openSectionIndex = index;
+      }
+    };
+
+    ExperienceProjectController.prototype.isSectionOpen = function(index) {
+      return this.openSectionIndex === index;
+    };
+
+    return ExperienceProjectController;
+
+  })();
+
+  angular.module("taigaProjects").controller("ExperienceProjectCtrl", ExperienceProjectController);
+
+}).call(this);
+
+
+/*
+ * Accion STEM
+ */
+
+(function() {
+  var ExperienceImageDirective, ExperienceImageModelDirective, ExperienceProjectDirective, ProjectExperienceImageSrcDirective, module;
+
+  module = angular.module("taigaProjects");
+
+  ExperienceProjectDirective = function() {
+    var link;
+    link = function(scope, el, attr, ctrl) {};
+    return {
+      link: link,
+      templateUrl: "projects/experience/create/experience-project.html",
+      controller: "ExperienceProjectCtrl",
+      controllerAs: "vm",
+      bindToController: true,
+      scope: {}
+    };
+  };
+
+  ExperienceProjectDirective.$inject = [];
+
+  module.directive("tgExperienceProject", ExperienceProjectDirective);
+
+  ExperienceImageDirective = function($auth, $model, $rs, $confirm) {
+    var link;
+    link = function($scope, $el, $attrs) {
+      var showSizeInfo;
+      showSizeInfo = function() {
+        return $el.find(".size-info").addClass("active");
+      };
+      $el.on("click", ".js-change-image", function() {
+        return $el.find("#image-field").click();
+      });
+      $el.on("change", "#image-field", function(event) {
+        if ($scope.vm.imageAttachment) {
+          return $el.find('#image-field-name').html($scope.vm.imageAttachment.name);
+        } else {
+          return $el.find('#image-field-name').html("");
+        }
+      });
+      return $scope.$on("$destroy", function() {
+        return $el.off();
+      });
+    };
+    return {
+      link: link
+    };
+  };
+
+  module.directive("tgExperienceImage", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", ExperienceImageDirective]);
+
+  ExperienceImageModelDirective = function($parse) {
+    var link;
+    link = function($scope, $el, $attrs) {
+      var model, modelSetter;
+      model = $parse($attrs.tgExperienceImageModel);
+      modelSetter = model.assign;
+      return $el.bind('change', function() {
+        return $scope.$apply(function() {
+          return modelSetter($scope, $el[0].files[0]);
+        });
+      });
+    };
+    return {
+      link: link
+    };
+  };
+
+  module.directive('tgExperienceImageModel', ['$parse', ExperienceImageModelDirective]);
+
+  ProjectExperienceImageSrcDirective = function() {
+    var link;
+    link = function(scope, el, attrs) {
+      return scope.$watch('project', function(project) {
+        var experienceImage;
+        project = Immutable.fromJS(project);
+        if (!project) {
+          return;
+        }
+        experienceImage = project.get('image_presentation');
+        if (experienceImage) {
+          el.attr('src', experienceImage);
+          return el.css('background', "");
+        }
+      });
+    };
+    return {
+      link: link,
+      scope: {
+        project: "=tgProjectExperienceImageSrc"
+      }
+    };
+  };
+
+  ProjectExperienceImageSrcDirective.$inject = [];
+
+  module.directive("tgProjectExperienceImageSrc", ProjectExperienceImageSrcDirective);
+
+}).call(this);
+
+
+/*
+ */
+
+(function() {
+  var EditExperienceController, taiga,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  taiga = this.taiga;
+
+  EditExperienceController = (function() {
+    EditExperienceController.$inject = ["$tgResources", "tgResources", "$q", "$tgConfirm", "$tgLocation", "$tgNavUrls", "tgCurrentUserService", "tgProjectsService", "lightboxService", "$translate", "$tgAccionStem", "$tgModel", "$tgRepo"];
+
+    function EditExperienceController(rs, rs2, q, confirm, location, navUrls, currentUserService, projectsService, lightboxService, translate, accionStem, model, repo) {
+      this.rs = rs;
+      this.rs2 = rs2;
+      this.q = q;
+      this.confirm = confirm;
+      this.location = location;
+      this.navUrls = navUrls;
+      this.currentUserService = currentUserService;
+      this.projectsService = projectsService;
+      this.lightboxService = lightboxService;
+      this.translate = translate;
+      this.accionStem = accionStem;
+      this.model = model;
+      this.repo = repo;
+      this.project = this.project.toJS();
+      this.project = this.model.make_model("projects", this.project);
+      this.errorList = [];
+      this.loading = false;
+      this.selectedRegion = {};
+      this.selectedProvince = {};
+      this.comunas = [
+        {
+          "region": "Región de los Ríos",
+          "provincias": [
+            {
+              "name": "Valdivia",
+              "comunas": [
+                {
+                  "name": "Valdivia"
+                }, {
+                  "name": "Corral"
+                }, {
+                  "name": "Lanco"
+                }, {
+                  "name": "Los Lagos"
+                }, {
+                  "name": "Máfil"
+                }, {
+                  "name": "Mariquina"
+                }, {
+                  "name": "Paillaco"
+                }, {
+                  "name": "Panguipulli"
+                }
+              ]
+            }, {
+              "name": "Ranco",
+              "comunas": [
+                {
+                  "name": "La Unión"
+                }, {
+                  "name": "Futrono"
+                }, {
+                  "name": "Lago Ranco"
+                }, {
+                  "name": "Río Bueno"
+                }
+              ]
+            }
+          ]
+        }
+      ];
+      this.rangos = this.accionStem.configAccionStem.institution.size;
+      this.ubicaciones = this.accionStem.configAccionStem.institution.location_type;
+      this.sostenedores = this.accionStem.configAccionStem.institution.sostenedor;
+      this.levelOptions = this.accionStem.configAccionStem.institution.level;
+      this.toolsOptions = this.accionStem.configAccionStem.experience.institutional_tools;
+      this.objetivos = this.accionStem.configAccionStem.experience.goals;
+      this.roles = this.accionStem.configAccionStem.experience.roles;
+      this.linkVideoPresentation = null;
+      this.estimated_start = null;
+      this.estimated_end = null;
+      this.rolesProject();
+      this.objetivosProject();
+    }
+
+    EditExperienceController.prototype.editExperience = function() {
+      var promise;
+      this.validateForm();
+      if (this.errorList.length === 0) {
+        this.loading = true;
+        this.project.start_date = moment(this.estimated_start).format("YYYY-MM-DDThh:mm");
+        this.project.end_date = moment(this.estimated_end).format("YYYY-MM-DDThh:mm");
+        this.project.setAttr('context_experience', this.project.context_experience);
+        promise = this.repo.save(this.project);
+        return promise.then((function(_this) {
+          return function(project) {
+            if (_this.imageAttachment) {
+              _this.rs.projects.changeImagePresentation(project.id, _this.imageAttachment);
+            }
+            _this.loading = false;
+            _this.lightboxService.closeAll();
+            return window.location.href = _this.location.url();
+          };
+        })(this));
+      }
+    };
+
+    EditExperienceController.prototype.validateForm = function() {
+      var idVideo;
+      this.errorList = [];
+      this.objetivosSeleccionados();
+      this.rolesSeleccionados();
+      if (!this.project.name) {
+        this.errorList.push('name');
+      }
+      if (!this.project.description) {
+        this.errorList.push('description');
+      }
+      if (!this.project.objectives_list.length) {
+        this.errorList.push('objectives_list');
+      }
+      if (!this.project.context_experience.problem) {
+        this.errorList.push('problem');
+      }
+      if (!this.project.related_roles.length) {
+        this.errorList.push('related_roles');
+      }
+      if (this.linkVideoPresentation) {
+        idVideo = this.obtenerIdYoutube(this.linkVideoPresentation);
+        if (idVideo) {
+          this.project.video_presentation = "https://www.youtube.com/embed/" + idVideo;
+        } else {
+          this.errorList.push('format_video');
+        }
+      }
+      if (this.imageAttachment) {
+        if (this.imageAttachment.type !== 'image/jpeg' && this.imageAttachment.type !== 'image/png') {
+          this.errorList.push('format_image');
+        }
+      }
+      this.estimated_start = $('.date-start').val();
+      this.estimated_end = $('.date-end').val();
+      if (!this.estimated_start) {
+        this.errorList.push('start_date');
+      }
+      if (!this.estimated_end) {
+        return this.errorList.push('end_date');
+      }
+    };
+
+    EditExperienceController.prototype.editEstablishmentDetails = function() {
+      var promise;
+      this.validateFormEstablishment();
+      if (this.errorList.length === 0) {
+        this.loading = true;
+        this.project.setAttr('establishment_details', this.project.establishment_details);
+        promise = this.repo.save(this.project);
+        return promise.then((function(_this) {
+          return function(project) {
+            _this.loading = false;
+            _this.lightboxService.closeAll();
+            return window.location.href = _this.location.url();
+          };
+        })(this));
+      }
+    };
+
+    EditExperienceController.prototype.validateFormEstablishment = function() {
+      this.errorList = [];
+      this.project.establishment_details.region = this.selectedRegion.region;
+      this.project.establishment_details.province = this.selectedProvince.name;
+      if (!this.project.establishment_details.name) {
+        this.errorList.push('establishment_name');
+      }
+      if (!this.project.establishment_details.rbd) {
+        this.errorList.push('establishment_rbd');
+      }
+      if (!this.project.establishment_details.level) {
+        this.errorList.push('establishment_level');
+      }
+      if (!this.project.establishment_details.size) {
+        this.errorList.push('establishment_size');
+      }
+      if (!this.project.establishment_details.region) {
+        this.errorList.push('establishment_region');
+      }
+      if (!this.project.establishment_details.province) {
+        this.errorList.push('establishment_province');
+      }
+      if (!this.project.establishment_details.commune) {
+        this.errorList.push('establishment_commune');
+      }
+      if (!this.project.establishment_details.location) {
+        this.errorList.push('establishment_location');
+      }
+      if (!this.project.establishment_details.holder) {
+        this.errorList.push('establishment_holder');
+      }
+      if (!this.project.establishment_details.vi) {
+        return this.errorList.push('establishment_vi');
+      }
+    };
+
+    EditExperienceController.prototype.rolesProject = function() {
+      var i, len, ref, ref1, results, rol;
+      ref = this.roles;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        rol = ref[i];
+        if (ref1 = rol['name'], indexOf.call(this.project.related_roles, ref1) >= 0) {
+          results.push(rol['selected'] = true);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    EditExperienceController.prototype.objetivosProject = function() {
+      var goal, i, len, ref, ref1, results;
+      ref = this.objetivos;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        goal = ref[i];
+        if (ref1 = goal['name'], indexOf.call(this.project.objectives_list, ref1) >= 0) {
+          results.push(goal['selected'] = true);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    EditExperienceController.prototype.objetivosSeleccionados = function() {
+      var goal, i, len, ref, results;
+      this.project.objectives_list = [];
+      ref = this.objetivos;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        goal = ref[i];
+        if (goal.selected) {
+          results.push(this.project.objectives_list.push(goal.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    EditExperienceController.prototype.rolesSeleccionados = function() {
+      var i, len, ref, results, rol;
+      this.project.related_roles = [];
+      ref = this.roles;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        rol = ref[i];
+        if (rol.selected) {
+          results.push(this.project.related_roles.push(rol.name));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+
+    /*
+    Esta función recibe un enlace de YouTube y devuelve el identificador del video.
+    Si el enlace no es válido, devuelve null.
+     */
+
+    EditExperienceController.prototype.obtenerIdYoutube = function(enlace) {
+      var query_params;
+      if (enlace.startsWith("https://youtu.be/")) {
+        return enlace.split("/").at(-1);
+      } else if (enlace.startsWith("https://www.youtube.com/watch?")) {
+        query_params = new URL(enlace).searchParams;
+        if (query_params.has("v")) {
+          return query_params.get("v");
+        }
+      } else if (enlace.startsWith("https://www.youtube.com/watch?v=")) {
+        return enlace.split("=").at(-1);
+      } else {
+        return null;
+      }
+    };
+
+    return EditExperienceController;
+
+  })();
+
+  angular.module("taigaProjects").controller("EditExperienceCtrl", EditExperienceController);
+
+}).call(this);
+
+
+/*
+ */
+
+(function() {
+  var EditEstablishmentDetailsDirective, EditExperienceDirective;
+
+  EditExperienceDirective = function() {
+    var link;
+    link = function(scope, el, attrs, ctrl) {
+      var form;
+      return form = el.find("form").checksley();
+    };
+    return {
+      link: link,
+      templateUrl: "projects/experience/edit/edit-experience.html",
+      controller: "EditExperienceCtrl",
+      controllerAs: "vm",
+      bindToController: {
+        project: '='
+      },
+      scope: {}
+    };
+  };
+
+  angular.module('taigaProjects').directive("tgEditExperience", EditExperienceDirective);
+
+  EditEstablishmentDetailsDirective = function() {
+    var link;
+    link = function(scope, el, attrs, ctrl) {
+      var form;
+      return form = el.find("form").checksley();
+    };
+    return {
+      link: link,
+      templateUrl: "projects/experience/edit/edit-establishment-details.html",
+      controller: "EditExperienceCtrl",
+      controllerAs: "vm",
+      bindToController: {
+        project: '='
+      },
+      scope: {}
+    };
+  };
+
+  angular.module('taigaProjects').directive("tgEditEstablishment", EditEstablishmentDetailsDirective);
+
+}).call(this);
+
+
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -46086,9 +46504,9 @@
   var ProjectController;
 
   ProjectController = (function() {
-    ProjectController.$inject = ["$routeParams", "tgAppMetaService", "$tgAuth", "$translate", "tgProjectService", "$tgConfig", "$tgNavUrls", "$location"];
+    ProjectController.$inject = ["$routeParams", "tgAppMetaService", "$tgAuth", "$translate", "tgProjectService", "$tgConfig", "$tgNavUrls", "$location", "tgLightboxFactory"];
 
-    function ProjectController(routeParams, appMetaService, auth, translate, projectService, config, navUrls, location) {
+    function ProjectController(routeParams, appMetaService, auth, translate, projectService, config, navUrls, location, lightboxFactory) {
       var creation_template_id, nextUrl;
       this.routeParams = routeParams;
       this.appMetaService = appMetaService;
@@ -46098,6 +46516,7 @@
       this.config = config;
       this.navUrls = navUrls;
       this.location = location;
+      this.lightboxFactory = lightboxFactory;
       this.user = this.auth.userData;
       taiga.defineImmutableProperty(this, "project", (function(_this) {
         return function() {
@@ -46140,6 +46559,24 @@
         title: this.translate.instant("PROJECT.PAGE_TITLE", ctx),
         description: this.project.get("description")
       };
+    };
+
+    ProjectController.prototype.onEditExperience = function() {
+      return this.lightboxFactory.create('tg-edit-experience', {
+        "class": "lightbox lightbox-edit-experience open",
+        "project": "project"
+      }, {
+        "project": this.project
+      });
+    };
+
+    ProjectController.prototype.onEditEstablishmentDetails = function() {
+      return this.lightboxFactory.create('tg-edit-establishment', {
+        "class": "lightbox lightbox-edit-experience open",
+        "project": "project"
+      }, {
+        "project": this.project
+      });
     };
 
     return ProjectController;

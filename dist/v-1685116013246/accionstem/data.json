@@ -2,7 +2,7 @@
     "experience": {
         "roles": [{
                 "id": "1",
-                "name": "Estudiantes: niños, niñas, adolescentes y adultos",
+                "name": "Estudiantes",
                 "selected": false
             },
             {
@@ -17,12 +17,12 @@
             },
             {
                 "id": "4",
-                "name": "Equipo Técnico-pedagógico",
+                "name": "Equipo técnico-pedagógico",
                 "selected": false
             },
             {
                 "id": "5",
-                "name": "Equipo Directivo",
+                "name": "Equipo directivo",
                 "selected": false
             },
             {
@@ -32,7 +32,7 @@
             },
             {
                 "id": "7",
-                "name": "Coordinadores de Informática / Enlaces",
+                "name": "Coordinadores de informática / Enlaces",
                 "selected": false
             },
             {
@@ -42,7 +42,7 @@
             },
             {
                 "id": "9",
-                "name": "Asesor/es externos Técnico-pedagógico",
+                "name": "Asesor/es externos técnico-pedagógico",
                 "selected": false
             },
             {
@@ -134,7 +134,7 @@
             },
             {
                 "id": "7",
-                "name": "Coordinadores de Informática / Enlaces"
+                "name": "Coordinadores de informática / Enlaces"
             },
             {
                 "id": "8",
@@ -142,7 +142,7 @@
             },
             {
                 "id": "9",
-                "name": "Asesor/es externos Técnico-pedagógico"
+                "name": "Asesor/es externos técnico-pedagógico"
             },
             {
                 "id": "10",
@@ -163,6 +163,10 @@
             },
             {
                 "id": "4",
+                "name": "Está en proceso de ser incorporada en los instrumentos de gestión institucional"
+            },
+            {
+                "id": "5",
                 "name": "No, no está incorporada en los instrumentos de gestión institucional"
             }
         ]
