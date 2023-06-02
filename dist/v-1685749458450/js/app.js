@@ -235,8 +235,18 @@
       loader: true,
       section: "wiki"
     });
+
+    /* Team
+    $routeProvider.when("/project/:pslug/team",
+        {
+            templateUrl: "team/team.html",
+            loader: true,
+            section: "team"
+        }
+    )
+     */
     $routeProvider.when("/project/:pslug/team", {
-      templateUrl: "team/team.html",
+      templateUrl: "admin/admin-memberships.html",
       loader: true,
       section: "team"
     });
@@ -2184,7 +2194,7 @@
 
   module.directive("tgLogin", ["$tgAuth", "$tgConfirm", "$tgLocation", "$tgConfig", "$routeParams", "$tgNavUrls", "$tgEvents", "$translate", "$window", "$tgAnalytics", LoginDirective]);
 
-  RegisterDirective = function($auth, $confirm, $location, $navUrls, $config, $routeParams, $analytics, $translate, $window) {
+  RegisterDirective = function($auth, $confirm, $location, $navUrls, $config, $routeParams, $analytics, $translate, $window, $accionStem) {
     var link;
     link = function($scope, $el, $attrs) {
       var form, onErrorSubmit, onSuccessSubmit, submit;
@@ -2192,6 +2202,7 @@
         $location.path($navUrls.resolve("not-found"));
         $location.replace();
       }
+      $scope.rolesOptions = $accionStem.configAccionStem.profile.roles;
       $scope.data = {};
       form = $el.find("form").checksley({
         onlyOneErrorElement: true
@@ -2241,7 +2252,7 @@
     };
   };
 
-  module.directive("tgRegister", ["$tgAuth", "$tgConfirm", "$tgLocation", "$tgNavUrls", "$tgConfig", "$routeParams", "$tgAnalytics", "$translate", "$window", RegisterDirective]);
+  module.directive("tgRegister", ["$tgAuth", "$tgConfirm", "$tgLocation", "$tgNavUrls", "$tgConfig", "$routeParams", "$tgAnalytics", "$translate", "$window", "$tgAccionStem", RegisterDirective]);
 
   RegisterOptionsDirective = function() {
     return {};
@@ -2343,7 +2354,7 @@
 
   module.directive("tgChangePasswordFromRecovery", ["$tgAuth", "$tgConfirm", "$tgLocation", "$routeParams", "$tgNavUrls", "$translate", ChangePasswordFromRecoveryDirective]);
 
-  InvitationDirective = function($auth, $confirm, $location, $config, $params, $navUrls, $analytics, $translate, config) {
+  InvitationDirective = function($auth, $confirm, $location, $config, $params, $navUrls, $analytics, $translate, config, $accionStem) {
     var link;
     link = function($scope, $el, $attrs) {
       var loginForm, onErrorSubmitLogin, onErrorSubmitRegister, onSuccessSubmitLogin, onSuccessSubmitRegister, promise, registerForm, submitLogin, submitRegister, token;
@@ -2398,6 +2409,7 @@
       })(this));
       $el.on("submit", "form.login-form", submitLogin);
       $el.on("click", ".button-login", submitLogin);
+      $scope.rolesOptions = $accionStem.configAccionStem.profile.roles;
       $scope.dataRegister = {
         token: token
       };
@@ -2446,7 +2458,7 @@
     };
   };
 
-  module.directive("tgInvitation", ["$tgAuth", "$tgConfirm", "$tgLocation", "$tgConfig", "$routeParams", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgConfig", InvitationDirective]);
+  module.directive("tgInvitation", ["$tgAuth", "$tgConfirm", "$tgLocation", "$tgConfig", "$routeParams", "$tgNavUrls", "$tgAnalytics", "$translate", "$tgConfig", "$tgAccionStem", InvitationDirective]);
 
   VerifyEmailDirective = function($repo, $model, $auth, $confirm, $location, $params, $navUrls, $translate) {
     var link;
@@ -19950,9 +19962,6 @@
     MembershipsController.prototype.loadProject = function() {
       var project;
       project = this.projectService.project.toJS();
-      if (!project.i_am_admin) {
-        this.errorHandlingService.permissionDenied();
-      }
       this.scope.projectId = project.id;
       this.scope.project = project;
       this.scope.canAddUsers = project.max_memberships === null || project.max_memberships > project.total_memberships;
@@ -28318,9 +28327,9 @@
   UserSettingsController = (function(superClass) {
     extend(UserSettingsController, superClass);
 
-    UserSettingsController.$inject = ["$scope", "$rootScope", "$tgConfig", "$tgRepo", "$tgConfirm", "$tgResources", "$routeParams", "$q", "$tgLocation", "$tgNavUrls", "$tgAuth", "$translate", "tgErrorHandlingService", "$window"];
+    UserSettingsController.$inject = ["$scope", "$rootScope", "$tgConfig", "$tgRepo", "$tgConfirm", "$tgResources", "$routeParams", "$q", "$tgLocation", "$tgNavUrls", "$tgAuth", "$translate", "tgErrorHandlingService", "$window", "$tgAccionStem"];
 
-    function UserSettingsController(scope, rootscope, config, repo, confirm, rs, params, q, location, navUrls, auth, translate, errorHandlingService, window1) {
+    function UserSettingsController(scope, rootscope, config, repo, confirm, rs, params, q, location, navUrls, auth, translate, errorHandlingService, window1, accionStem) {
       var maxFileSize, promise, text;
       this.scope = scope;
       this.rootscope = rootscope;
@@ -28336,7 +28345,9 @@
       this.translate = translate;
       this.errorHandlingService = errorHandlingService;
       this.window = window1;
+      this.accionStem = accionStem;
       this.scope.sectionName = "USER_SETTINGS.MENU.SECTION_TITLE";
+      this.scope.rolesOptions = this.accionStem.configAccionStem.profile.roles;
       this.scope.project = {};
       this.scope.user = this.auth.getUser();
       if (!this.scope.user) {
@@ -46640,7 +46651,7 @@
           return setInvitedContacts = [
             {
               'role_id': i.get('id'),
-              'username': 'reviewer@admin.com'
+              'username': 'comunidades.accionstem@gmail.com'
             }
           ];
         }

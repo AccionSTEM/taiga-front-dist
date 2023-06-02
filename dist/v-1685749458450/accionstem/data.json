@@ -224,5 +224,48 @@
                 "name": "Municipal"
             }
         ]
+    },
+    "profile": {
+        "roles": [{
+                "id": "1",
+                "name": "Estudiante"
+            },
+            {
+                "id": "2",
+                "name": "Educador/a y/o técnico/a de educación parvularia"
+            },
+            {
+                "id": "3",
+                "name": "Docente"
+            },
+            {
+                "id": "4",
+                "name": "Equipo técnico-pedagógico"
+            },
+            {
+                "id": "5",
+                "name": "Equipo directivo"
+            },
+            {
+                "id": "6",
+                "name": "Equipo convivencia escolar"
+            },
+            {
+                "id": "7",
+                "name": "Coordinador/a de informática / Enlaces"
+            },
+            {
+                "id": "8",
+                "name": "Apoderado/a"
+            },
+            {
+                "id": "9",
+                "name": "Asesor externo técnico-pedagógico"
+            },
+            {
+                "id": "10",
+                "name": "Sostenedor"
+            }
+        ]
     }
 }

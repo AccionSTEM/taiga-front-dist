@@ -2144,7 +2144,15 @@
             "RECOMMENDATION_TAB": "Recomendaciones",
             "RECOMMENDATION_TAB_TITLE": "Lista todos los projectos que se han recomendado a este usuario",
             "RECOMMENDATION_EMPTY":"Aún no te han recomendado proyectos",
-            "RECOMMENDATION_FROM_USER":" te ha recomendado el proyecto: "
+            "RECOMMENDATION_FROM_USER":" te ha recomendado el proyecto: ",
+            "FIELD": {
+                "INSTITUTION": "Institución educativa",
+                "PLACEHOLDER_INSTITUTION": "Escribe el nombre de tu institución",
+                "ROLE_INSTITUTION": "Rol en la institución",
+                "PLACEHOLDER_ROLE_INSTITUTION": "Selecciona tu rol en la institución",
+                "EDUCATION_LEVEL": "Nivel educativo o grado",
+                "PLACEHOLDER_EDUCATION_LEVEL": "Escribe tu nivel educativo o grado (separado por comas)"
+            }
         } 
     },
     "MISC":{
