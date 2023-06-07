@@ -45420,10 +45420,10 @@
       if (!this.newProjectForm.context_experience.problem) {
         this.errorList.push('problem');
       }
-      if (!this.newProjectForm.context_experience.problem) {
+      if (!this.newProjectForm.context_experience.solution) {
         this.errorList.push('solution');
       }
-      if (!this.newProjectForm.context_experience.problem) {
+      if (!this.newProjectForm.context_experience.results) {
         this.errorList.push('results');
       }
       if (this.linkVideoPresentation) {
@@ -45753,6 +45753,7 @@
       this.linkVideoPresentation = null;
       this.estimated_start = null;
       this.estimated_end = null;
+      this.formSubmitLoading = false;
       this.openSectionIndex = -1;
     }
 
@@ -45814,6 +45815,7 @@
       var prettyDate;
       this.validateForm();
       if (this.errorList.length === 0) {
+        this.formSubmitLoading = true;
         this.projectForm.establishment_details.region = this.selectedRegion.region;
         this.projectForm.establishment_details.province = this.selectedProvince.name;
         if (!this.projectForm.establishment_details.delegated_administration) {
@@ -45853,6 +45855,7 @@
               });
               new_promise = _this.rs.customAttributesValues.customBulkCreate(us_ids, attributes_values);
               return new_promise.then(function(data) {
+                _this.formSubmitLoading = false;
                 _this.analytics.trackEvent("project", "create", "project creation", {
                   slug: project.get('slug'),
                   id: project.get('id')
@@ -45883,10 +45886,10 @@
       if (!this.projectForm.context_experience.problem) {
         this.errorList.push('problem');
       }
-      if (!this.projectForm.context_experience.problem) {
+      if (!this.projectForm.context_experience.solution) {
         this.errorList.push('solution');
       }
-      if (!this.projectForm.context_experience.problem) {
+      if (!this.projectForm.context_experience.results) {
         this.errorList.push('results');
       }
       if (!this.projectForm.related_roles.length) {
