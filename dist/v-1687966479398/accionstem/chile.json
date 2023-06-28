@@ -1,0 +1,3117 @@
+{
+    "chile": [{
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 11,
+            "NOM_PRO": "Iquique",
+            "COD_COM": 1101,
+            "NOM_COM": "Iquique"
+        },
+        {
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 11,
+            "NOM_PRO": "Iquique",
+            "COD_COM": 1107,
+            "NOM_COM": "Alto Hospicio"
+        },
+        {
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 14,
+            "NOM_PRO": "Tamarugal",
+            "COD_COM": 1401,
+            "NOM_COM": "Pozo Almonte"
+        },
+        {
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 14,
+            "NOM_PRO": "Tamarugal",
+            "COD_COM": 1402,
+            "NOM_COM": "Camiña"
+        },
+        {
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 14,
+            "NOM_PRO": "Tamarugal",
+            "COD_COM": 1403,
+            "NOM_COM": "Colchane"
+        },
+        {
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 14,
+            "NOM_PRO": "Tamarugal",
+            "COD_COM": 1404,
+            "NOM_COM": "Huara"
+        },
+        {
+            "COD_REG": 1,
+            "NOM_REG": "Tarapacá",
+            "NOM_REG_A": "TPCA",
+            "COD_PRO": 14,
+            "NOM_PRO": "Tamarugal",
+            "COD_COM": 1405,
+            "NOM_COM": "Pica"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 21,
+            "NOM_PRO": "Antofagasta",
+            "COD_COM": 2101,
+            "NOM_COM": "Antofagasta"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 21,
+            "NOM_PRO": "Antofagasta",
+            "COD_COM": 2102,
+            "NOM_COM": "Mejillones"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 21,
+            "NOM_PRO": "Antofagasta",
+            "COD_COM": 2103,
+            "NOM_COM": "Sierra Gorda"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 21,
+            "NOM_PRO": "Antofagasta",
+            "COD_COM": 2104,
+            "NOM_COM": "Taltal"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 22,
+            "NOM_PRO": "El Loa",
+            "COD_COM": 2201,
+            "NOM_COM": "Calama"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 22,
+            "NOM_PRO": "El Loa",
+            "COD_COM": 2202,
+            "NOM_COM": "Ollagüe"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 22,
+            "NOM_PRO": "El Loa",
+            "COD_COM": 2203,
+            "NOM_COM": "San Pedro de Atacama"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 23,
+            "NOM_PRO": "Tocopilla",
+            "COD_COM": 2301,
+            "NOM_COM": "Tocopilla"
+        },
+        {
+            "COD_REG": 2,
+            "NOM_REG": "Antofagasta",
+            "NOM_REG_A": "ANTOF",
+            "COD_PRO": 23,
+            "NOM_PRO": "Tocopilla",
+            "COD_COM": 2302,
+            "NOM_COM": "María Elena"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 31,
+            "NOM_PRO": "Copiapó",
+            "COD_COM": 3101,
+            "NOM_COM": "Copiapó"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 31,
+            "NOM_PRO": "Copiapó",
+            "COD_COM": 3102,
+            "NOM_COM": "Caldera"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 31,
+            "NOM_PRO": "Copiapó",
+            "COD_COM": 3103,
+            "NOM_COM": "Tierra Amarilla"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 32,
+            "NOM_PRO": "Chañaral",
+            "COD_COM": 3201,
+            "NOM_COM": "Chañaral"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 32,
+            "NOM_PRO": "Chañaral",
+            "COD_COM": 3202,
+            "NOM_COM": "Diego de Almagro"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 33,
+            "NOM_PRO": "Huasco",
+            "COD_COM": 3301,
+            "NOM_COM": "Vallenar"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 33,
+            "NOM_PRO": "Huasco",
+            "COD_COM": 3302,
+            "NOM_COM": "Alto del Carmen"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 33,
+            "NOM_PRO": "Huasco",
+            "COD_COM": 3303,
+            "NOM_COM": "Freirina"
+        },
+        {
+            "COD_REG": 3,
+            "NOM_REG": "Atacama",
+            "NOM_REG_A": "ATCMA",
+            "COD_PRO": 33,
+            "NOM_PRO": "Huasco",
+            "COD_COM": 3304,
+            "NOM_COM": "Huasco"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 41,
+            "NOM_PRO": "Elqui",
+            "COD_COM": 4101,
+            "NOM_COM": "La Serena"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 41,
+            "NOM_PRO": "Elqui",
+            "COD_COM": 4102,
+            "NOM_COM": "Coquimbo"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 41,
+            "NOM_PRO": "Elqui",
+            "COD_COM": 4103,
+            "NOM_COM": "Andacollo"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 41,
+            "NOM_PRO": "Elqui",
+            "COD_COM": 4104,
+            "NOM_COM": "La Higuera"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 41,
+            "NOM_PRO": "Elqui",
+            "COD_COM": 4105,
+            "NOM_COM": "Paiguano"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 41,
+            "NOM_PRO": "Elqui",
+            "COD_COM": 4106,
+            "NOM_COM": "Vicuña"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 42,
+            "NOM_PRO": "Choapa",
+            "COD_COM": 4201,
+            "NOM_COM": "Illapel"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 42,
+            "NOM_PRO": "Choapa",
+            "COD_COM": 4202,
+            "NOM_COM": "Canela"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 42,
+            "NOM_PRO": "Choapa",
+            "COD_COM": 4203,
+            "NOM_COM": "Los Vilos"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 42,
+            "NOM_PRO": "Choapa",
+            "COD_COM": 4204,
+            "NOM_COM": "Salamanca"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 43,
+            "NOM_PRO": "Limarí",
+            "COD_COM": 4301,
+            "NOM_COM": "Ovalle"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 43,
+            "NOM_PRO": "Limarí",
+            "COD_COM": 4302,
+            "NOM_COM": "Combarbalá"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 43,
+            "NOM_PRO": "Limarí",
+            "COD_COM": 4303,
+            "NOM_COM": "Monte Patria"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 43,
+            "NOM_PRO": "Limarí",
+            "COD_COM": 4304,
+            "NOM_COM": "Punitaqui"
+        },
+        {
+            "COD_REG": 4,
+            "NOM_REG": "Coquimbo",
+            "NOM_REG_A": "COQ",
+            "COD_PRO": 43,
+            "NOM_PRO": "Limarí",
+            "COD_COM": 4305,
+            "NOM_COM": "Río Hurtado"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5101,
+            "NOM_COM": "Valparaíso"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5102,
+            "NOM_COM": "Casablanca"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5103,
+            "NOM_COM": "Concón"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5104,
+            "NOM_COM": "Juan Fernández"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5105,
+            "NOM_COM": "Puchuncaví"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5107,
+            "NOM_COM": "Quintero"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 51,
+            "NOM_PRO": "Valparaíso",
+            "COD_COM": 5109,
+            "NOM_COM": "Viña del Mar"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 52,
+            "NOM_PRO": "Isla de Pascua",
+            "COD_COM": 5201,
+            "NOM_COM": "Isla de Pascua"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 53,
+            "NOM_PRO": "Los Andes",
+            "COD_COM": 5301,
+            "NOM_COM": "Los Andes"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 53,
+            "NOM_PRO": "Los Andes",
+            "COD_COM": 5302,
+            "NOM_COM": "Calle Larga"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 53,
+            "NOM_PRO": "Los Andes",
+            "COD_COM": 5303,
+            "NOM_COM": "Rinconada"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 53,
+            "NOM_PRO": "Los Andes",
+            "COD_COM": 5304,
+            "NOM_COM": "San Esteban"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 54,
+            "NOM_PRO": "Petorca",
+            "COD_COM": 5401,
+            "NOM_COM": "La Ligua"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 54,
+            "NOM_PRO": "Petorca",
+            "COD_COM": 5402,
+            "NOM_COM": "Cabildo"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 54,
+            "NOM_PRO": "Petorca",
+            "COD_COM": 5403,
+            "NOM_COM": "Papudo"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 54,
+            "NOM_PRO": "Petorca",
+            "COD_COM": 5404,
+            "NOM_COM": "Petorca"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 54,
+            "NOM_PRO": "Petorca",
+            "COD_COM": 5405,
+            "NOM_COM": "Zapallar"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 55,
+            "NOM_PRO": "Quillota",
+            "COD_COM": 5501,
+            "NOM_COM": "Quillota"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 55,
+            "NOM_PRO": "Quillota",
+            "COD_COM": 5502,
+            "NOM_COM": "Calera"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 55,
+            "NOM_PRO": "Quillota",
+            "COD_COM": 5503,
+            "NOM_COM": "Hijuelas"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 55,
+            "NOM_PRO": "Quillota",
+            "COD_COM": 5504,
+            "NOM_COM": "La Cruz"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 55,
+            "NOM_PRO": "Quillota",
+            "COD_COM": 5506,
+            "NOM_COM": "Nogales"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 56,
+            "NOM_PRO": "San Antonio",
+            "COD_COM": 5601,
+            "NOM_COM": "San Antonio"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 56,
+            "NOM_PRO": "San Antonio",
+            "COD_COM": 5602,
+            "NOM_COM": "Algarrobo"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 56,
+            "NOM_PRO": "San Antonio",
+            "COD_COM": 5603,
+            "NOM_COM": "Cartagena"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 56,
+            "NOM_PRO": "San Antonio",
+            "COD_COM": 5604,
+            "NOM_COM": "El Quisco"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 56,
+            "NOM_PRO": "San Antonio",
+            "COD_COM": 5605,
+            "NOM_COM": "El Tabo"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 56,
+            "NOM_PRO": "San Antonio",
+            "COD_COM": 5606,
+            "NOM_COM": "Santo Domingo"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 57,
+            "NOM_PRO": "San Felipe de Aconcagua",
+            "COD_COM": 5701,
+            "NOM_COM": "San Felipe"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 57,
+            "NOM_PRO": "San Felipe de Aconcagua",
+            "COD_COM": 5702,
+            "NOM_COM": "Catemu"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 57,
+            "NOM_PRO": "San Felipe de Aconcagua",
+            "COD_COM": 5703,
+            "NOM_COM": "Llaillay"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 57,
+            "NOM_PRO": "San Felipe de Aconcagua",
+            "COD_COM": 5704,
+            "NOM_COM": "Panquehue"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 57,
+            "NOM_PRO": "San Felipe de Aconcagua",
+            "COD_COM": 5705,
+            "NOM_COM": "Putaendo"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 57,
+            "NOM_PRO": "San Felipe de Aconcagua",
+            "COD_COM": 5706,
+            "NOM_COM": "Santa María"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 58,
+            "NOM_PRO": "Marga Marga",
+            "COD_COM": 5801,
+            "NOM_COM": "Quilpué"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 58,
+            "NOM_PRO": "Marga Marga",
+            "COD_COM": 5802,
+            "NOM_COM": "Limache"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 58,
+            "NOM_PRO": "Marga Marga",
+            "COD_COM": 5803,
+            "NOM_COM": "Olmué"
+        },
+        {
+            "COD_REG": 5,
+            "NOM_REG": "Valparaíso",
+            "NOM_REG_A": "VALPO",
+            "COD_PRO": 58,
+            "NOM_PRO": "Marga Marga",
+            "COD_COM": 5804,
+            "NOM_COM": "Villa Alemana"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6101,
+            "NOM_COM": "Rancagua"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6102,
+            "NOM_COM": "Codegua"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6103,
+            "NOM_COM": "Coinco"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6104,
+            "NOM_COM": "Coltauco"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6105,
+            "NOM_COM": "Doñihue"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6106,
+            "NOM_COM": "Graneros"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6107,
+            "NOM_COM": "Las Cabras"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6108,
+            "NOM_COM": "Machalí"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6109,
+            "NOM_COM": "Malloa"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6110,
+            "NOM_COM": "Mostazal"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6111,
+            "NOM_COM": "Olivar"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6112,
+            "NOM_COM": "Peumo"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6113,
+            "NOM_COM": "Pichidegua"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6114,
+            "NOM_COM": "Quinta de Tilcoco"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6115,
+            "NOM_COM": "Rengo"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6116,
+            "NOM_COM": "Requínoa"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 61,
+            "NOM_PRO": "Cachapoal",
+            "COD_COM": 6117,
+            "NOM_COM": "San Vicente"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 62,
+            "NOM_PRO": "Cardenal Caro",
+            "COD_COM": 6201,
+            "NOM_COM": "Pichilemu"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 62,
+            "NOM_PRO": "Cardenal Caro",
+            "COD_COM": 6202,
+            "NOM_COM": "La Estrella"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 62,
+            "NOM_PRO": "Cardenal Caro",
+            "COD_COM": 6203,
+            "NOM_COM": "Litueche"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 62,
+            "NOM_PRO": "Cardenal Caro",
+            "COD_COM": 6204,
+            "NOM_COM": "Marchihue"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 62,
+            "NOM_PRO": "Cardenal Caro",
+            "COD_COM": 6205,
+            "NOM_COM": "Navidad"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 62,
+            "NOM_PRO": "Cardenal Caro",
+            "COD_COM": 6206,
+            "NOM_COM": "Paredones"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6301,
+            "NOM_COM": "San Fernando"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6302,
+            "NOM_COM": "Chépica"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6303,
+            "NOM_COM": "Chimbarongo"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6304,
+            "NOM_COM": "Lolol"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6305,
+            "NOM_COM": "Nancagua"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6306,
+            "NOM_COM": "Palmilla"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6307,
+            "NOM_COM": "Peralillo"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6308,
+            "NOM_COM": "Placilla"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6309,
+            "NOM_COM": "Pumanque"
+        },
+        {
+            "COD_REG": 6,
+            "NOM_REG": "Libertador General Bernardo O'Higgins",
+            "NOM_REG_A": "LGBO",
+            "COD_PRO": 63,
+            "NOM_PRO": "Colchagua",
+            "COD_COM": 6310,
+            "NOM_COM": "Santa Cruz"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7101,
+            "NOM_COM": "Talca"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7102,
+            "NOM_COM": "Constitución"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7103,
+            "NOM_COM": "Curepto"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7104,
+            "NOM_COM": "Empedrado"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7105,
+            "NOM_COM": "Maule"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7106,
+            "NOM_COM": "Pelarco"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7107,
+            "NOM_COM": "Pencahue"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7108,
+            "NOM_COM": "Río Claro"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7109,
+            "NOM_COM": "San Clemente"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 71,
+            "NOM_PRO": "Talca",
+            "COD_COM": 7110,
+            "NOM_COM": "San Rafael"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 72,
+            "NOM_PRO": "Cauquenes",
+            "COD_COM": 7201,
+            "NOM_COM": "Cauquenes"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 72,
+            "NOM_PRO": "Cauquenes",
+            "COD_COM": 7202,
+            "NOM_COM": "Chanco"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 72,
+            "NOM_PRO": "Cauquenes",
+            "COD_COM": 7203,
+            "NOM_COM": "Pelluhue"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7301,
+            "NOM_COM": "Curicó"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7302,
+            "NOM_COM": "Hualañé"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7303,
+            "NOM_COM": "Licantén"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7304,
+            "NOM_COM": "Molina"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7305,
+            "NOM_COM": "Rauco"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7306,
+            "NOM_COM": "Romeral"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7307,
+            "NOM_COM": "Sagrada Familia"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7308,
+            "NOM_COM": "Teno"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 73,
+            "NOM_PRO": "Curicó",
+            "COD_COM": 7309,
+            "NOM_COM": "Vichuquén"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7401,
+            "NOM_COM": "Linares"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7402,
+            "NOM_COM": "Colbún"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7403,
+            "NOM_COM": "Longaví"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7404,
+            "NOM_COM": "Parral"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7405,
+            "NOM_COM": "Retiro"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7406,
+            "NOM_COM": "San Javier"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7407,
+            "NOM_COM": "Villa Alegre"
+        },
+        {
+            "COD_REG": 7,
+            "NOM_REG": "Maule",
+            "NOM_REG_A": "MAULE",
+            "COD_PRO": 74,
+            "NOM_PRO": "Linares",
+            "COD_COM": 7408,
+            "NOM_COM": "Yerbas Buenas"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8101,
+            "NOM_COM": "Concepción"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8102,
+            "NOM_COM": "Coronel"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8103,
+            "NOM_COM": "Chiguayante"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8104,
+            "NOM_COM": "Florida"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8105,
+            "NOM_COM": "Hualqui"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8106,
+            "NOM_COM": "Lota"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8107,
+            "NOM_COM": "Penco"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8108,
+            "NOM_COM": "San Pedro de la Paz"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8109,
+            "NOM_COM": "Santa Juana"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8110,
+            "NOM_COM": "Talcahuano"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8111,
+            "NOM_COM": "Tomé"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 81,
+            "NOM_PRO": "Concepción",
+            "COD_COM": 8112,
+            "NOM_COM": "Hualpén"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8201,
+            "NOM_COM": "Lebu"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8202,
+            "NOM_COM": "Arauco"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8203,
+            "NOM_COM": "Cañete"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8204,
+            "NOM_COM": "Contulmo"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8205,
+            "NOM_COM": "Curanilahue"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8206,
+            "NOM_COM": "Los Alamos"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 82,
+            "NOM_PRO": "Arauco",
+            "COD_COM": 8207,
+            "NOM_COM": "Tirúa"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8301,
+            "NOM_COM": "Los Angeles"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8302,
+            "NOM_COM": "Antuco"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8303,
+            "NOM_COM": "Cabrero"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8304,
+            "NOM_COM": "Laja"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8305,
+            "NOM_COM": "Mulchén"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8306,
+            "NOM_COM": "Nacimiento"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8307,
+            "NOM_COM": "Negrete"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8308,
+            "NOM_COM": "Quilaco"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8309,
+            "NOM_COM": "Quilleco"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8310,
+            "NOM_COM": "San Rosendo"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8311,
+            "NOM_COM": "Santa Bárbara"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8312,
+            "NOM_COM": "Tucapel"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8313,
+            "NOM_COM": "Yumbel"
+        },
+        {
+            "COD_REG": 8,
+            "NOM_REG": "Biobío",
+            "NOM_REG_A": "BBIO",
+            "COD_PRO": 83,
+            "NOM_PRO": "Biobío",
+            "COD_COM": 8314,
+            "NOM_COM": "Alto Biobío"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9101,
+            "NOM_COM": "Temuco"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9102,
+            "NOM_COM": "Carahue"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9103,
+            "NOM_COM": "Cunco"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9104,
+            "NOM_COM": "Curarrehue"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9105,
+            "NOM_COM": "Freire"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9106,
+            "NOM_COM": "Galvarino"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9107,
+            "NOM_COM": "Gorbea"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9108,
+            "NOM_COM": "Lautaro"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9109,
+            "NOM_COM": "Loncoche"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9110,
+            "NOM_COM": "Melipeuco"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9111,
+            "NOM_COM": "Nueva Imperial"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9112,
+            "NOM_COM": "Padre Las Casas"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9113,
+            "NOM_COM": "Perquenco"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9114,
+            "NOM_COM": "Pitrufquén"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9115,
+            "NOM_COM": "Pucón"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9116,
+            "NOM_COM": "Saavedra"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9117,
+            "NOM_COM": "Teodoro Schmidt"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9118,
+            "NOM_COM": "Toltén"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9119,
+            "NOM_COM": "Vilcún"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9120,
+            "NOM_COM": "Villarrica"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 91,
+            "NOM_PRO": "Cautín",
+            "COD_COM": 9121,
+            "NOM_COM": "Cholchol"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9201,
+            "NOM_COM": "Angol"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9202,
+            "NOM_COM": "Collipulli"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9203,
+            "NOM_COM": "Curacautín"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9204,
+            "NOM_COM": "Ercilla"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9205,
+            "NOM_COM": "Lonquimay"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9206,
+            "NOM_COM": "Los Sauces"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9207,
+            "NOM_COM": "Lumaco"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9208,
+            "NOM_COM": "Purén"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9209,
+            "NOM_COM": "Renaico"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9210,
+            "NOM_COM": "Traiguén"
+        },
+        {
+            "COD_REG": 9,
+            "NOM_REG": "La Araucanía",
+            "NOM_REG_A": "ARAUC",
+            "COD_PRO": 92,
+            "NOM_PRO": "Malleco",
+            "COD_COM": 9211,
+            "NOM_COM": "Victoria"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10101,
+            "NOM_COM": "Puerto Montt"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10102,
+            "NOM_COM": "Calbuco"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10103,
+            "NOM_COM": "Cochamó"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10104,
+            "NOM_COM": "Fresia"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10105,
+            "NOM_COM": "Frutillar"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10106,
+            "NOM_COM": "Los Muermos"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10107,
+            "NOM_COM": "Llanquihue"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10108,
+            "NOM_COM": "Maullín"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 101,
+            "NOM_PRO": "Llanquihue",
+            "COD_COM": 10109,
+            "NOM_COM": "Puerto Varas"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10201,
+            "NOM_COM": "Castro"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10202,
+            "NOM_COM": "Ancud"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10203,
+            "NOM_COM": "Chonchi"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10204,
+            "NOM_COM": "Curaco de Vélez"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10205,
+            "NOM_COM": "Dalcahue"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10206,
+            "NOM_COM": "Puqueldón"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10207,
+            "NOM_COM": "Queilén"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10208,
+            "NOM_COM": "Quellón"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10209,
+            "NOM_COM": "Quemchi"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 102,
+            "NOM_PRO": "Chiloé",
+            "COD_COM": 10210,
+            "NOM_COM": "Quinchao"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10301,
+            "NOM_COM": "Osorno"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10302,
+            "NOM_COM": "Puerto Octay"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10303,
+            "NOM_COM": "Purranque"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10304,
+            "NOM_COM": "Puyehue"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10305,
+            "NOM_COM": "Río Negro"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10306,
+            "NOM_COM": "San Juan de la Costa"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 103,
+            "NOM_PRO": "Osorno",
+            "COD_COM": 10307,
+            "NOM_COM": "San Pablo"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 104,
+            "NOM_PRO": "Palena",
+            "COD_COM": 10401,
+            "NOM_COM": "Chaitén"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 104,
+            "NOM_PRO": "Palena",
+            "COD_COM": 10402,
+            "NOM_COM": "Futaleufú"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 104,
+            "NOM_PRO": "Palena",
+            "COD_COM": 10403,
+            "NOM_COM": "Hualaihué"
+        },
+        {
+            "COD_REG": 10,
+            "NOM_REG": "Los Lagos",
+            "NOM_REG_A": "LAGOS",
+            "COD_PRO": 104,
+            "NOM_PRO": "Palena",
+            "COD_COM": 10404,
+            "NOM_COM": "Palena"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 111,
+            "NOM_PRO": "Coyhaique",
+            "COD_COM": 11101,
+            "NOM_COM": "Coyhaique"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 111,
+            "NOM_PRO": "Coyhaique",
+            "COD_COM": 11102,
+            "NOM_COM": "Lago Verde"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 112,
+            "NOM_PRO": "Aysén",
+            "COD_COM": 11201,
+            "NOM_COM": "Aysén"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 112,
+            "NOM_PRO": "Aysén",
+            "COD_COM": 11202,
+            "NOM_COM": "Cisnes"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 112,
+            "NOM_PRO": "Aysén",
+            "COD_COM": 11203,
+            "NOM_COM": "Guaitecas"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 113,
+            "NOM_PRO": "Capitán Prat",
+            "COD_COM": 11301,
+            "NOM_COM": "Cochrane"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 113,
+            "NOM_PRO": "Capitán Prat",
+            "COD_COM": 11302,
+            "NOM_COM": "O'Higgins"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 113,
+            "NOM_PRO": "Capitán Prat",
+            "COD_COM": 11303,
+            "NOM_COM": "Tortel"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 114,
+            "NOM_PRO": "General Carrera",
+            "COD_COM": 11401,
+            "NOM_COM": "Chile Chico"
+        },
+        {
+            "COD_REG": 11,
+            "NOM_REG": "Aysén del General Carlos Ibáñez del Campo",
+            "NOM_REG_A": "AYSEN",
+            "COD_PRO": 114,
+            "NOM_PRO": "General Carrera",
+            "COD_COM": 11402,
+            "NOM_COM": "Río Ibáñez"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 121,
+            "NOM_PRO": "Magallanes",
+            "COD_COM": 12101,
+            "NOM_COM": "Punta Arenas"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 121,
+            "NOM_PRO": "Magallanes",
+            "COD_COM": 12102,
+            "NOM_COM": "Laguna Blanca"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 121,
+            "NOM_PRO": "Magallanes",
+            "COD_COM": 12103,
+            "NOM_COM": "Río Verde"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 121,
+            "NOM_PRO": "Magallanes",
+            "COD_COM": 12104,
+            "NOM_COM": "San Gregorio"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 122,
+            "NOM_PRO": "Antártica Chilena",
+            "COD_COM": 12201,
+            "NOM_COM": "Cabo de Hornos"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 122,
+            "NOM_PRO": "Antártica Chilena",
+            "COD_COM": 12202,
+            "NOM_COM": "Antártica"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 123,
+            "NOM_PRO": "Tierra del Fuego",
+            "COD_COM": 12301,
+            "NOM_COM": "Porvenir"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 123,
+            "NOM_PRO": "Tierra del Fuego",
+            "COD_COM": 12302,
+            "NOM_COM": "Primavera"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 123,
+            "NOM_PRO": "Tierra del Fuego",
+            "COD_COM": 12303,
+            "NOM_COM": "Timaukel"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 124,
+            "NOM_PRO": "Última Esperanza",
+            "COD_COM": 12401,
+            "NOM_COM": "Natales"
+        },
+        {
+            "COD_REG": 12,
+            "NOM_REG": "Magallanes y de la Antártica Chilena",
+            "NOM_REG_A": "MAG",
+            "COD_PRO": 124,
+            "NOM_PRO": "Última Esperanza",
+            "COD_COM": 12402,
+            "NOM_COM": "Torres del Paine"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13101,
+            "NOM_COM": "Santiago"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13102,
+            "NOM_COM": "Cerrillos"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13103,
+            "NOM_COM": "Cerro Navia"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13104,
+            "NOM_COM": "Conchalí"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13105,
+            "NOM_COM": "El Bosque"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13106,
+            "NOM_COM": "Estación Central"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13107,
+            "NOM_COM": "Huechuraba"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13108,
+            "NOM_COM": "Independencia"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13109,
+            "NOM_COM": "La Cisterna"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13110,
+            "NOM_COM": "La Florida"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13111,
+            "NOM_COM": "La Granja"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13112,
+            "NOM_COM": "La Pintana"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13113,
+            "NOM_COM": "La Reina"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13114,
+            "NOM_COM": "Las Condes"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13115,
+            "NOM_COM": "Lo Barnechea"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13116,
+            "NOM_COM": "Lo Espejo"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13117,
+            "NOM_COM": "Lo Prado"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13118,
+            "NOM_COM": "Macul"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13119,
+            "NOM_COM": "Maipú"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13120,
+            "NOM_COM": "Ñuñoa"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13121,
+            "NOM_COM": "Pedro Aguirre Cerda"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13122,
+            "NOM_COM": "Peñalolén"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13123,
+            "NOM_COM": "Providencia"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13124,
+            "NOM_COM": "Pudahuel"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13125,
+            "NOM_COM": "Quilicura"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13126,
+            "NOM_COM": "Quinta Normal"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13127,
+            "NOM_COM": "Recoleta"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13128,
+            "NOM_COM": "Renca"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13129,
+            "NOM_COM": "San Joaquín"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13130,
+            "NOM_COM": "San Miguel"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13131,
+            "NOM_COM": "San Ramón"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 131,
+            "NOM_PRO": "Santiago",
+            "COD_COM": 13132,
+            "NOM_COM": "Vitacura"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 132,
+            "NOM_PRO": "Cordillera",
+            "COD_COM": 13201,
+            "NOM_COM": "Puente Alto"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 132,
+            "NOM_PRO": "Cordillera",
+            "COD_COM": 13202,
+            "NOM_COM": "Pirque"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 132,
+            "NOM_PRO": "Cordillera",
+            "COD_COM": 13203,
+            "NOM_COM": "San José de Maipo"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 133,
+            "NOM_PRO": "Chacabuco",
+            "COD_COM": 13301,
+            "NOM_COM": "Colina"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 133,
+            "NOM_PRO": "Chacabuco",
+            "COD_COM": 13302,
+            "NOM_COM": "Lampa"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 133,
+            "NOM_PRO": "Chacabuco",
+            "COD_COM": 13303,
+            "NOM_COM": "Tiltil"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 134,
+            "NOM_PRO": "Maipo",
+            "COD_COM": 13401,
+            "NOM_COM": "San Bernardo"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 134,
+            "NOM_PRO": "Maipo",
+            "COD_COM": 13402,
+            "NOM_COM": "Buin"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 134,
+            "NOM_PRO": "Maipo",
+            "COD_COM": 13403,
+            "NOM_COM": "Calera de Tango"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 134,
+            "NOM_PRO": "Maipo",
+            "COD_COM": 13404,
+            "NOM_COM": "Paine"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 135,
+            "NOM_PRO": "Melipilla",
+            "COD_COM": 13501,
+            "NOM_COM": "Melipilla"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 135,
+            "NOM_PRO": "Melipilla",
+            "COD_COM": 13502,
+            "NOM_COM": "Alhué"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 135,
+            "NOM_PRO": "Melipilla",
+            "COD_COM": 13503,
+            "NOM_COM": "Curacaví"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 135,
+            "NOM_PRO": "Melipilla",
+            "COD_COM": 13504,
+            "NOM_COM": "María Pinto"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 135,
+            "NOM_PRO": "Melipilla",
+            "COD_COM": 13505,
+            "NOM_COM": "San Pedro"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 136,
+            "NOM_PRO": "Talagante",
+            "COD_COM": 13601,
+            "NOM_COM": "Talagante"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 136,
+            "NOM_PRO": "Talagante",
+            "COD_COM": 13602,
+            "NOM_COM": "El Monte"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 136,
+            "NOM_PRO": "Talagante",
+            "COD_COM": 13603,
+            "NOM_COM": "Isla de Maipo"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 136,
+            "NOM_PRO": "Talagante",
+            "COD_COM": 13604,
+            "NOM_COM": "Padre Hurtado"
+        },
+        {
+            "COD_REG": 13,
+            "NOM_REG": "Metropolitana de Santiago",
+            "NOM_REG_A": "RM",
+            "COD_PRO": 136,
+            "NOM_PRO": "Talagante",
+            "COD_COM": 13605,
+            "NOM_COM": "Peñaflor"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14101,
+            "NOM_COM": "Valdivia"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14102,
+            "NOM_COM": "Corral"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14103,
+            "NOM_COM": "Lanco"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14104,
+            "NOM_COM": "Los Lagos"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14105,
+            "NOM_COM": "Máfil"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14106,
+            "NOM_COM": "Mariquina"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14107,
+            "NOM_COM": "Paillaco"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 141,
+            "NOM_PRO": "Valdivia",
+            "COD_COM": 14108,
+            "NOM_COM": "Panguipulli"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 142,
+            "NOM_PRO": "Ranco",
+            "COD_COM": 14201,
+            "NOM_COM": "La Unión"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 142,
+            "NOM_PRO": "Ranco",
+            "COD_COM": 14202,
+            "NOM_COM": "Futrono"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 142,
+            "NOM_PRO": "Ranco",
+            "COD_COM": 14203,
+            "NOM_COM": "Lago Ranco"
+        },
+        {
+            "COD_REG": 14,
+            "NOM_REG": "Los Ríos",
+            "NOM_REG_A": "RIOS",
+            "COD_PRO": 142,
+            "NOM_PRO": "Ranco",
+            "COD_COM": 14204,
+            "NOM_COM": "Río Bueno"
+        },
+        {
+            "COD_REG": 15,
+            "NOM_REG": "Arica y Parinacota",
+            "NOM_REG_A": "AyP",
+            "COD_PRO": 151,
+            "NOM_PRO": "Arica",
+            "COD_COM": 15101,
+            "NOM_COM": "Arica"
+        },
+        {
+            "COD_REG": 15,
+            "NOM_REG": "Arica y Parinacota",
+            "NOM_REG_A": "AyP",
+            "COD_PRO": 151,
+            "NOM_PRO": "Arica",
+            "COD_COM": 15102,
+            "NOM_COM": "Camarones"
+        },
+        {
+            "COD_REG": 15,
+            "NOM_REG": "Arica y Parinacota",
+            "NOM_REG_A": "AyP",
+            "COD_PRO": 152,
+            "NOM_PRO": "Parinacota",
+            "COD_COM": 15201,
+            "NOM_COM": "Putre"
+        },
+        {
+            "COD_REG": 15,
+            "NOM_REG": "Arica y Parinacota",
+            "NOM_REG_A": "AyP",
+            "COD_PRO": 152,
+            "NOM_PRO": "Parinacota",
+            "COD_COM": 15202,
+            "NOM_COM": "General Lagos"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16101,
+            "NOM_COM": "Chillán"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16102,
+            "NOM_COM": "Bulnes"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16103,
+            "NOM_COM": "Chillán Viejo"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16104,
+            "NOM_COM": "El Carmen"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16105,
+            "NOM_COM": "Pemuco"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16106,
+            "NOM_COM": "Pinto"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16107,
+            "NOM_COM": "Quillón"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16108,
+            "NOM_COM": "San Ignacio"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 161,
+            "NOM_PRO": "Diguillín",
+            "COD_COM": 16109,
+            "NOM_COM": "Yungay"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16201,
+            "NOM_COM": "Quirihue"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16202,
+            "NOM_COM": "Cobquecura"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16203,
+            "NOM_COM": "Coelemu"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16204,
+            "NOM_COM": "Ninhue"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16205,
+            "NOM_COM": "Portezuelo"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16206,
+            "NOM_COM": "Ranquil"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 162,
+            "NOM_PRO": "Itata",
+            "COD_COM": 16207,
+            "NOM_COM": "Treguaco"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 163,
+            "NOM_PRO": "Punilla",
+            "COD_COM": 16301,
+            "NOM_COM": "San Carlos"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 163,
+            "NOM_PRO": "Punilla",
+            "COD_COM": 16302,
+            "NOM_COM": "Coihueco"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 163,
+            "NOM_PRO": "Punilla",
+            "COD_COM": 16303,
+            "NOM_COM": "Ñiquén"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 163,
+            "NOM_PRO": "Punilla",
+            "COD_COM": 16304,
+            "NOM_COM": "San Fabián"
+        },
+        {
+            "COD_REG": 16,
+            "NOM_REG": "Ñuble",
+            "NOM_REG_A": "NUBLE",
+            "COD_PRO": 163,
+            "NOM_PRO": "Punilla",
+            "COD_COM": 16305,
+            "NOM_COM": "San Nicolás"
+        }
+    ]
+}

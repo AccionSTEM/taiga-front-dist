@@ -1,0 +1,287 @@
+{
+    "experience": {
+        "roles": [{
+                "id": "1",
+                "name": "Estudiantes",
+                "selected": false
+            },
+            {
+                "id": "2",
+                "name": "Educadoras/es y/o técnicos de educación parvularia",
+                "selected": false
+            },
+            {
+                "id": "3",
+                "name": "Docentes",
+                "selected": false
+            },
+            {
+                "id": "4",
+                "name": "Equipo técnico-pedagógico",
+                "selected": false
+            },
+            {
+                "id": "5",
+                "name": "Equipo directivo",
+                "selected": false
+            },
+            {
+                "id": "6",
+                "name": "Equipo convivencia escolar",
+                "selected": false
+            },
+            {
+                "id": "7",
+                "name": "Coordinadores de informática / Enlaces",
+                "selected": false
+            },
+            {
+                "id": "8",
+                "name": "Apoderados y apoderadas",
+                "selected": false
+            },
+            {
+                "id": "9",
+                "name": "Asesor/es externos técnico-pedagógico",
+                "selected": false
+            },
+            {
+                "id": "10",
+                "name": "Sostenedor",
+                "selected": false
+            }
+        ],
+        "goals": [{
+                "id": "1",
+                "name": "Colaboración",
+                "description": "Fomentar la colaboración y el trabajo en equipo entre los estudiantes, a través de actividades que involucren la resolución de problemas y la toma de decisiones en grupo.",
+                "keywords": ["colaboración", "trabajo en equipo", "resolución de problemas", "toma de decisiones en grupo"],
+                "selected": false
+            },
+            {
+                "id": "2",
+                "name": "Creatividad",
+                "description": "Promover la creatividad y la innovación a través de proyectos que estimulen la generación de ideas, la experimentación y la aplicación de soluciones novedosas.",
+                "keywords": ["creatividad", "innovación", "generación de ideas", "experimentación", "soluciones novedosas"],
+                "selected": false
+            },
+            {
+                "id": "3",
+                "name": "Pensamiento crítico",
+                "description": "Desarrollar habilidades de pensamiento crítico y resolución de problemas a través de la identificación de problemas, la formulación de hipótesis, la recopilación de datos y la evaluación de soluciones.",
+                "keywords": ["pensamiento crítico", "resolución de problemas", "identificación de problemas", "formulación de hipótesis", "recopilación de datos", "evaluación de soluciones"],
+                "selected": false
+            },
+            {
+                "id": "4",
+                "name": "Alfabetización digital",
+                "description": "Fomentar la alfabetización digital y el uso de tecnologías de la información y la comunicación para el aprendizaje, la investigación y la comunicación.",
+                "keywords": ["alfabetización digital", "tecnologías de la información y la comunicación", "aprendizaje", "investigación", "comunicación"],
+                "selected": false
+            },
+            {
+                "id": "5",
+                "name": "Ciudadanía global",
+                "description": "Promover la ciudadanía global a través del desarrollo de habilidades interculturales, la valoración de la diversidad cultural y la conciencia de los desafíos globales y las responsabilidades sociales.",
+                "keywords": ["ciudadanía global", "habilidades interculturales", "valoración de la diversidad", "conciencia de desafíos globales", "responsabilidades sociales"],
+                "selected": false
+            },
+            {
+                "id": "6",
+                "name": "Comunicación efectiva",
+                "description": "Desarrollar habilidades de comunicación efectiva y colaboración a través de la presentación de ideas, la escucha activa, el diálogo y la retroalimentación constructiva.",
+                "keywords": ["comunicación efectiva", "colaboración", "presentación de ideas", "escucha activa", "diálogo", "retroalimentación constructiva"],
+                "selected": false
+            },
+            {
+                "id": "7",
+                "name": "Liderazgo",
+                "description": "Fomentar el liderazgo y la responsabilidad personal y social a través de actividades que desarrollen la capacidad de tomar decisiones informadas, de asumir riesgos y de trabajar hacia metas individuales y comunitarias.",
+                "keywords": ["liderazgo", "responsabilidad personal y social", "toma de decisiones informadas", "asumir riesgos", "trabajar hacia metas individuales y comunitarias"],
+                "selected": false
+            },
+            {
+                "id": "8",
+                "name": "Adaptabilidad",
+                "description": "Promover la capacidad de adaptación y el aprendizaje continuo a través de la exploración de nuevas ideas y tecnologías, la experimentación y el análisis reflexivo.",
+                "keywords": ["adaptabilidad", "aprendizaje continuo", "exploración de nuevas ideas y tecnologías", "experimentación", "análisis reflexivo"],
+                "selected": false
+            }
+        ],
+        "roles_activities": [{
+                "id": "1",
+                "name": "Estudiantes"
+            },
+            {
+                "id": "2",
+                "name": "Educadoras/es y/o técnicos de educación parvularia"
+            },
+            {
+                "id": "3",
+                "name": "Docentes"
+            },
+            {
+                "id": "4",
+                "name": "Equipo técnico-pedagógico"
+            },
+            {
+                "id": "5",
+                "name": "Equipo directivo"
+            },
+            {
+                "id": "6",
+                "name": "Equipo convivencia escolar"
+            },
+            {
+                "id": "7",
+                "name": "Coordinadores de informática / Enlaces"
+            },
+            {
+                "id": "8",
+                "name": "Apoderados y apoderadas"
+            },
+            {
+                "id": "9",
+                "name": "Asesor/es externos técnico-pedagógico"
+            },
+            {
+                "id": "10",
+                "name": "Sostenedor"
+            }
+        ],
+        "institutional_tools": [{
+                "id": "1",
+                "name": "Sí, es parte del Plan Educativo Institucional (PEI) y del Plan de Mejoramiento Educativo (PME)"
+            },
+            {
+                "id": "2",
+                "name": "Sí, es parte Plan de Mejoramiento Educativo (PME)"
+            },
+            {
+                "id": "3",
+                "name": "Sí, es parte del Plan Educativo Institucional (PEI)"
+            },
+            {
+                "id": "4",
+                "name": "Está en proceso de ser incorporada en los instrumentos de gestión institucional"
+            },
+            {
+                "id": "5",
+                "name": "No, no está incorporada en los instrumentos de gestión institucional"
+            }
+        ]
+    },
+    "institution": {
+        "level": [{
+                "name": "Educación Parvularia",
+                "selected": false,
+                "min": null,
+                "max": 99
+            },
+            {
+                "name": "Educación Básica",
+                "selected": false,
+                "min": 100,
+                "max": 199
+            },
+            {
+                "name": "Educación Especial",
+                "selected": false,
+                "min": 200,
+                "max": 299
+            },
+            {
+                "name": "Educación Media",
+                "selected": false,
+                "min": 300,
+                "max": null
+            }
+        ],
+        "size": [{
+                "name": "Menos de 100 estudiantes",
+                "min": null,
+                "max": 99
+            },
+            {
+                "name": "100-499 estudiantes",
+                "min": 100,
+                "max": 499
+            },
+            {
+                "name": "500-999 estudiantes",
+                "min": 500,
+                "max": 999
+            },
+            {
+                "name": "1000 o más estudiantes",
+                "min": 1000,
+                "max": null
+            }
+        ],
+        "location_type": [{
+                "id": "1",
+                "name": "Rural"
+            },
+            {
+                "id": "2",
+                "name": "Urbano"
+            }
+        ],
+        "sostenedor": [{
+                "id": "1",
+                "name": "Particular"
+            },
+            {
+                "id": "2",
+                "name": "Particular subvencionado"
+            },
+            {
+                "id": "3",
+                "name": "Municipal"
+            }
+        ]
+    },
+    "profile": {
+        "roles": [{
+                "id": "1",
+                "name": "Estudiante"
+            },
+            {
+                "id": "2",
+                "name": "Educador/a y/o técnico/a de educación parvularia"
+            },
+            {
+                "id": "3",
+                "name": "Docente"
+            },
+            {
+                "id": "4",
+                "name": "Equipo técnico-pedagógico"
+            },
+            {
+                "id": "5",
+                "name": "Equipo directivo"
+            },
+            {
+                "id": "6",
+                "name": "Equipo convivencia escolar"
+            },
+            {
+                "id": "7",
+                "name": "Coordinador/a de informática / Enlaces"
+            },
+            {
+                "id": "8",
+                "name": "Apoderado/a"
+            },
+            {
+                "id": "9",
+                "name": "Asesor externo técnico-pedagógico"
+            },
+            {
+                "id": "10",
+                "name": "Sostenedor"
+            }
+        ]
+    }
+}
